@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import Footer from '../components/Footer';
 
-export default function Login( {navigation} ) {
+export default function Login(props) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <View style={{ flex: 1, marginTop: 80}}>
@@ -18,7 +18,7 @@ export default function Login( {navigation} ) {
           <TouchableOpacity 
             style={styles.loginBtn}
             onPress={() => {
-              navigation.replace('Academic Project');
+              props.click();
             }}
           >
             <Text style={styles.loginText}>Login</Text>
