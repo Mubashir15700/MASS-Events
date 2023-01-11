@@ -19,6 +19,9 @@ const staffsSchema = mongoose.Schema({
     wage: {
         required: true,
         type: Number,
+    },role: {
+        required: true,
+        type: String, 
     },
     category: {
         required: true,

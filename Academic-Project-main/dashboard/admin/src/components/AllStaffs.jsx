@@ -49,12 +49,15 @@ const AllStaffs = () => {
                     <TableCell>Wage</TableCell>
                     <TableCell>Category</TableCell>
                     <TableCell>Phone</TableCell>
-                    <TableCell></TableCell>
+                    <TableCell>Actions</TableCell>
                 </THead>
             </TableHead>
             <TableBody>
                 {
-                    loading ? (<TableRow>Loading...</TableRow>) :
+                    loading ? (
+                        <TableRow>
+                            <TableCell>Loading...</TableCell>
+                        </TableRow>) :
                     staffs.map((staff) => {
                         return (
                             <TableRow key={staff._id}>

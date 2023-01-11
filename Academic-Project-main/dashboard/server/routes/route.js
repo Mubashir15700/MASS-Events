@@ -1,15 +1,26 @@
 import express from "express";
-import { addStaff, getStaffs, getStaff, editStaff, deleteStaff } from "../controller/staff-controller.js";
-import { addEvent, getEvents, getEvent, editEvent, deleteEvent } from "../controller/event-controller.js";
+import { registerAdmin, adminLogin, addStaff, staffLogin } from "../controller/auth.js";
+import { getEvents, addEvent, getEvent, editEvent, deleteEvent } from "../controller/event-controller.js";
+import {  getStaffs, getStaff, editStaff, deleteStaff } from "../controller/staff-controller.js";
+
 
 const router = express.Router();
 
-router.get("/", getEvents);
+// Route Level Middleware - To Protect Route
+
+// Public Routes
+router.post("/admin/register", registerAdmin);
+router.post("/admin/login", adminLogin);
+router.post("/staff/login", staffLogin);
+
+// Protected Routes
+// Events
+router.get("/allevents", getEvents);
 router.post("/addevent", addEvent);
 router.get("/editevent/:id", getEvent);
 router.put("/events/:id", editEvent);
 router.delete("/deleteevent/:id", deleteEvent);
-
+// Staffs
 router.post("/addstaff", addStaff);
 router.get("/allstaffs", getStaffs);
 router.get("/:id", getStaff);

@@ -15,9 +15,10 @@ export default function App() {
 
   const [auth, setAuth] = useState(false);
 
-  const handleClick = () => {
-    setAuth(true);
-  }
+  // const handleClick = () => {
+  //   console.log("clicked");
+  //   setAuth(true);
+  // }
 
   return (
     <>
@@ -50,7 +51,7 @@ export default function App() {
             </Tab.Navigator>
           </NavigationContainer>)
           :
-          <Login click={handleClick} />
+          <Login />
       }
     </>
   );

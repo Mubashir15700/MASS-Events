@@ -16,8 +16,8 @@ const defaultValue = {
     username: '',
     dob: '',
     wage: '',
+    role: 'staff',
     category: '',
-    password: '',
     phone: ''
 }
 
@@ -77,10 +77,6 @@ const EditStaff = () => {
                     <MenuItem value={"head"}>Head</MenuItem>
                     <MenuItem value={"supervisor"}>Supervisor</MenuItem>
                 </Select>
-            </FormControl>
-            <FormControl>
-                <InputLabel>Password</InputLabel>
-                <Input type="password" onChange={(e) => handleChange(e)} name="password" value={staff.password} />
             </FormControl>
             <FormControl>
                 <InputLabel>Phone</InputLabel>

@@ -46,13 +46,16 @@ const AllEvents = () => {
                     <TableCell>Time</TableCell>
                     <TableCell>Event Name</TableCell>
                     <TableCell>Location</TableCell>
-                    <TableCell></TableCell>
+                    <TableCell>Actions</TableCell>
                 </THead>
             </TableHead>
             <TableBody>
                 {
                     events.length ? 
-                        loading ? (<TableRow>Loading...</TableRow>) :
+                        loading ? (
+                            <TableRow>
+                                <TableCell>Loading...</TableCell>
+                            </TableRow>) :
                         events.map((event) => {
                             return (
                                 <TableRow key={event._id}>
@@ -66,8 +69,10 @@ const AllEvents = () => {
                                     </TableCell>
                                 </TableRow>
                             );
-                        }) : 
-                    (<TableRow>Nothing to show here</TableRow>)
+                        }) : (
+                    <TableRow>
+                        <TableCell>Nothing to show here</TableCell>
+                    </TableRow>)
                 }
             </TableBody>
         </Container>

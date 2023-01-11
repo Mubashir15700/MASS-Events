@@ -2,6 +2,22 @@ import axios from 'axios';
 
 const URL = 'http://localhost:3001';
 
+export const registerAdmin = async (data) => {
+    try {
+        return await axios.post(`${URL}/admin/register`, data);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const loginAdmin = async (data) => {
+    try {
+        return await axios.post(`${URL}/admin/login`, data);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const addStaff = async (data) => {
     try {
         return await axios.post(`${URL}/addstaff`, data);
@@ -52,7 +68,7 @@ export const addEvent = async (data) => {
 
 export const getEvents = async () => {
     try {
-        return await axios.get(`${URL}/`);
+        return await axios.get(`${URL}/allevents`);
     } catch (error) {
         console.log(error);
     }

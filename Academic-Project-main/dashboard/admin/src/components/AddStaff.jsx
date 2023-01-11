@@ -16,8 +16,10 @@ const defaultValue = {
     username: '',
     dob: '',
     wage: '',
+    role: 'staff',
     category: '',
     password: '',
+    confpassword: '',
     phone: '',
 }
 
@@ -29,6 +31,7 @@ const AddStaff = () => {
 
     const handleChange = (e) => {
         setStaff({ ...staff, [e.target.name]: e.target.value });
+        console.log(staff);
     }
 
     const addStaffDetails = async () => {
@@ -71,6 +74,10 @@ const AddStaff = () => {
             <FormControl>
                 <InputLabel>Password</InputLabel>
                 <Input type="password" onChange={(e) => handleChange(e)} name="password" />
+            </FormControl>
+            <FormControl>
+                <InputLabel>Confirm Password</InputLabel>
+                <Input type="password" onChange={(e) => handleChange(e)} name="confpassword" />
             </FormControl>
             <FormControl>
                 <InputLabel>Phone</InputLabel>
