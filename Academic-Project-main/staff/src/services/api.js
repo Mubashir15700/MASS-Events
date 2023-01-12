@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "http://192.168.43.77:3001";
+const URL = "http://192.168.1.83:3001";
 
 export const loginStaff = async (data) => {
     try {

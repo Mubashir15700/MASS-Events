@@ -13,7 +13,7 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
 
-  const [auth, setAuth] = useState(false);
+  const [auth, setAuth] = useState(true);
 
   // const handleClick = () => {
   //   console.log("clicked");
@@ -24,32 +24,34 @@ export default function App() {
     <>
       {
         auth ?
-          (<NavigationContainer>
-            <Tab.Navigator
-              screenOptions={({ route }) => ({
-                tabBarIcon: ({ focused, color, size }) => {
-                  let iconName;
-                  if (route.name === 'Sites') {
-                    iconName = focused ? 'map-marker' : 'map-marker';
-                  } else if (route.name === 'Site Report') {
-                    iconName = focused ? 'tasks' : 'tasks';
-                  } else if (route.name === 'Payments') {
-                    iconName = focused ? 'credit-card-alt' : 'credit-card';
-                  } else if (route.name === 'Attendance') {
-                    iconName = focused ? 'list' : 'list-alt';
-                  }
-                  return <Icon name={iconName} size={size} color={color} />;
-                },
-                tabBarActiveTintColor: 'pink',
-                tabBarInactiveTintColor: 'gray',
-              })}
-            >
-              <Tab.Screen name="Sites" component={Sites} />
-              <Tab.Screen name="Site Report" component={SiteReport} />
-              <Tab.Screen name="Payments" component={Payments} />
-              <Tab.Screen name="Attendance" component={Attendance} />
-            </Tab.Navigator>
-          </NavigationContainer>)
+          (
+            <NavigationContainer>
+              <Tab.Navigator
+                screenOptions={({ route }) => ({
+                  tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
+                    if (route.name === 'Sites') {
+                      iconName = focused ? 'map-marker' : 'map-marker';
+                    } else if (route.name === 'Site Report') {
+                      iconName = focused ? 'tasks' : 'tasks';
+                    } else if (route.name === 'Payments') {
+                      iconName = focused ? 'credit-card-alt' : 'credit-card';
+                    } else if (route.name === 'Attendance') {
+                      iconName = focused ? 'list' : 'list-alt';
+                    }
+                    return <Icon name={iconName} size={size} color={color} />;
+                  },
+                  tabBarActiveTintColor: 'pink',
+                  tabBarInactiveTintColor: 'gray',
+                })
+                }
+              >
+                <Tab.Screen name="Sites" component={Sites} />
+                <Tab.Screen name="Site Report" component={SiteReport} />
+                <Tab.Screen name="Payments" component={Payments} />
+                <Tab.Screen name="Attendance" component={Attendance} />
+              </Tab.Navigator>
+            </NavigationContainer>)
           :
           <Login />
       }

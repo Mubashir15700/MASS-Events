@@ -31,11 +31,11 @@ const AddStaff = () => {
 
     const handleChange = (e) => {
         setStaff({ ...staff, [e.target.name]: e.target.value });
-        console.log(staff);
     }
 
     const addStaffDetails = async () => {
-        await addStaff(staff);
+        const response = await addStaff(staff);
+        console.log(response.data);
         navigate("/allstaffs");
     }
 

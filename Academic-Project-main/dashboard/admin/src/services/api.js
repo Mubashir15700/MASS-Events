@@ -68,7 +68,7 @@ export const addEvent = async (data) => {
 
 export const getEvents = async () => {
     try {
-        return await axios.get(`${URL}/allevents`);
+        return await axios.get(`${URL}/`);
     } catch (error) {
         console.log(error);
     }

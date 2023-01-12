@@ -16,7 +16,7 @@ const Navbar = () => {
   return (
     <Header position="static">
       <Toolbar>
-        <Tabs to="/allevents">All Events</Tabs>
+        <Tabs to="/">All Events</Tabs>
         <Tabs to="/addevent">Add Event</Tabs>
         <Tabs to="/allstaffs">All Staffs</Tabs>
         <Tabs to="/addstaff">Add Staff</Tabs>

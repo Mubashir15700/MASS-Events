@@ -94,7 +94,6 @@ export const addStaff = async (req, res) => {
                     const token = jwt.sign({ userID: savedStaff._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
                     res.status(201).send({ "status": "success", "message": "Registration Success", "token": token });
                 } catch (error) {
-                    console.log(error);
                     res.send({ "status": "failed", "message": "Unable to Register" });
                 }
             } else {

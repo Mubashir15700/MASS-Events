@@ -24,6 +24,7 @@ export default function Sites() {
 
   const getAllEvents = async () => {
     let response = await getEvents();
+    console.log(response);
     setEvents(response.data);
     setLoading(false);
   }

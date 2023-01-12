@@ -2,11 +2,9 @@ import express from "express";
 import { registerAdmin, adminLogin, addStaff, staffLogin } from "../controller/auth.js";
 import { getEvents, addEvent, getEvent, editEvent, deleteEvent } from "../controller/event-controller.js";
 import {  getStaffs, getStaff, editStaff, deleteStaff } from "../controller/staff-controller.js";
-
+import checkUserAuth from '../middlewares/auth-middleware.js';
 
 const router = express.Router();
-
-// Route Level Middleware - To Protect Route
 
 // Public Routes
 router.post("/admin/register", registerAdmin);
@@ -15,7 +13,7 @@ router.post("/staff/login", staffLogin);
 
 // Protected Routes
 // Events
-router.get("/allevents", getEvents);
+router.get("/", getEvents);
 router.post("/addevent", addEvent);
 router.get("/editevent/:id", getEvent);
 router.put("/events/:id", editEvent);

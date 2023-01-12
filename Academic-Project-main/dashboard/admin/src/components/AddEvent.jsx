@@ -30,7 +30,7 @@ const AddEvent = () => {
 
     const addEventDetails = async () => {
         await addEvent(event);
-        navigate("/allevents");
+        navigate("/");
     }
 
     return (

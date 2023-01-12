@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useState } from 'react';
 import { loginStaff } from '../services/api';
 import Footer from '../components/Footer';
@@ -12,14 +12,15 @@ const defaultValue = {
 export default function Login(props) {
 
   const [staff, setStaff] = useState(defaultValue);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleChange = (e) => {
-    setStaff({ ...staff, [e.target.name]: e.target.value });
-  }
-
-  const loginStaffDetails = async () => {
-    await loginStaff(staff);
-    console.log(staff);
+  const submit = () => {
+    return Alert.alert(username, password);
+    // setStaff({username, password});
+    // console.log(staff);
+    // const response = await loginStaff(staff);
+    // console.log(response.data);
   }
 
   return (
@@ -29,18 +30,20 @@ export default function Login(props) {
             style={styles.input}
             placeholder="User Name:"
             name="username"
-            onChangeText={(e) => handleChange(e)}
+            value={username}
+            onChangeText={(e) => setUsername(e)}
           />
           <TextInput 
             style={styles.input}
             placeholder="Password:" 
             name="password"
+            value={password}
             secureTextEntry={true}
-            onChangeText={(e) => handleChange(e)}
+            onChangeText={(e) => setPassword(e)}
           />
           <TouchableOpacity 
             style={styles.loginBtn}
-            onPress={() => loginStaffDetails()}
+            onPress={() => submit()}
           >
             <Text style={styles.loginText}>Login</Text>
           </TouchableOpacity>

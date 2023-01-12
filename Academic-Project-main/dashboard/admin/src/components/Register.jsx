@@ -31,12 +31,12 @@ const Register = () => {
 
     const handleChange = (e) => {
         setAdmin({ ...admin, [e.target.name]: e.target.value });
-        console.log(admin);
     }
     
     const register = async () => {
-        await registerAdmin(admin);
-        navigate("/allevents");
+        const response = await registerAdmin(admin);
+        console.log(response.data);
+        //navigate("/");
     }
     
     return (
