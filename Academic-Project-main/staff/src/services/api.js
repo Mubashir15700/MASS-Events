@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const URL = "http://192.168.1.83:3001";
+const URL = "http://192.168.43.77:3001";
 
-export const loginStaff = async (data) => {
+export const loginStaff = async (username, password) => {
     try {
-        return await axios.post(`${URL}/login`, data);
+        return await axios.post(`${URL}/staff/login`, {username, password});
     } catch (error) {
         console.log(error);
     }

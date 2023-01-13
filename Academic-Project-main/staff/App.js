@@ -13,7 +13,7 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
 
-  const [auth, setAuth] = useState(true);
+  const [auth, setAuth] = useState(false);
 
   // const handleClick = () => {
   //   console.log("clicked");

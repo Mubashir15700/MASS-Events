@@ -29,7 +29,8 @@ const Login = () => {
     
     const login = async () => {
         const response = await loginAdmin(admin);
-        console.log(response.data);
+        // const token = response.data.token;
+        // console.log(token);
         //navigate("/");
     }
 

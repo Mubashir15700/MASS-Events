@@ -13,16 +13,16 @@ router.post("/staff/login", staffLogin);
 
 // Protected Routes
 // Events
-router.get("/", getEvents);
-router.post("/addevent", addEvent);
-router.get("/editevent/:id", getEvent);
-router.put("/events/:id", editEvent);
-router.delete("/deleteevent/:id", deleteEvent);
+router.get("/", checkUserAuth, getEvents);
+router.post("/addevent", checkUserAuth, addEvent);
+router.get("/editevent/:id", checkUserAuth, getEvent);
+router.put("/events/:id",checkUserAuth, editEvent);
+router.delete("/deleteevent/:id", checkUserAuth, deleteEvent);
 // Staffs
-router.post("/addstaff", addStaff);
-router.get("/allstaffs", getStaffs);
-router.get("/:id", getStaff);
-router.put("/staffs/:id", editStaff);
-router.delete("/deletestaff/:id", deleteStaff);
+router.post("/addstaff", checkUserAuth, addStaff);
+router.get("/allstaffs", checkUserAuth, getStaffs);
+router.get("/:id", checkUserAuth, getStaff);
+router.put("/staffs/:id", checkUserAuth, editStaff);
+router.delete("/deletestaff/:id", checkUserAuth, deleteStaff);
 
 export default router;

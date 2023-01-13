@@ -4,23 +4,14 @@ import { useState } from 'react';
 import { loginStaff } from '../services/api';
 import Footer from '../components/Footer';
 
-const defaultValue = {
-  username: '',
-  password: '',
-}
-
 export default function Login(props) {
 
-  const [staff, setStaff] = useState(defaultValue);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const submit = () => {
-    return Alert.alert(username, password);
-    // setStaff({username, password});
-    // console.log(staff);
-    // const response = await loginStaff(staff);
-    // console.log(response.data);
+  const submit = async () => {
+    const response = await loginStaff(username, password);
+    //console.log(response.data);
   }
 
   return (
