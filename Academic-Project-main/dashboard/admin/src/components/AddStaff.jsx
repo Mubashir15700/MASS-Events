@@ -5,9 +5,9 @@ import { addStaff } from "../services/api";
 
 const Container = styled(FormGroup)`
     width: 50%;
-    margin: 3% auto 0 auto;
+    margin: 2% auto 0 auto;
     & > div {
-        margin-top: 8px;
+        margin-top: 5px;
     }
 `
 
@@ -41,7 +41,7 @@ const AddStaff = () => {
 
     return (
         <Container>
-            <Typography variant='h4'>Add Staff</Typography>
+            <Typography variant='h6'>Add Staff</Typography>
             <FormControl>
                 <InputLabel>Name</InputLabel>
                 <Input onChange={(e) => handleChange(e)} name="name" />

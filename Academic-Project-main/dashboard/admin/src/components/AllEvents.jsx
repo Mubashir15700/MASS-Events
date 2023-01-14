@@ -4,11 +4,12 @@ import { getEvents, deleteEvent } from "../services/api.js";
 import { Link } from "react-router-dom";
 
 const Container = styled(Table)`
-    width: 80%;
-    margin: 3% auto 0 auto;
+    width: 95%;
+    margin: 2% auto 0 auto;
     & > div {
         margin-top: 10px;
     }
+    background-color: #e5e5e5;
 `
 
 const THead = styled(TableRow)`

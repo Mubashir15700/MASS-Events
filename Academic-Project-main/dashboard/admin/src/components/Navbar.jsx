@@ -1,5 +1,6 @@
 import { AppBar, Toolbar, styled } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import "./styles.css";
 
 const Header = styled(AppBar)`
   background: #111111;
@@ -14,9 +15,9 @@ const Tabs = styled(NavLink)`
 
 const Navbar = () => {
   return (
-    <Header position="static">
-      <Toolbar>
-        <Tabs to="/">All Events</Tabs>
+    <Header position="static" className="app">
+      <Toolbar className="nav">
+        <Tabs to="/" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>All Events</Tabs>
         <Tabs to="/addevent">Add Event</Tabs>
         <Tabs to="/allstaffs">All Staffs</Tabs>
         <Tabs to="/addstaff">Add Staff</Tabs>

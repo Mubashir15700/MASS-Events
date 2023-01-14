@@ -4,8 +4,8 @@ import { FormControl, FormGroup, InputLabel, Input, Typography, styled, Button }
 import { addEvent } from "../services/api";
 
 const Container = styled(FormGroup)`
-    width: 50%;
-    margin: 3% auto 0 auto;
+    width: 60%;
+    margin: 2% auto 0 auto;
     & > div {
         margin-top: 8px;
     }
@@ -36,7 +36,7 @@ const AddEvent = () => {
 
     return (
         <Container>
-            <Typography variant='h4'>Add Event</Typography>
+            <Typography variant='h6'>Add Event</Typography>
             <FormControl>
                 <InputLabel>Date</InputLabel><br/><br/>
                 <Input type="date" onChange={(e) => handleChange(e)} name="date" />
