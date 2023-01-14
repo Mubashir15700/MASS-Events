@@ -53,11 +53,10 @@ const AllEvents = () => {
             </TableHead>
             <TableBody>
                 {
-                    events.length ? 
-                        loading ? (
-                            <TableRow>
-                                <TableCell>Loading...</TableCell>
-                            </TableRow>) :
+                    loading ? (
+                        <TableRow>
+                            <TableCell>Loading...</TableCell>
+                        </TableRow>) :
                         events.map((event) => {
                             return (
                                 <TableRow key={event._id}>
@@ -71,10 +70,8 @@ const AllEvents = () => {
                                     </TableCell>
                                 </TableRow>
                             );
-                        }) : (
-                    <TableRow>
-                        <TableCell>Nothing to show here</TableCell>
-                    </TableRow>)
+                        }
+                    )
                 }
             </TableBody>
         </Container>

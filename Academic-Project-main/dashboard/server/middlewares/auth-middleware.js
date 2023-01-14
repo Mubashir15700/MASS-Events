@@ -4,7 +4,7 @@ import Staff from '../schema/staff-schema.js';
 var checkUserAuth = async (req, res, next) => {
   let token;
   const { authorization } = req.headers;
-  console.log("Auth:  ", authorization);
+  //console.log("Auth:  ", authorization);
   if (authorization && authorization.startsWith('Bearer')) {
     try {
       // Get Token from header
