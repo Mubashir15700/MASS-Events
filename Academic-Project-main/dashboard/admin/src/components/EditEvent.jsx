@@ -47,7 +47,7 @@ const EditEvent = () => {
         <Container>
             <Typography variant='h4'>Edit Event</Typography>
             <FormControl>
-                <InputLabel>Date</InputLabel><br></br><br></br>
+                <InputLabel>Date</InputLabel><br/><br/>
                 <Input type="date" onChange={(e) => handleChange(e)} name="date" value={event.date} />
             </FormControl>
             <FormControl>

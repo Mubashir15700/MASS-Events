@@ -12,7 +12,7 @@ export const loginStaff = async (username, password) => {
 
 export const getEvents = async () => {
     try {
-        return await axios.get(`${URL}/`);
+        return await axios.get(`${URL}/events/getevents`);
     } catch (error) {
         console.log(error);
     }

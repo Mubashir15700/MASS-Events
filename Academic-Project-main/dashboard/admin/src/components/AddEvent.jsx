@@ -29,7 +29,8 @@ const AddEvent = () => {
     }
 
     const addEventDetails = async () => {
-        await addEvent(event);
+        let response = await addEvent(event);
+        console.log(response.data);
         navigate("/");
     }
 
@@ -37,11 +38,11 @@ const AddEvent = () => {
         <Container>
             <Typography variant='h4'>Add Event</Typography>
             <FormControl>
-                <InputLabel>Date</InputLabel><br></br><br></br>
+                <InputLabel>Date</InputLabel><br/><br/>
                 <Input type="date" onChange={(e) => handleChange(e)} name="date" />
             </FormControl>
             <FormControl>
-                <InputLabel>Time</InputLabel><br></br><br></br>
+                <InputLabel>Time</InputLabel><br/><br/>
                 <Input type="time" onChange={(e) => handleChange(e)} name="time" />
             </FormControl>
             <FormControl>

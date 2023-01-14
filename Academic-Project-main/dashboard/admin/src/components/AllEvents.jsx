@@ -34,7 +34,8 @@ const AllEvents = () => {
     }
 
     const deleteEventDetails = async (id) => {
-        deleteEvent(id);
+        let response = await deleteEvent(id);
+        console.log(response.data);
         getAllEvents();
     }
 

@@ -1,17 +1,15 @@
-import * as React from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
-import { loginStaff } from '../services/api';
-import Footer from '../components/Footer';
+import { loginStaff } from '../../services/api';
 
-export default function Login(props) {
+export default Login = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const submit = async () => {
     const response = await loginStaff(username, password);
-    //console.log(response.data);
+    console.log(response.data);
   }
 
   return (
@@ -39,7 +37,6 @@ export default function Login(props) {
             <Text style={styles.loginText}>Login</Text>
           </TouchableOpacity>
       </View>
-      {/* <Footer /> */}
     </View>
   );
 }

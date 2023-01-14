@@ -34,7 +34,7 @@ const Register = () => {
     }
     
     const register = async () => {
-        const response = await registerAdmin(admin);
+        let response = await registerAdmin(admin);
         console.log(response.data);
         //navigate("/");
     }

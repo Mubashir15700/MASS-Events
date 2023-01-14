@@ -9,15 +9,15 @@ var checkUserAuth = async (req, res, next) => {
     try {
       // Get Token from header
       token = authorization.split(' ')[1];
-      console.log("Token:  ", token);
+      //console.log("Token:  ", token);
 
       // Verify Token
       const { userID } = jwt.verify(token, process.env.JWT_SECRET_KEY);
-      console.log("User:  ", userID);
+      //console.log("User:  ", userID);
 
       // Get User from Token
       req.user = await Staff.findById(userID).select('-password');
-      console.log("Req:  ", req.user);
+      //console.log("Req:  ", req.user);
 
       next();
     } catch (error) {

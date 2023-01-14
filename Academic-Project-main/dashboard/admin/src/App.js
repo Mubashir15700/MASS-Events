@@ -13,7 +13,7 @@ import Register from "./components/Register";
 
 function App() {
 
-  const [auth, setAuth] = useState(false);
+  const [auth, setAuth] = useState(true);
 
   return (
     <>

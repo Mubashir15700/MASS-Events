@@ -1,12 +1,12 @@
 import { useEffect, useState, useCallback } from 'react';
 import { StyleSheet, Text, View, Pressable, RefreshControl, ScrollView, Alert } from 'react-native';
-import { getEvents } from '../services/api';
+import { getEvents } from '../../services/api';
 
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
 
-export default function Sites() {
+export default Events = () => {
 
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,7 +24,6 @@ export default function Sites() {
 
   const getAllEvents = async () => {
     let response = await getEvents();
-    console.log(response);
     setEvents(response.data);
     setLoading(false);
   }
@@ -37,31 +36,31 @@ export default function Sites() {
           onRefresh={onRefresh}
         />
       }>
-      {
+      {loading ? (<Text>Loading...</Text>) :
         events.length ?
-          loading ? (<Text>Loading...</Text>) :
-            events.map((event, index) => {
-              return (
-                <View key={index} style={styles.row}>
-                  <View>
-                    <Text>{event.date}</Text>
-                    <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{event.time}</Text>
-                  </View>
-                  <View style={{
-                    marginLeft: 10,
-                    paddingVertical: 20,
-                    flex: 1,
-                  }}>
-                    <Text style={{ fontSize: 13, color: 'grey' }}>{event.eventname}</Text>
-                    <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{event.location}</Text>
-                  </View>
-                  <Pressable style={styles.actionBtn} onPress={() => Alert.alert("Book " + event.eventname)}>
-                    <Text>Book</Text>
-                  </Pressable>
+          events.map((event, index) => {
+            return (
+              <View key={index} style={styles.row}>
+                <View>
+                  <Text>{event.date}</Text>
+                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{event.time}</Text>
                 </View>
-              );
-            }) :
-          (<Text>Nothing to show here</Text>)
+                <View style={{
+                  marginLeft: 10,
+                  paddingVertical: 20,
+                  flex: 1,
+                }}>
+                  <Text style={{ fontSize: 13, color: 'grey' }}>{event.eventname}</Text>
+                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{event.location}</Text>
+                </View>
+                <Pressable style={styles.actionBtn} onPress={() => Alert.alert("Booking " + event.eventname)}>
+                  <Text>Book</Text>
+                </Pressable>
+              </View>
+            );
+          }) :
+        (
+          <Text>No data found</Text>)
       }
     </ScrollView>
   );

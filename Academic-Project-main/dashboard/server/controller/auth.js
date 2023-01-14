@@ -41,7 +41,7 @@ export const registerAdmin = async (req, res) => {
     }
 }
 
-export const adminLogin = async (req, res) => {
+export const loginAdmin = async (req, res) => {
     try {
         const { username, password } = req.body;
         if (username && password) {
@@ -107,8 +107,7 @@ export const addStaff = async (req, res) => {
 }
 
 // App
-
-export const staffLogin = async (req, res) => {
+export const loginStaff = async (req, res) => {
     try {
         const { username, password } = req.body;
         if (username && password) {

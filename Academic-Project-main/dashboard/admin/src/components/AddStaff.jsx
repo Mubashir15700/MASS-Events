@@ -34,8 +34,8 @@ const AddStaff = () => {
     }
 
     const addStaffDetails = async () => {
-        await addStaff(staff);
-        //console.log(response.data);
+        let response = await addStaff(staff);
+        console.log(response.data);
         navigate("/allstaffs");
     }
 

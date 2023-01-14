@@ -3,22 +3,17 @@ import { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Login from './src/screens/Login';
-import Sites from './src/screens/Sites';
-import SiteReport from './src/screens/SiteReport';
-import Payments from './src/screens/Payments';
-import Attendance from './src/screens/Attendance';
+import Login from './src/components/screens/Login';
+import Events from './src/components/screens/Events';
+import EventReport from './src/components/screens/EventReport';
+import Payments from './src/components/screens/Payments';
+import Attendance from './src/components/screens/Attendance';
 
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+export default App = () => {
 
-  const [auth, setAuth] = useState(false);
-
-  // const handleClick = () => {
-  //   console.log("clicked");
-  //   setAuth(true);
-  // }
+  const [auth, setAuth] = useState(true);
 
   return (
     <>
@@ -30,9 +25,9 @@ export default function App() {
                 screenOptions={({ route }) => ({
                   tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
-                    if (route.name === 'Sites') {
+                    if (route.name === 'Events') {
                       iconName = focused ? 'map-marker' : 'map-marker';
-                    } else if (route.name === 'Site Report') {
+                    } else if (route.name === 'EventReport') {
                       iconName = focused ? 'tasks' : 'tasks';
                     } else if (route.name === 'Payments') {
                       iconName = focused ? 'credit-card-alt' : 'credit-card';
@@ -46,8 +41,8 @@ export default function App() {
                 })
                 }
               >
-                <Tab.Screen name="Sites" component={Sites} />
-                <Tab.Screen name="Site Report" component={SiteReport} />
+                <Tab.Screen name="Events" component={Events} />
+                <Tab.Screen name="EventReport" component={EventReport} />
                 <Tab.Screen name="Payments" component={Payments} />
                 <Tab.Screen name="Attendance" component={Attendance} />
               </Tab.Navigator>
