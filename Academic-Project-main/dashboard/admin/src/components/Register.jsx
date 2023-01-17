@@ -5,7 +5,7 @@ import { registerAdmin } from '../services/api';
 
 const Container = styled(FormGroup)`
     width: 50%;
-    margin: 3% auto 0 auto;
+    margin: 8% auto 0 auto;
     & > div {
         margin-top: 8px;
     }
@@ -36,30 +36,30 @@ const Register = () => {
     const register = async () => {
         let response = await registerAdmin(admin);
         console.log(response.data);
-        //navigate("/");
+        navigate("/");
     }
     
     return (
         <Container>
-        <Typography variant='h4'>Register</Typography>
+        <Typography variant='h5'>Register</Typography>
         <FormControl>
-                <InputLabel>Name</InputLabel>
+                <InputLabel>Name:</InputLabel>
                 <Input onChange={(e) => handleChange(e)} name="name" />
             </FormControl>
             <FormControl>
-                <InputLabel>Username</InputLabel>
+                <InputLabel>User Name:</InputLabel>
                 <Input onChange={(e) => handleChange(e)} name="username" />
             </FormControl>
             <FormControl>
-                <InputLabel>Password</InputLabel>
+                <InputLabel>Password:</InputLabel>
                 <Input type="password" onChange={(e) => handleChange(e)} name="password" />
             </FormControl>
             <FormControl>
-                <InputLabel>Confirm Password</InputLabel>
+                <InputLabel>Confirm Password:</InputLabel>
                 <Input type="password" onChange={(e) => handleChange(e)} name="confpassword" />
             </FormControl>
             <FormControl>
-                <InputLabel>Phone</InputLabel>
+                <InputLabel>Phone:</InputLabel>
                 <Input type="number" onChange={(e) => handleChange(e)} name="phone" />
             </FormControl>
         <FormControl>

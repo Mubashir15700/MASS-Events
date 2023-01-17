@@ -30,8 +30,8 @@ const AllEvents = () => {
 
     const getAllEvents = async () => {
         let response = await getEvents();
-        setEvents(response.data);
         setLoading(false);
+        setEvents(response.data);
     }
 
     const deleteEventDetails = async (id) => {

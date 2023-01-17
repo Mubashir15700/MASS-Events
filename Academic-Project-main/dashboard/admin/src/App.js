@@ -30,7 +30,6 @@ function App() {
               <Route path="/editstaff/:id" element={<EditStaff />} />
             </Routes>
           </BrowserRouter> :
-
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Login />} />

@@ -51,8 +51,14 @@ export const loginAdmin = async (req, res) => {
                 if ((admin.username === username) && isMatch) {
                     // Generate JWT Token
                     const token = jwt.sign({ userID: admin._id, userPWD: admin.password }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
+
+                    // Save token to cookie
+                    res.cookie("jwt", token, {
+                        maxAge: 60000 * 60 * 24 * 7,
+                        httpOnly: true
+                    });
+
                     res.send({ "status": "success", "message": "Login Success", "token": token });
-                    console.log(token);
                 } else {
                     res.send({ "status": "failed", "message": "Username or Password is not Valid" });
                 }
@@ -63,7 +69,6 @@ export const loginAdmin = async (req, res) => {
             res.send({ "status": "failed", "message": "All Fields are Required" });
         }
     } catch (error) {
-        console.log(error)
         res.send({ "status": "failed", "message": "Unable to Login" });
     }
 }

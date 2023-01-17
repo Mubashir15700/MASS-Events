@@ -6,7 +6,7 @@ import { loginAdmin } from '../services/api';
 
 const Container = styled(FormGroup)`
     width: 50%;
-    margin: 5% auto 0 auto;
+    margin: 8% auto 0 auto;
     & > div {
         margin-top: 20px;
     }
@@ -28,18 +28,20 @@ const Login = () => {
     }
     
     const login = async () => {
-        await loginAdmin(admin);
+        const response = await loginAdmin(admin);
+        console.log(response);
+        navigate("/");
     }
 
     return (
         <Container>
-        <Typography variant='h4'>Log In</Typography>
+        <Typography variant='h5'>Log In</Typography>
         <FormControl>
-            <InputLabel>User Name</InputLabel>
+            <InputLabel>User Name:</InputLabel>
             <Input onChange={(e) => handleChange(e)} name="username" />
         </FormControl>
         <FormControl>
-            <InputLabel>password</InputLabel>
+            <InputLabel>password:</InputLabel>
             <Input type="password" onChange={(e) => handleChange(e)} name="password" />
         </FormControl>
         <FormControl>

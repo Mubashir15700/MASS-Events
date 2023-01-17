@@ -24,7 +24,7 @@ export const editEvent = async (req, res) => {
 
     try {
         await Event.updateOne({ _id: req.params.id }, editEvent);
-        res.status(201).json(editEvent);
+        res.status(201).send({ "status": "success", "message": "Edited event Successfully" });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -33,7 +33,7 @@ export const editEvent = async (req, res) => {
 export const deleteEvent = async (req, res) => {
     try {
         await Event.deleteOne({ _id: req.params.id });
-        res.status(200).json({ message: "deleted event successfully" });
+        res.status(200).send({ "status": "success", "message": "Deleted event Successfully" });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -44,7 +44,7 @@ export const addEvent = async (req, res) => {
     const newEvent = new Event(event);
     try {
         await newEvent.save();
-        res.status(201).json(newEvent);
+        res.status(201).send({ "status": "success", "message": "Added new event Successfully" });
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
