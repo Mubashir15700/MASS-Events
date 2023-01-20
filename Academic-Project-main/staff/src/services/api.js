@@ -17,8 +17,9 @@ export const getEvents = async () => {
         console.log(token);
         return await axios.get(`${URL}/staff/events/getevents`, {
             headers: {
-                "Authorization": 'Bearer ' + token,
-            }
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + token,
+            },
         });
     } catch (error) {
         console.log(error);

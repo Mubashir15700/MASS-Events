@@ -122,6 +122,7 @@ export const loginStaff = async (req, res) => {
                 if ((staff.username === username) && isMatch) {
                     // Generate JWT Token
                     const token = jwt.sign({ userID: staff._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
+                    console.log("generated token: " + token);
                     res.send({ "status": "success", "message": "Login Success", "token": token });
                 } else {
                     console.log("didnt match");
