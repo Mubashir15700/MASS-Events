@@ -2,7 +2,8 @@ import express from "express";
 import { registerAdmin, loginAdmin, addStaff, loginStaff } from "../controller/auth.js";
 import { getEvents, addEvent, getEvent, editEvent, deleteEvent } from "../controller/event-controller.js";
 import {  getStaffs, getStaff, editStaff, deleteStaff } from "../controller/staff-controller.js";
-import authorization from "../middlewares/auth-middleware.js";
+import adminAuthorization from "../middlewares/admin-middleware.js";
+import staffAuthorization from "../middlewares/staff-middleware.js";
 
 const router = express.Router();
 
@@ -13,16 +14,18 @@ router.post("/staff/login", loginStaff);
 
 // Protected Routes
 // Events
-router.get("/events/getevents", authorization, getEvents);
-router.get("/events/getevent/:id", authorization, getEvent);
-router.put("/events/editevent/:id", authorization, editEvent);
-router.delete("/events/deleteevent/:id", authorization, deleteEvent);
-router.post("/events/addevent", authorization, addEvent);
+router.get("/events/getevents", adminAuthorization, getEvents);
+router.get("/events/getevent/:id", adminAuthorization, getEvent);
+router.put("/events/editevent/:id", adminAuthorization, editEvent);
+router.delete("/events/deleteevent/:id", adminAuthorization, deleteEvent);
+router.post("/events/addevent", adminAuthorization, addEvent);
 // Staffs
-router.get("/staffs/getstaffs", authorization, getStaffs);
-router.get("/staffs/getstaff/:id", authorization, getStaff);
-router.put("/staffs/editstaff/:id", authorization, editStaff);
-router.delete("/staffs/deletestaff/:id", authorization, deleteStaff);
-router.post("/staffs/addstaff", authorization, addStaff);
+router.get("/staffs/getstaffs", adminAuthorization, getStaffs);
+router.get("/staffs/getstaff/:id", adminAuthorization, getStaff);
+router.put("/staffs/editstaff/:id", adminAuthorization, editStaff);
+router.delete("/staffs/deletestaff/:id", adminAuthorization, deleteStaff);
+router.post("/staffs/addstaff", adminAuthorization, addStaff);
+// App
+router.get("/staff/events/getevents", staffAuthorization, getEvents);
 
 export default router;

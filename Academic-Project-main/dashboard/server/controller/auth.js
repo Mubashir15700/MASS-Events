@@ -26,7 +26,7 @@ export const registerAdmin = async (req, res) => {
                     await newAdmin.save();
                     const savedAdmin = await Staff.findOne({ username: username });
                     // Generate JWT Token
-                    const token = jwt.sign({ userID: savedAdmin._id, userPWD: admin.password }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
+                    const token = jwt.sign({ userID: savedAdmin._id, userPWD: savedAdmin.password }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
                     res.status(201).send({ "status": "success", "message": "Registration Success", "token": token });
                 } catch (error) {
                     console.log(error);

@@ -28,6 +28,7 @@ export const editStaff = async (req, res) => {
             wage: staff.wage,
             role: staff.role,
             category: staff.category,
+            phone: staff.phone,
         };
         await Staff.updateOne({ _id: staff._id }, editStaff);
         res.status(201).send({ "status": "success", "message": "Editing Success" });
