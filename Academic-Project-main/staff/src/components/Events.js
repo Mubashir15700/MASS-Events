@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { StyleSheet, Text, View, Pressable, RefreshControl, ScrollView, Alert } from 'react-native';
-import { getEvents } from '../../services/api';
+import { getEvents, bookEvent } from "../services/api";
 
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -26,6 +26,12 @@ export default Events = () => {
     let response = await getEvents();
     setEvents(response.data);
     setLoading(false);
+    console.log(response.data);
+  }
+
+  const bookThisEvent = async (event, user) => {
+    const response = await bookEvent({event, user});
+    console.log(response.data.message);
   }
 
   return (
@@ -53,7 +59,7 @@ export default Events = () => {
                   <Text style={{ fontSize: 13, color: 'grey' }}>{event.eventname}</Text>
                   <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{event.location}</Text>
                 </View>
-                <Pressable style={styles.actionBtn} onPress={() => Alert.alert("Booking " + event.eventname)}>
+                <Pressable style={styles.actionBtn} onPress={() => bookThisEvent(event.eventname, "logged user")}>
                   <Text>Book</Text>
                 </Pressable>
               </View>

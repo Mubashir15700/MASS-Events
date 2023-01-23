@@ -36,7 +36,9 @@ const Register = () => {
     const register = async () => {
         let response = await registerAdmin(admin);
         console.log(response.data);
-        navigate("/");
+        if(response.data.status === "success") {
+            navigate("/");
+        }
     }
     
     return (
