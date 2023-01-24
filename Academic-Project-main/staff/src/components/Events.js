@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { StyleSheet, Text, View, Pressable, RefreshControl, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, View, Pressable, RefreshControl, ScrollView } from 'react-native';
 import { getEvents, bookEvent } from "../services/api";
 
 const wait = (timeout) => {
@@ -26,12 +26,11 @@ export default Events = () => {
     let response = await getEvents();
     setEvents(response.data);
     setLoading(false);
-    console.log(response.data);
   }
 
   const bookThisEvent = async (event, user) => {
     const response = await bookEvent({event, user});
-    console.log(response.data.message);
+    console.log(response);
   }
 
   return (
