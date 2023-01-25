@@ -13,13 +13,7 @@ export const loginStaff = async (username, password) => {
 
 export const getEvents = async () => {
     try {
-        const token = await AsyncStorage.getItem("jwt");
-        return await axios.get(`${URL}/staff/events/getevents`, {
-            headers: {
-                accept: 'application/json',
-                authorization: 'Bearer ' + token,
-            },
-        });
+        return await axios.get(`${URL}/staff/events/getevents`);
     } catch (error) {
         console.log(error);
     }
@@ -27,13 +21,7 @@ export const getEvents = async () => {
 
 export const bookEvent = async (data) => {
     try {
-        const token = await AsyncStorage.getItem("jwt");
-        return await axios.post(`${URL}/staff/events/bookevent`, data, {
-            headers: {
-                accept: 'application/json',
-                authorization: 'Bearer ' + token,
-            },
-        });
+        return await axios.post(`${URL}/staff/events/bookevent`, data);
     } catch (error) {
         console.log(error);
     }

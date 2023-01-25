@@ -1,7 +1,6 @@
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import { loginStaff } from "../services/api";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default Login = () => {
 
@@ -10,9 +9,7 @@ export default Login = () => {
 
   const submit = async () => {
     const response = await loginStaff(username, password);
-    if(response.data.status === "success") {
-      AsyncStorage.setItem("jwt", response.data.token);
-    }
+    console.log(response.data);
   }
 
   return (

@@ -3,6 +3,7 @@ import Staff from '../schema/staff-schema.js';
 
 const adminAuthorization = async (req, res, next) => {
   const token = req.cookies.jwt;
+  console.log("token from admin cookie: " + token);
   if (!token) {
     res.status(401).send({ "status": "failed", "message": "Unauthorized user, no token" });
   }

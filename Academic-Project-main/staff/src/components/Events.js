@@ -28,9 +28,9 @@ export default Events = () => {
     setLoading(false);
   }
 
-  const bookThisEvent = async (event, user) => {
-    const response = await bookEvent({event, user});
-    console.log(response);
+  const bookThisEvent = async (event) => {
+    const response = await bookEvent({event});
+    console.log(response.data);
   }
 
   return (
@@ -58,7 +58,7 @@ export default Events = () => {
                   <Text style={{ fontSize: 13, color: 'grey' }}>{event.eventname}</Text>
                   <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{event.location}</Text>
                 </View>
-                <Pressable style={styles.actionBtn} onPress={() => bookThisEvent(event.eventname, "logged user")}>
+                <Pressable style={styles.actionBtn} onPress={() => bookThisEvent(event.eventname)}>
                   <Text>Book</Text>
                 </Pressable>
               </View>
