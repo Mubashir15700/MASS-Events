@@ -7,6 +7,7 @@ export const bookEvent = async (req, res) => {
         const token = req.cookies.jwt;
         const decoded = await jwt.verify(token, process.env.JWT_SECRET_KEY);
         const currentUser = await Staff.findById(decoded.userID).select('-password');
+        console.log(currentUser);
 
         const datas = await req.body;
         await Event.findOneAndUpdate({
@@ -14,7 +15,7 @@ export const bookEvent = async (req, res) => {
         },
             {
                 $addToSet: {
-                    bookings: [{ userId: currentUser._id }],
+                    bookings: currentUser,
                 },
             }
         );

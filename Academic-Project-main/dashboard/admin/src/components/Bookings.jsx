@@ -30,7 +30,7 @@ const Bookings = () => {
     const getAllEvents = async () => {
         let response = await getEvents();
         setLoading(false);
-        setEvents(response.data);
+        response && setEvents(response.data);
     }
 
     const cancelEventBooking = async (eventname, userid) => {
@@ -53,28 +53,35 @@ const Bookings = () => {
                         <TableRow>
                             <TableCell>Loading...</TableCell>
                         </TableRow>) :
-                        events.map((event) => {
-                            return (
-                                <>
-                                    <TableRow key={event._id}>
-                                        <TableCell>{event.eventname}</TableCell>
-                                    </TableRow>
-                                    {
-                                        event.bookings.map((booking) => {
-                                            return (
-                                                <TableRow key={booking._id}>
-                                                    <TableCell> 
-                                                        {booking.userId} 
-                                                        <Button variant="contained" color="secondary" onClick={() => cancelEventBooking(event.eventname, booking.userId)}>Cancel</Button>
-                                                    </TableCell>
-                                                </TableRow>
-                                            );
-                                        })
-                                    }
-                                </>
-                            );
-                        }
-                    )
+                        events.length ?
+                            events.map((event) => {
+                                return (
+                                    <>
+                                        <TableRow key={event._id}>
+                                            <TableCell>{event.eventname}</TableCell>
+                                        </TableRow>
+                                        {
+                                            event.bookings.map((booking) => {
+                                                return (
+                                                    <TableRow key={booking._id}>
+                                                        <TableCell>
+                                                            {booking._id + " "}
+                                                            {booking.username + " "}
+                                                            {booking.phone}
+                                                            <Button variant="contained" color="secondary" onClick={() => cancelEventBooking(event.eventname, booking.userId)}>Cancel</Button>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                );
+                                            })
+                                        }
+                                    </>
+                                );
+                            }
+                            ) :
+                            (
+                                <TableRow>
+                                    <TableCell>No data found</TableCell>
+                                </TableRow>)
                 }
             </TableBody>
         </Container>

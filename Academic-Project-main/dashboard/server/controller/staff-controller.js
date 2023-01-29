@@ -32,7 +32,7 @@ export const editStaff = async (req, res) => {
             phone: staff.phone,
         };
         await Staff.updateOne({ _id: staff._id }, editStaff);
-        res.status(201).send({ "status": "success", "message": "Editing Success" });
+        res.status(201).send({ "status": "success", "message": "Edited staff successfully" });
     } catch (error) {
         console.log(error);
     }
@@ -41,7 +41,7 @@ export const editStaff = async (req, res) => {
 export const deleteStaff = async (req, res) => {
     try {
         await Staff.deleteOne({ _id: req.params.id });
-        res.status(200).send({ "status": "success", "message": "Deleting Success" });
+        res.status(200).send({ "status": "success", "message": "Deleted staff successfully" });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -53,10 +53,10 @@ export const cancelBooking = async (req, res) => {
             eventname: req.body.eventName,
         }, {
             $pull: {
-                bookings: [{ userId: req.body.userId }],
+                bookings: { userId: req.body.userId },
             },
         });
-        res.status(201).send({ "status": "success", "message": "Booking Cancelled" });
+        res.status(201).send({ "status": "success", "message": "Booking cancelled successfully" });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }

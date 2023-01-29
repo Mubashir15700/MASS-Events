@@ -16,6 +16,7 @@ const defaultValue = {
     time: '',
     eventname: '',
     location: '',
+    reqstaffs: '',
 }
 
 const EditEvent = () => {
@@ -30,7 +31,7 @@ const EditEvent = () => {
     }, []);
 
     const loadEventDetails = async () => {
-        const response = await getEvent(id);
+        let response = await getEvent(id);
         setEvent(response.data);
     }
 
@@ -39,15 +40,18 @@ const EditEvent = () => {
     }
 
     const editEventDetails = async () => {
-        await editEvent(id, event);
-        navigate("/");
+        let response = await editEvent(id, event);
+        if (response) {
+            console.log(response.data);
+            navigate("/");
+        }
     }
 
     return (
         <Container>
             <Typography variant='h4'>Edit Event</Typography>
             <FormControl>
-                <InputLabel>Date</InputLabel><br/><br/>
+                <InputLabel>Date</InputLabel><br /><br />
                 <Input type="date" onChange={(e) => handleChange(e)} name="date" value={event.date} />
             </FormControl>
             <FormControl>
@@ -61,6 +65,10 @@ const EditEvent = () => {
             <FormControl>
                 <InputLabel>Location</InputLabel>
                 <Input onChange={(e) => handleChange(e)} name="location" value={event.location} />
+            </FormControl>
+            <FormControl>
+                <InputLabel>Required Staffs</InputLabel>
+                <Input type="number" onChange={(e) => handleChange(e)} name="reqstaffs" value={event.reqstaffs} />
             </FormControl>
             <FormControl>
                 <Button variant='contained' onClick={() => editEventDetails()}>Edit Event</Button>

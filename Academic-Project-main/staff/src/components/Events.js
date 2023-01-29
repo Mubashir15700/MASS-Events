@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { StyleSheet, Text, View, Pressable, RefreshControl, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Pressable, RefreshControl, ScrollView, Alert } from 'react-native';
 import { getEvents, bookEvent } from "../services/api";
 
 const wait = (timeout) => {
@@ -29,8 +29,11 @@ export default Events = () => {
   }
 
   const bookThisEvent = async (event) => {
-    const response = await bookEvent({event});
-    console.log(response.data);
+    let response = await bookEvent({ event });
+    if (response.data.status == "success") {
+      Alert.alert("Booked this event");
+      console.log(response.data);
+    }
   }
 
   return (
@@ -57,15 +60,22 @@ export default Events = () => {
                 }}>
                   <Text style={{ fontSize: 13, color: 'grey' }}>{event.eventname}</Text>
                   <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{event.location}</Text>
+                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Avail Slots: {event.reqstaffs - event.bookings.length}</Text>
                 </View>
-                <Pressable style={styles.actionBtn} onPress={() => bookThisEvent(event.eventname)}>
-                  <Text>Book</Text>
-                </Pressable>
+                {
+                  (event.reqstaffs > event.bookings.length) ?
+                    <Pressable style={styles.actionBtn} onPress={() => bookThisEvent(event.eventname)}>
+                      <Text>Book</Text>
+                    </Pressable> :
+                    <Pressable style={styles.disabledActionBtn} disabled={true} onPress={() => bookThisEvent(event.eventname)}>
+                      <Text>Book</Text>
+                    </Pressable>
+                }
               </View>
             );
-          }) :
-        (
-          <Text>No data found</Text>)
+          })
+          :
+          (<Text>No data found</Text>)
       }
     </ScrollView>
   );
@@ -93,6 +103,16 @@ const styles = StyleSheet.create({
     width: 80,
     height: 30,
     backgroundColor: 'pink',
+    borderRadius: 30,
+    paddingHorizontal: 3,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  disabledActionBtn: {
+    width: 80,
+    height: 30,
+    backgroundColor: 'grey',
     borderRadius: 30,
     paddingHorizontal: 3,
     flexDirection: 'row',

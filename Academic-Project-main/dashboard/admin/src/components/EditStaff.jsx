@@ -33,7 +33,7 @@ const EditStaff = () => {
     }, []);
 
     const loadStaffDetails = async () => {
-        const response = await getStaff(id);
+        let response = await getStaff(id);
         setStaff(response.data);
     }
 
@@ -42,9 +42,11 @@ const EditStaff = () => {
     }
 
     const editStaffDetails = async () => {
-        const response = await editStaff(id, staff);
-        console.log(response.data);
-        navigate("/allstaffs");
+        let response = await editStaff(id, staff);
+        if (response) {
+            console.log(response.data);
+            navigate("/allstaffs");
+        }
     }
 
     return (

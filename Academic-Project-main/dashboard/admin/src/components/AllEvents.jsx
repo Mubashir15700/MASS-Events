@@ -31,7 +31,7 @@ const AllEvents = () => {
     const getAllEvents = async () => {
         let response = await getEvents();
         setLoading(false);
-        setEvents(response.data);
+        response && setEvents(response.data);
     }
 
     const deleteEventDetails = async (id) => {
@@ -48,15 +48,17 @@ const AllEvents = () => {
                     <TableCell>Time</TableCell>
                     <TableCell>Event Name</TableCell>
                     <TableCell>Location</TableCell>
+                    <TableCell>Booked/Required Staffs</TableCell>
                     <TableCell>Actions</TableCell>
                 </THead>
             </TableHead>
             <TableBody>
-                {
-                    loading ? (
-                        <TableRow>
-                            <TableCell>Loading...</TableCell>
-                        </TableRow>) :
+                {loading ? (
+                    <TableRow>
+                        <TableCell>Loading...</TableCell>
+                    </TableRow>
+                ) :
+                    events.length ?
                         events.map((event) => {
                             return (
                                 <TableRow key={event._id}>
@@ -64,14 +66,18 @@ const AllEvents = () => {
                                     <TableCell>{event.time}</TableCell>
                                     <TableCell>{event.eventname}</TableCell>
                                     <TableCell>{event.location}</TableCell>
+                                    <TableCell>{event.bookings.length}/{event.reqstaffs}</TableCell>
                                     <TableCell>
                                         <Button variant="contained" style={{ marginRight: "10px" }} component={Link} to={`/editevent/${event._id}`}>Edit</Button>
                                         <Button variant="contained" color="secondary" onClick={() => deleteEventDetails(event._id)}>Delete</Button>
                                     </TableCell>
                                 </TableRow>
                             );
-                        }
-                    )
+                        }) :
+                        (
+                            <TableRow>
+                                <TableCell>No data found</TableCell>
+                            </TableRow>)
                 }
             </TableBody>
         </Container>

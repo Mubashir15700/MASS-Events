@@ -19,9 +19,11 @@ const eventsSchema = mongoose.Schema({
         type: String,
         maxLength: 25,
     },
-    bookings: [{
-        userId: String
-    }],
+    reqstaffs: {
+        required: true,
+        type: Number,
+    },
+    bookings: [''],
 });
 
 const event = mongoose.model("event", eventsSchema);

@@ -16,6 +16,7 @@ const defaultValue = {
     time: '',
     eventname: '',
     location: '',
+    reqstaffs: '',
 }
 
 const AddEvent = () => {
@@ -30,8 +31,10 @@ const AddEvent = () => {
 
     const addEventDetails = async () => {
         let response = await addEvent(event);
-        console.log(response.data);
-        navigate("/");
+            if (response) {
+            console.log(response.data);
+            navigate("/");
+        }
     }
 
     return (
@@ -52,6 +55,10 @@ const AddEvent = () => {
             <FormControl>
                 <InputLabel>Location</InputLabel>
                 <Input onChange={(e) => handleChange(e)} name="location" />
+            </FormControl>
+            <FormControl>
+                <InputLabel>Required Staffs</InputLabel>
+                <Input type="number" onChange={(e) => handleChange(e)} name="reqstaffs" />
             </FormControl>
             <FormControl>
                 <Button variant='contained' onClick={() => addEventDetails()}>Add Event</Button>

@@ -26,7 +26,7 @@ export const registerAdmin = async (req, res) => {
                     await newAdmin.save();
                     const savedAdmin = await Staff.findOne({ username: username });
                     // Generate JWT Token
-                    const token = jwt.sign({ userID: savedAdmin._id, userPWD: savedAdmin.password }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
+                    const token = jwt.sign({ userID: savedAdmin._id, userPWD: savedAdmin.password }, process.env.JWT_SECRET_KEY, { expiresIn: '7d' });
                     res.status(201).send({ "status": "success", "message": "Registration Success", "token": token });
                 } catch (error) {
                     console.log(error);
@@ -50,7 +50,7 @@ export const loginAdmin = async (req, res) => {
                 const isMatch = await bcrypt.compare(password, admin.password);
                 if ((admin.username === username) && isMatch) {
                     // Generate JWT Token
-                    const token = jwt.sign({ userID: admin._id, userPWD: admin.password }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
+                    const token = jwt.sign({ userID: admin._id, userPWD: admin.password }, process.env.JWT_SECRET_KEY, { expiresIn: '7d' });
                     // Save token to cookie
                     res.cookie("jwt", token, {
                         maxAge: 60000 * 60 * 24 * 7,
@@ -95,7 +95,7 @@ export const addStaff = async (req, res) => {
                     await newStaff.save();
                     const savedStaff = await Staff.findOne({ username: username });
                     // Generate JWT Token
-                    const token = jwt.sign({ userID: savedStaff._id, userPWD: savedStaff.password }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
+                    const token = jwt.sign({ userID: savedStaff._id, userPWD: savedStaff.password }, process.env.JWT_SECRET_KEY, { expiresIn: '7d' });
                     res.status(201).send({ "status": "success", "message": "Registration Success", "token": token });
                 } catch (error) {
                     res.send({ "status": "failed", "message": "Unable to Register" });
@@ -119,7 +119,7 @@ export const loginStaff = async (req, res) => {
                 const isMatch = await bcrypt.compare(password, staff.password);
                 if ((staff.username === username) && isMatch) {
                     // Generate JWT Token
-                    const token = jwt.sign({ userID: staff._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
+                    const token = jwt.sign({ userID: staff._id }, process.env.JWT_SECRET_KEY, { expiresIn: '7d' });
                     // Save token to cookie
                     res.cookie("jwt", token, {
                         maxAge: 60000 * 60 * 24 * 7,
