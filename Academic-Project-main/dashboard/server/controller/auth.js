@@ -120,7 +120,6 @@ export const loginStaff = async (req, res) => {
                 if ((staff.username === username) && isMatch) {
                     // Generate JWT Token
                     const token = jwt.sign({ userID: staff._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
-                    console.log("generated token: " + token);
                     // Save token to cookie
                     res.cookie("jwt", token, {
                         maxAge: 60000 * 60 * 24 * 7,

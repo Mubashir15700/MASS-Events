@@ -1,4 +1,5 @@
 import Staff from "../schema/staff-schema.js";
+import Event from "../schema/event-schema.js";
 
 export const getStaffs = async (req, res) => {
     try {
@@ -41,6 +42,21 @@ export const deleteStaff = async (req, res) => {
     try {
         await Staff.deleteOne({ _id: req.params.id });
         res.status(200).send({ "status": "success", "message": "Deleting Success" });
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
+export const cancelBooking = async (req, res) => {
+    try {
+        await Event.findOneAndUpdate({
+            eventname: req.body.eventName,
+        }, {
+            $pull: {
+                bookings: [{ userId: req.body.userId }],
+            },
+        });
+        res.status(201).send({ "status": "success", "message": "Booking Cancelled" });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }

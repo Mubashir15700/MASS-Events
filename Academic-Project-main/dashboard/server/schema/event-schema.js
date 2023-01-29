@@ -19,6 +19,9 @@ const eventsSchema = mongoose.Schema({
         type: String,
         maxLength: 25,
     },
+    bookings: [{
+        userId: String
+    }],
 });
 
 const event = mongoose.model("event", eventsSchema);
