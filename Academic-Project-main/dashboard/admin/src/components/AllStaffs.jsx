@@ -54,32 +54,45 @@ const AllStaffs = () => {
                 </THead>
             </TableHead>
             <TableBody>
-                {
-                    loading ? (
-                        <TableRow>
-                            <TableCell>Loading...</TableCell>
-                        </TableRow>) :
-                        staffs.length ?
-                            staffs.map((staff) => {
-                                return (
-                                    <TableRow key={staff._id}>
-                                        <TableCell>{staff.name}</TableCell>
-                                        <TableCell>{staff.username}</TableCell>
-                                        <TableCell>{staff.dob}</TableCell>
-                                        <TableCell>{staff.wage}</TableCell>
-                                        <TableCell>{staff.category}</TableCell>
-                                        <TableCell>{staff.phone}</TableCell>
-                                        <TableCell>
-                                            <Button variant="contained" style={{ marginRight: "10px" }} component={Link} to={`/editstaff/${staff._id}`}>Edit</Button>
-                                            <Button variant="contained" color="secondary" onClick={() => deleteStaffDetails(staff._id)}>Delete</Button>
-                                        </TableCell>
-                                    </TableRow>
-                                );
-                            }) :
-                            (
-                                <TableRow>
-                                    <TableCell>No data found</TableCell>
-                                </TableRow>)
+                {loading ? 
+                    <TableRow>
+                        <TableCell>Loading...</TableCell>
+                    </TableRow> 
+                :
+                staffs.length ?
+                    staffs.map((staff) => {
+                        return (
+                            <TableRow key={staff._id}>
+                                <TableCell>{staff.name}</TableCell>
+                                <TableCell>{staff.username}</TableCell>
+                                <TableCell>{staff.dob}</TableCell>
+                                <TableCell>{staff.wage}</TableCell>
+                                <TableCell>{staff.category}</TableCell>
+                                <TableCell>{staff.phone}</TableCell>
+                                <TableCell>
+                                    <Button 
+                                    variant="contained" 
+                                    style={{ marginRight: "10px" }} 
+                                    component={Link} 
+                                    to={`/editstaff/${staff._id}`}
+                                    >
+                                        Edit
+                                    </Button>
+                                    <Button 
+                                    variant="contained" 
+                                    color="secondary" 
+                                    onClick={() => deleteStaffDetails(staff._id)}
+                                    >
+                                        Delete
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        );
+                    }) 
+                    :
+                    <TableRow>
+                        <TableCell>No data found</TableCell>
+                    </TableRow>
                 }
             </TableBody>
         </Container>

@@ -43,8 +43,8 @@ const Register = () => {
     
     return (
         <Container>
-        <Typography variant='h5'>Register</Typography>
-        <FormControl>
+            <Typography variant='h5'>Register</Typography>
+            <FormControl>
                 <InputLabel>Name:</InputLabel>
                 <Input onChange={(e) => handleChange(e)} name="name" />
             </FormControl>
@@ -64,10 +64,10 @@ const Register = () => {
                 <InputLabel>Phone:</InputLabel>
                 <Input type="number" onChange={(e) => handleChange(e)} name="phone" />
             </FormControl>
-        <FormControl>
-            <Button variant="contained" onClick={() => register()}>Register</Button>
-        </FormControl>
-    </Container>
+            <FormControl>
+                <Button variant="contained" onClick={() => register()}>Register</Button>
+            </FormControl>
+        </Container>
     );
 }
 

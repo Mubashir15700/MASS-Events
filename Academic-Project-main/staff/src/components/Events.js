@@ -31,7 +31,8 @@ export default Events = () => {
   const bookThisEvent = async (event) => {
     let response = await bookEvent({ event });
     if (response.data.status == "success") {
-      Alert.alert("Booked this event");
+      Alert.alert(response.data.message);
+      getAllEvents();
       console.log(response.data);
     }
   }
@@ -44,38 +45,40 @@ export default Events = () => {
           onRefresh={onRefresh}
         />
       }>
-      {loading ? (<Text>Loading...</Text>) :
-        events.length ?
-          events.map((event, index) => {
-            return (
-              <View key={index} style={styles.row}>
-                <View>
-                  <Text>{event.date}</Text>
-                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{event.time}</Text>
-                </View>
-                <View style={{
-                  marginLeft: 10,
-                  paddingVertical: 20,
-                  flex: 1,
-                }}>
-                  <Text style={{ fontSize: 13, color: 'grey' }}>{event.eventname}</Text>
-                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{event.location}</Text>
-                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Avail Slots: {event.reqstaffs - event.bookings.length}</Text>
-                </View>
-                {
-                  (event.reqstaffs > event.bookings.length) ?
-                    <Pressable style={styles.actionBtn} onPress={() => bookThisEvent(event.eventname)}>
-                      <Text>Book</Text>
-                    </Pressable> :
-                    <Pressable style={styles.disabledActionBtn} disabled={true} onPress={() => bookThisEvent(event.eventname)}>
-                      <Text>Book</Text>
-                    </Pressable>
-                }
+      {loading ? 
+        (<Text>Loading...</Text>) 
+      :
+      events.length ?
+        events.map((event, index) => {
+          return (
+            <View key={index} style={styles.row}>
+              <View>
+                <Text>{event.date}</Text>
+                <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{event.time}</Text>
               </View>
-            );
-          })
-          :
-          (<Text>No data found</Text>)
+              <View style={{
+                marginLeft: 10,
+                paddingVertical: 20,
+                flex: 1,
+              }}>
+                <Text style={{ fontSize: 13, color: 'grey' }}>{event.eventname}</Text>
+                <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{event.location}</Text>
+                <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Avail Slots: {event.reqstaffs - event.bookings.length}</Text>
+              </View>
+              {(event.reqstaffs > event.bookings.length) ?
+                <Pressable style={styles.actionBtn} onPress={() => bookThisEvent(event.eventname)}>
+                  <Text>Book</Text>
+                </Pressable> 
+                :
+                <Pressable style={styles.disabledActionBtn} disabled={true} onPress={() => bookThisEvent(event.eventname)}>
+                  <Text>Book</Text>
+                </Pressable>
+              }
+            </View>
+          );
+        })
+        :
+        (<Text>No data found</Text>)
       }
     </ScrollView>
   );

@@ -10,13 +10,12 @@ export default App = () => {
 
   return (
     <>
-      {
-        auth ?
-          <NavigationContainer>
-            <Combined />
-          </NavigationContainer>
+      {auth ?
+        <NavigationContainer>
+          <Combined />
+        </NavigationContainer>
         :
-          <Login />
+        <Login />
       }
     </>
   );

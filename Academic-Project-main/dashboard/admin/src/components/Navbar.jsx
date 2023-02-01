@@ -17,7 +17,13 @@ const Navbar = () => {
   return (
     <Header position="static" className="app">
       <Toolbar className="nav">
-        <Tabs to="/" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>All Events</Tabs>
+        <Tabs to="/" 
+          className={({ isActive }) => 
+            isActive ? 'active' : 'inactive'
+          }
+        >
+          All Events
+        </Tabs>
         <Tabs to="/addevent">Add Event</Tabs>
         <Tabs to="/bookings">Bookings</Tabs>
         <Tabs to="/allstaffs">All Staffs</Tabs>

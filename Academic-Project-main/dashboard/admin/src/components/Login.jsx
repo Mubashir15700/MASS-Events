@@ -35,21 +35,21 @@ const Login = () => {
 
     return (
         <Container>
-        <Typography variant='h5'>Log In</Typography>
-        <FormControl>
-            <InputLabel>User Name:</InputLabel>
-            <Input onChange={(e) => handleChange(e)} name="username" />
-        </FormControl>
-        <FormControl>
-            <InputLabel>password:</InputLabel>
-            <Input type="password" onChange={(e) => handleChange(e)} name="password" />
-        </FormControl>
-        <FormControl>
-            <Button variant="contained" style={{ marginBottom: "5px"}} onClick={() => login()}>Login</Button>
-            <Button variant="contained" color="secondary" component={Link} to={"/register"}>Register</Button>
-        </FormControl>
-    </Container>
-    )
+            <Typography variant='h5'>Log In</Typography>
+            <FormControl>
+                <InputLabel>User Name:</InputLabel>
+                <Input onChange={(e) => handleChange(e)} name="username" />
+            </FormControl>
+            <FormControl>
+                <InputLabel>password:</InputLabel>
+                <Input type="password" onChange={(e) => handleChange(e)} name="password" />
+            </FormControl>
+            <FormControl>
+                <Button variant="contained" style={{ marginBottom: "5px"}} onClick={() => login()}>Login</Button>
+                <Button variant="contained" color="secondary" component={Link} to={"/register"}>Register</Button>
+            </FormControl>
+        </Container>
+    );
 }
 
 export default Login;

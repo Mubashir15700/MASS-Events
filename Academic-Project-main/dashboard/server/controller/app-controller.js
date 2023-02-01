@@ -19,7 +19,7 @@ export const bookEvent = async (req, res) => {
                 },
             }
         );
-        res.status(201).send({ "status": "success", "message": "Booked event" });
+        res.status(201).send({ "status": "success", "message": "Booked event successfully" });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
