@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useState } from 'react';
 import { loginStaff } from "../services/api";
 
@@ -9,7 +9,8 @@ export default Login = () => {
 
   const submit = async () => {
     const response = await loginStaff(username, password);
-    console.log(response.data);
+    Alert.alert(response.data.message);
+    console.log("token: " + response.data.token);
   }
 
   return (

@@ -18,6 +18,14 @@ export const getEvents = async () => {
     }
 }
 
+export const getCurrStaff = async () => {
+    try {
+        return await axios.get(`${URL}/staff/currentstaff`);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const bookEvent = async (data) => {
     try {
         return await axios.post(`${URL}/staff/events/bookevent`, data);
@@ -29,6 +37,18 @@ export const bookEvent = async (data) => {
 export const markAttendance = async (data) => {
     try {
         return await axios.post(`${URL}/staff/events/markattendance`, data);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const cancelAttendance = async (event, staff) => {
+    try {
+        return await axios.delete(`${URL}/staff/events/cancelattendance`, { data: { 
+            "eventName": event, 
+            "Staff": staff 
+        } });
+        
     } catch (error) {
         console.log(error);
     }

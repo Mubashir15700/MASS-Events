@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { StyleSheet, Text, View, Pressable, RefreshControl, ScrollView, Alert } from 'react-native';
 import DateIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/Fontisto';
-import { getEvents, markAttendance } from "../services/api";
+import { getEvents, markAttendance, cancelAttendance } from "../services/api";
 
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -26,13 +26,19 @@ export default Attendance = () => {
 
   const getAllEvents = async () => {
     let response = await getEvents();
-    setEvents(response.data);
+    response && setEvents(response.data);
     setLoading(false);
   }
 
   const handleAttendance = async (event, staff) => {
     let response = await markAttendance({ event, staff });
-    Alert.alert(response.data.message);
+    response && Alert.alert(response.data.message);
+    getAllEvents();
+  }
+
+  const removeAttendance = async (event, staff) => {
+    let response = await cancelAttendance({ event, staff });
+    response && Alert.alert(response.data.message);
     getAllEvents();
   }
 
@@ -73,7 +79,7 @@ export default Attendance = () => {
                         </View>
                         <View>
                           {event.attendance.some((staff) => staff.username === booking.username) ? 
-                          <Pressable style={styles.actionBtn} onPress={() => handleAttendance(event.eventname, booking.username)}>
+                          <Pressable style={styles.actionBtn} onPress={() => removeAttendance(event.eventname, booking.username)}>
                             <Icon name={'checkbox-active'} size={20} color={'pink'} />
                           </Pressable> :
                           <Pressable style={styles.actionBtn} onPress={() => handleAttendance(event.eventname, booking.username)}>

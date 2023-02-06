@@ -53,15 +53,9 @@ export default Payments = () => {
                   <Text>{event.eventname}</Text>
                 </View>
               </View>
-              {event.bookings.length ?
                 <View style={{ padding: 10 }}>
                   <Text>Payments</Text>
                 </View>
-                :
-                <View style={{ padding: 10 }}>
-                  <Text>No bookings yet</Text>
-                </View>
-              }
             </View>
           );
         })

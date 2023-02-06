@@ -27,13 +27,13 @@ export const registerAdmin = async (req, res) => {
                     const savedAdmin = await Staff.findOne({ username: username });
                     // Generate JWT Token
                     const token = jwt.sign({ userID: savedAdmin._id, userPWD: savedAdmin.password }, process.env.JWT_SECRET_KEY, { expiresIn: '7d' });
-                    res.status(201).send({ "status": "success", "message": "Registration Success", "token": token });
+                    res.status(201).send({ "status": "success", "message": "Registered admin successfully", "token": token });
                 } catch (error) {
                     console.log(error);
-                    res.send({ "status": "failed", "message": "Unable to Register" });
+                    res.send({ "status": "failed", "message": "Unable to register" });
                 }
             } else {
-                res.send({ "status": "failed", "message": "Password and Confirm Password doesn't match" });
+                res.send({ "status": "failed", "message": "Password and confirm password doesn't match" });
             }
         } else {
             res.send({ "status": "failed", "message": "All fields are required" });
@@ -56,18 +56,18 @@ export const loginAdmin = async (req, res) => {
                         maxAge: 60000 * 60 * 24 * 7,
                         httpOnly: true
                     });
-                    res.send({ "status": "success", "message": "Login Success", "token": token });
+                    res.send({ "status": "success", "message": "Logged in successfully", "token": token });
                 } else {
-                    res.send({ "status": "failed", "message": "Username or Password is not Valid" });
+                    res.send({ "status": "failed", "message": "Username or password is not valid" });
                 }
             } else {
-                res.send({ "status": "failed", "message": "You are not a Registered Admin" });
+                res.send({ "status": "failed", "message": "You are not a registered admin" });
             }
         } else {
-            res.send({ "status": "failed", "message": "All Fields are Required" });
+            res.send({ "status": "failed", "message": "All fields are required" });
         }
     } catch (error) {
-        res.send({ "status": "failed", "message": "Unable to Login" });
+        res.send({ "status": "failed", "message": "Unable to login" });
     }
 }
 
@@ -96,12 +96,12 @@ export const addStaff = async (req, res) => {
                     const savedStaff = await Staff.findOne({ username: username });
                     // Generate JWT Token
                     const token = jwt.sign({ userID: savedStaff._id, userPWD: savedStaff.password }, process.env.JWT_SECRET_KEY, { expiresIn: '7d' });
-                    res.status(201).send({ "status": "success", "message": "Registration Success", "token": token });
+                    res.status(201).send({ "status": "success", "message": "Registered staff successfully", "token": token });
                 } catch (error) {
-                    res.send({ "status": "failed", "message": "Unable to Register" });
+                    res.send({ "status": "failed", "message": "Unable to register" });
                 }
             } else {
-                res.send({ "status": "failed", "message": "Password and Confirm Password doesn't match" });
+                res.send({ "status": "failed", "message": "Password and confirm password doesn't match" });
             }
         } else {
             res.send({ "status": "failed", "message": "All fields are required" });
@@ -125,17 +125,17 @@ export const loginStaff = async (req, res) => {
                         maxAge: 60000 * 60 * 24 * 7,
                         httpOnly: true
                     });
-                    res.send({ "status": "success", "message": "Login Success", "token": token });
+                    res.send({ "status": "success", "message": "Logged in successfully", "token": token });
                 } else {
-                    res.send({ "status": "failed", "message": "Username or Password is not Valid" });
+                    res.send({ "status": "failed", "message": "Username or password is not valid" });
                 }
             } else {
-                res.send({ "status": "failed", "message": "You are not a Registered Staff" });
+                res.send({ "status": "failed", "message": "You are not a registered staff" });
             }
         } else {
-            res.send({ "status": "failed", "message": "All Fields are Required" });
+            res.send({ "status": "failed", "message": "All fields are required" });
         }
     } catch (error) {
-        res.send({ "status": "failed", "message": "Unable to Login" });
+        res.send({ "status": "failed", "message": "Unable to login" });
     }
 }

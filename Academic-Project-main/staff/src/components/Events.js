@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { StyleSheet, Text, View, Pressable, RefreshControl, ScrollView, Alert } from 'react-native';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { getEvents, bookEvent } from "../services/api";
+import { getEvents, getCurrStaff, bookEvent } from "../services/api";
 
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -10,6 +10,7 @@ const wait = (timeout) => {
 export default Events = () => {
 
   const [events, setEvents] = useState([]);
+  const [staff, setStaff] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -21,12 +22,18 @@ export default Events = () => {
 
   useEffect(() => {
     getAllEvents();
+    getCurrentStaff();
   }, []);
 
   const getAllEvents = async () => {
     let response = await getEvents();
-    setEvents(response.data);
+    response && setEvents(response.data);
     setLoading(false);
+  }
+
+  const getCurrentStaff = async () => {
+    let response = await getCurrStaff();
+    response && setStaff(response.data.currentStaff);
   }
 
   const bookThisEvent = async (event) => {
@@ -66,14 +73,14 @@ export default Events = () => {
                 <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{event.location}</Text>
                 <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Avail Slots: {event.reqstaffs - event.bookings.length}</Text>
               </View>
-              {(event.reqstaffs > event.bookings.length) ?
-                <Pressable style={styles.actionBtn} onPress={() => bookThisEvent(event.eventname)}>
-                  <Text>Book</Text>
-                </Pressable> 
-                :
+              {event.bookings.some((staff) => staff.username === staff.username) || (event.reqstaffs < event.bookings.length) ?
                 <Pressable style={styles.disabledActionBtn} disabled={true}>
                   <Text>Book</Text>
                 </Pressable>
+                :
+                <Pressable style={styles.actionBtn} onPress={() => bookThisEvent(event.eventname)}>
+                  <Text>Book</Text>
+                </Pressable> 
               }
             </View>
           );
