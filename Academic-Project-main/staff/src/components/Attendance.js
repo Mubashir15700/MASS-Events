@@ -57,37 +57,42 @@ export default Attendance = () => {
                   <Text>{event.time}</Text>
                 </View>
                 <View>
-                  <Text>{event.eventname}</Text>
+                  <Text style={{ fontWeight: 'bold' }}>{event.eventname}</Text>
                 </View>
               </View>
-                {event.bookings.map((booking, index) => {
-                  return (
-                    <View key={index} style={{ alignItems: 'center', flexDirection: 'row',  padding: 10 }}>
-                      <View>
-                        <Icon name={'male'} size={20} color={'black'} />
+                {event.bookings.length ? 
+                  event.bookings.map((booking, index) => {
+                    return (
+                      <View key={index} style={{ alignItems: 'center', flexDirection: 'row',  padding: 10 }}>
+                        <View>
+                          <Icon name={'male'} size={20} color={'black'} />
+                        </View>
+                        <View style={{ marginLeft: 10, width: '70%' }}>
+                          <Text>{booking.username}</Text>
+                          <Text><Icon name={'phone'} size={12} color={'black'} /> {booking.phone}</Text>
+                        </View>
+                        <View>
+                          {event.attendance.some((staff) => staff.username === booking.username) ? 
+                          <Pressable style={styles.actionBtn} onPress={() => handleAttendance(event.eventname, booking.username)}>
+                            <Icon name={'checkbox-active'} size={20} color={'pink'} />
+                          </Pressable> :
+                          <Pressable style={styles.actionBtn} onPress={() => handleAttendance(event.eventname, booking.username)}>
+                            <Icon name={'checkbox-passive'} size={20} color={'gray'} />
+                          </Pressable>}
+                        </View>
                       </View>
-                      <View style={{ marginLeft: 10, width: '70%' }}>
-                        <Text>{booking.username}</Text>
-                        <Text><Icon name={'phone'} size={12} color={'black'} /> {booking.phone}</Text>
-                      </View>
-                      <View>
-                        {event.attendance.some((staff) => staff.username === booking.username) ? 
-                        <Pressable style={styles.actionBtn} onPress={() => handleAttendance(event.eventname, booking.username)}>
-                          <Icon name={'checkbox-active'} size={20} color={'pink'} />
-                        </Pressable> :
-                         <Pressable style={styles.actionBtn} onPress={() => handleAttendance(event.eventname, booking.username)}>
-                         <Icon name={'checkbox-passive'} size={20} color={'gray'} />
-                       </Pressable>}
-                      </View>
-                    </View>
-                  );
-                })}
-            </View>
-          );
-        })
-        :
-        <Text>No data found</Text>
-      }
+                    );
+                  }) :
+                  <View style={{ padding: 10 }}>
+                    <Text>No bookings yet</Text>
+                  </View>
+                }
+              </View>
+            );
+          })
+          :
+          <Text>No data found</Text>
+        }
     </ScrollView>
   );
 }

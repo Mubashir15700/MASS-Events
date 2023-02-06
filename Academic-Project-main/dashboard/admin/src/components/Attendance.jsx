@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Table, TableHead, TableBody, TableRow, TableCell, styled, Button } from "@mui/material";
-import { getEvents, cancelBooking } from "../services/api.js";
+import { Link } from "react-router-dom";
+import { getEvents } from "../services/api.js";
 
 const Container = styled(Table)`
     width: 95%;
@@ -18,7 +19,7 @@ const THead = styled(TableRow)`
     }
 `
 
-const Bookings = () => {
+const Attendance = () => {
 
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -33,12 +34,6 @@ const Bookings = () => {
         response && setEvents(response.data);
     }
 
-    const cancelEventBooking = async (eventname, staff) => {
-        let response = await cancelBooking(eventname, staff);
-        getAllEvents();
-        console.log(response.data);
-    }
-
     return (
         <Container>
             <TableHead>
@@ -49,6 +44,7 @@ const Bookings = () => {
                     <TableCell>User Name</TableCell>
                     <TableCell>Category</TableCell>
                     <TableCell>Phone</TableCell>
+                    <TableCell>Payable</TableCell>
                     <TableCell>Actions</TableCell>
                 </THead>
             </TableHead>
@@ -66,33 +62,40 @@ const Bookings = () => {
                                     <TableCell style={{ fontWeight: 'bold' }}>{event.date} {event.time}</TableCell>
                                     <TableCell style={{ fontWeight: 'bold' }}>{event.eventname}</TableCell>
                                 </TableRow>
-                                {event.bookings.length ?
-                                    event.bookings.map((booking) => {
+                                {event.attendance.length ?
+                                    event.attendance.map((attendance) => {
                                         return (
-                                            <TableRow key={booking._id}>
+                                            <TableRow key={attendance._id}>
                                                 <TableCell></TableCell>
                                                 <TableCell></TableCell>
                                                 <TableCell>
-                                                    {booking._id}
+                                                    {attendance._id}
                                                 </TableCell>
                                                 <TableCell>
-                                                    {booking.username}
+                                                    {attendance.username}
                                                 </TableCell>
                                                 <TableCell>
-                                                    {booking.category}
+                                                    {attendance.category}
                                                 </TableCell>
                                                 <TableCell>
-                                                    {booking.phone}
+                                                    {attendance.phone}
                                                 </TableCell>
                                                 <TableCell>
+                                                    {attendance.wage}
+                                                </TableCell>
+                                                <TableCell>
+                                                <Button 
+                                                    variant="contained" 
+                                                    style={{ marginRight: "10px" }} 
+                                                    >
+                                                        Pay
+                                                    </Button>
                                                     <Button 
                                                     variant="contained" 
                                                     color="secondary" 
-                                                    onClick={() => 
-                                                        cancelEventBooking(event.eventname, booking.username)
-                                                    }
+                                                    component={Link} to={"/payments"}
                                                     >
-                                                        Cancel
+                                                        Payments
                                                     </Button>
                                                 </TableCell>
                                             </TableRow>
@@ -102,7 +105,7 @@ const Bookings = () => {
                                 <TableRow>
                                     <TableCell></TableCell>
                                     <TableCell></TableCell>
-                                    <TableCell>No Bookings Yet!</TableCell>
+                                    <TableCell>No data found</TableCell>
                                 </TableRow>
                                 }
                             </>
@@ -118,4 +121,4 @@ const Bookings = () => {
     );
 }
 
-export default Bookings;
+export default Attendance;

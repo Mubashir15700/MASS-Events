@@ -26,6 +26,8 @@ const Navbar = () => {
         </Tabs>
         <Tabs to="/addevent">Add Event</Tabs>
         <Tabs to="/bookings">Bookings</Tabs>
+        <Tabs to="/attendance">Attendance</Tabs>
+        <Tabs to="/payments">Payments</Tabs>
         <Tabs to="/allstaffs">All Staffs</Tabs>
         <Tabs to="/addstaff">Add Staff</Tabs>
       </Toolbar>

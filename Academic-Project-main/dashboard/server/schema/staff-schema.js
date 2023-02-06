@@ -12,16 +12,17 @@ const staffsSchema = mongoose.Schema({
         unique: true,
         maxLength: 25,
     },
-    dob:{
+    dob: {
         required: true,
         type: String,
     },
     wage: {
         required: true,
         type: Number,
-    },role: {
+    },
+    role: {
         required: true,
-        type: String, 
+        type: String,
     },
     category: {
         required: true,

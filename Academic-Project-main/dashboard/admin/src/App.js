@@ -9,6 +9,8 @@ import AllStaffs from "./components/AllStaffs";
 import AddStaff from "./components/AddStaff";
 import EditStaff from "./components/EditStaff";
 import Bookings from "./components/Bookings";
+import Attendance from "./components/Attendance";
+import Payments from './components/Payments';
 import Login from "./components/Login";
 import Register from "./components/Register";
 
@@ -25,6 +27,8 @@ function App() {
             <Route path="/" element={<AllEvents />} />
             <Route path="/addevent" element={<AddEvent />} />
             <Route path="/bookings" element={<Bookings />} />
+            <Route path="/attendance" element={<Attendance />} />
+            <Route path="/payments" element={<Payments />} />
             <Route path="/editevent/:id" element={<EditEvent />} />
             <Route path="/allstaffs" element={<AllStaffs />} />
             <Route path="/addstaff" element={<AddStaff />} />

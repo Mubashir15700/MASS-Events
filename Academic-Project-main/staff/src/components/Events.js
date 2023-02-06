@@ -46,7 +46,7 @@ export default Events = () => {
         />
       }>
       {loading ? 
-        (<Text>Loading...</Text>) 
+        <Text>Loading...</Text> 
       :
       events.length ?
         events.map((event, index) => {
@@ -79,7 +79,7 @@ export default Events = () => {
           );
         })
         :
-        (<Text>No data found</Text>)
+        <Text>No data found</Text>
       }
     </ScrollView>
   );
