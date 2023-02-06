@@ -2,7 +2,7 @@ import express from "express";
 import { registerAdmin, loginAdmin, addStaff, loginStaff } from "../controller/auth.js";
 import { getEvents, addEvent, getEvent, editEvent, deleteEvent } from "../controller/event-controller.js";
 import { getStaffs, getStaff, editStaff, deleteStaff, cancelBooking } from "../controller/staff-controller.js";
-import { bookEvent } from "../controller/app-controller.js";
+import { bookEvent, markAttendance } from "../controller/app-controller.js";
 import adminAuthorization from "../middlewares/admin-middleware.js";
 import staffAuthorization from "../middlewares/staff-middleware.js";
 
@@ -30,5 +30,6 @@ router.delete("/staffs/cancelbooking", adminAuthorization, cancelBooking);
 // App
 router.get("/staff/events/getevents", staffAuthorization, getEvents);
 router.post("/staff/events/bookevent", staffAuthorization, bookEvent);
+router.post("/staff/events/markattendance", staffAuthorization, markAttendance);
 
 export default router;

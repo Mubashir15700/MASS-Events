@@ -24,6 +24,7 @@ const eventsSchema = mongoose.Schema({
         type: Number,
     },
     bookings: [''],
+    attendance: [''],
 });
 
 const event = mongoose.model("event", eventsSchema);

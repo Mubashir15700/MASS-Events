@@ -25,3 +25,11 @@ export const bookEvent = async (data) => {
         console.log(error);
     }
 }
+
+export const markAttendance = async (data) => {
+    try {
+        return await axios.post(`${URL}/staff/events/markattendance`, data);
+    } catch (error) {
+        console.log(error);
+    }
+}

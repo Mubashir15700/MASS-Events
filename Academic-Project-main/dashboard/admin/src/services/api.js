@@ -103,11 +103,11 @@ export const addStaff = async (data) => {
     }
 }
 
-export const cancelBooking = async (eventname, userid) => {
+export const cancelBooking = async (eventname, staff) => {
     try {
         return await axios.delete(`${URL}/staffs/cancelbooking/`, { data: { 
             "eventName": eventname, 
-            "userId": userid 
+            "Staff": staff 
         } });
     } catch (error) {
         console.log(error.response.data);

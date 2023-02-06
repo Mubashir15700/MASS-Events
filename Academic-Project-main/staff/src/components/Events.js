@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { StyleSheet, Text, View, Pressable, RefreshControl, ScrollView, Alert } from 'react-native';
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { getEvents, bookEvent } from "../services/api";
 
 const wait = (timeout) => {
@@ -33,7 +34,6 @@ export default Events = () => {
     if (response.data.status == "success") {
       Alert.alert(response.data.message);
       getAllEvents();
-      console.log(response.data);
     }
   }
 
@@ -53,6 +53,7 @@ export default Events = () => {
           return (
             <View key={index} style={styles.row}>
               <View>
+                <Icon name={'calendar-clock-outline'} size={20} color={'pink'} />
                 <Text>{event.date}</Text>
                 <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{event.time}</Text>
               </View>
@@ -70,7 +71,7 @@ export default Events = () => {
                   <Text>Book</Text>
                 </Pressable> 
                 :
-                <Pressable style={styles.disabledActionBtn} disabled={true} onPress={() => bookThisEvent(event.eventname)}>
+                <Pressable style={styles.disabledActionBtn} disabled={true}>
                   <Text>Book</Text>
                 </Pressable>
               }

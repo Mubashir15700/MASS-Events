@@ -33,8 +33,8 @@ const Bookings = () => {
         response && setEvents(response.data);
     }
 
-    const cancelEventBooking = async (eventname, userid) => {
-        let response = await cancelBooking(eventname, userid);
+    const cancelEventBooking = async (eventname, staff) => {
+        let response = await cancelBooking(eventname, staff);
         getAllEvents();
         console.log(response.data);
     }
@@ -89,7 +89,7 @@ const Bookings = () => {
                                                     variant="contained" 
                                                     color="secondary" 
                                                     onClick={() => 
-                                                        cancelEventBooking(event.eventname, booking.userId)
+                                                        cancelEventBooking(event.eventname, booking.username)
                                                     }
                                                     >
                                                         Cancel

@@ -49,11 +49,12 @@ export const deleteStaff = async (req, res) => {
 
 export const cancelBooking = async (req, res) => {
     try {
+        console.log(req.body);
         await Event.findOneAndUpdate({
             eventname: req.body.eventName,
         }, {
             $pull: {
-                bookings: { userId: req.body.userId },
+                bookings: { username: req.body.Staff },
             },
         });
         res.status(201).send({ "status": "success", "message": "Booking cancelled successfully" });
