@@ -10,7 +10,7 @@ const wait = (timeout) => {
 export default Events = () => {
 
   const [events, setEvents] = useState([]);
-  const [staff, setStaff] = useState([]);
+  const [currentstaff, setCurrentStaff] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -33,7 +33,7 @@ export default Events = () => {
 
   const getCurrentStaff = async () => {
     let response = await getCurrStaff();
-    response && setStaff(response.data.currentStaff);
+    response && setCurrentStaff(response.data.currentStaff);
   }
 
   const bookThisEvent = async (event) => {
@@ -73,7 +73,7 @@ export default Events = () => {
                 <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{event.location}</Text>
                 <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Avail Slots: {event.reqstaffs - event.bookings.length}</Text>
               </View>
-              {event.bookings.some((staff) => staff.username === staff.username) || (event.reqstaffs < event.bookings.length) ?
+              {event.bookings.some((staff) => staff.username === currentstaff.username) || (event.reqstaffs <= event.bookings.length) ?
                 <Pressable style={styles.disabledActionBtn} disabled={true}>
                   <Text>Book</Text>
                 </Pressable>
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 3,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   disabledActionBtn: {
     width: 80,

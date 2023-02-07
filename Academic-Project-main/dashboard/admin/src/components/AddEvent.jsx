@@ -31,9 +31,9 @@ const AddEvent = () => {
 
     const addEventDetails = async () => {
         let response = await addEvent(event);
-            if (response) {
-            console.log(response.data);
-            navigate("/");
+        if (response) {
+            alert(response.data.message);
+            response.data.status === "success" && navigate("/");
         }
     }
 

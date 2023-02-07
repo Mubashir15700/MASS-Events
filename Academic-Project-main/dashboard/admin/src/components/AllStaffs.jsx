@@ -36,7 +36,7 @@ const AllStaffs = () => {
 
     const deleteStaffDetails = async (id) => {
         let response = await deleteStaff(id);
-        console.log(response.data);
+        response && alert(response.data.message);
         getAllStaffs();
     }
 

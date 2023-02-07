@@ -36,8 +36,8 @@ const Register = () => {
     const register = async () => {
         let response = await registerAdmin(admin);
         alert(response.data.message);
-        console.log("token: " + response.data.token);
         if(response.data.status === "success" || response.data.message === "Admin already exists") {
+            console.log("token: " + response.data.token);
             navigate("/");
         }
     }

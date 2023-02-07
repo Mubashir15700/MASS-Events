@@ -30,8 +30,10 @@ const Login = () => {
     const login = async () => {
         const response = await loginAdmin(admin);
         alert(response.data.message);
-        console.log("token: " + response.data.token);
-        //navigate("/");
+        if(response.data.status === "success") {
+            console.log("token: " + response.data.token);
+            navigate("/");
+        }
     }
 
     return (

@@ -59,8 +59,8 @@ export default Attendance = () => {
               <View style={{ backgroundColor: 'pink', width: '100%', borderTopStartRadius: 10, alignItems: 'center', flexDirection: 'row' }}>
                 <View style={{ marginHorizontal: 10, padding: 10 }}>
                   <DateIcon name={'calendar-clock-outline'} size={20} color={'black'} />
-                  <Text>{event.date}</Text>
-                  <Text>{event.time}</Text>
+                  <Text style={{ fontWeight: 'bold' }}>{event.date}</Text>
+                  <Text style={{ fontWeight: 'bold' }}>{event.time}</Text>
                 </View>
                 <View>
                   <Text style={{ fontWeight: 'bold' }}>{event.eventname}</Text>

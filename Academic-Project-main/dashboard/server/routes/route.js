@@ -1,7 +1,7 @@
 import express from "express";
-import { registerAdmin, loginAdmin, addStaff, loginStaff } from "../controller/auth.js";
+import { registerAdmin, loginAdmin, checkAuth, addStaff, loginStaff } from "../controller/auth.js";
 import { getEvents, addEvent, getEvent, editEvent, deleteEvent } from "../controller/event-controller.js";
-import { getStaffs, getStaff, editStaff, deleteStaff, cancelBooking } from "../controller/staff-controller.js";
+import { getStaffs, getStaff, editStaff, deleteStaff, cancelBooking, payStaff } from "../controller/staff-controller.js";
 import { getCurrentStaff, bookEvent, markAttendance, cancelAttendance } from "../controller/app-controller.js";
 import adminAuthorization from "../middlewares/admin-middleware.js";
 import staffAuthorization from "../middlewares/staff-middleware.js";
@@ -11,7 +11,9 @@ const router = express.Router();
 // Public Routes
 router.post("/admin/register", registerAdmin);
 router.post("/admin/login", loginAdmin);
+router.get("/admin/checkauth", checkAuth);
 router.post("/staff/login", loginStaff);
+router.get("/staff/checkauth", checkAuth);
 
 // Protected Routes
 // Events
@@ -27,6 +29,7 @@ router.put("/staffs/editstaff/:id", adminAuthorization, editStaff);
 router.delete("/staffs/deletestaff/:id", adminAuthorization, deleteStaff);
 router.post("/staffs/addstaff", adminAuthorization, addStaff);
 router.delete("/staffs/cancelbooking", adminAuthorization, cancelBooking);
+router.put("/staffs/paystaff/", adminAuthorization, payStaff);
 // App
 router.get("/staff/currentstaff", staffAuthorization, getCurrentStaff)
 router.get("/staff/events/getevents", staffAuthorization, getEvents);

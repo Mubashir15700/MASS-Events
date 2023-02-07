@@ -62,3 +62,19 @@ export const cancelBooking = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 }
+
+export const payStaff = async (req, res) => {
+    try {
+        const event = req.body.data.eventName;
+        await Event.findOneAndUpdate({
+            eventname: event,
+        }, {
+            $addToSet: {
+                payments: req.body.data.staff,
+            },
+        });
+        res.status(201).send({ "status": "success", "message": "Paid staff successfully" });
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}

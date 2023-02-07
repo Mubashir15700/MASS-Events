@@ -10,6 +10,14 @@ export const loginStaff = async (username, password) => {
     }
 }
 
+export const checkAuth = async () => {
+    try {
+        return await axios.get(`${URL}/staff/checkauth`);
+    } catch (error) {
+        alert(error.response.data.message);
+    }
+}
+
 export const getEvents = async () => {
     try {
         return await axios.get(`${URL}/staff/events/getevents`);

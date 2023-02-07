@@ -44,7 +44,7 @@ const EditStaff = () => {
     const editStaffDetails = async () => {
         let response = await editStaff(id, staff);
         if (response) {
-            console.log(response.data);
+            alert(response.data.message);
             navigate("/allstaffs");
         }
     }

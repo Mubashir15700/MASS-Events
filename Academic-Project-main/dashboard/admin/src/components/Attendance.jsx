@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Table, TableHead, TableBody, TableRow, TableCell, styled, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { getEvents } from "../services/api.js";
+import { getEvents, payStaff } from "../services/api.js";
 
 const Container = styled(Table)`
     width: 95%;
@@ -32,6 +32,11 @@ const Attendance = () => {
         let response = await getEvents();
         setLoading(false);
         response && setEvents(response.data);
+    }
+
+    const payment = async (eventName, staff) => {
+        let response = await payStaff(eventName, staff);
+        console.log(response.data);
     }
 
     return (
@@ -87,6 +92,9 @@ const Attendance = () => {
                                                 <Button 
                                                     variant="contained" 
                                                     style={{ marginRight: "10px" }} 
+                                                    onClick={() => 
+                                                        payment(event.eventname, attendance)
+                                                    }
                                                     >
                                                         Pay
                                                     </Button>

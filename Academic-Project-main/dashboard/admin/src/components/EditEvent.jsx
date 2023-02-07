@@ -42,7 +42,7 @@ const EditEvent = () => {
     const editEventDetails = async () => {
         let response = await editEvent(id, event);
         if (response) {
-            console.log(response.data);
+            alert(response.data.message);
             navigate("/");
         }
     }

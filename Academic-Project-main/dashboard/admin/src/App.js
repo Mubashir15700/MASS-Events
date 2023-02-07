@@ -1,6 +1,7 @@
 import './App.css';
-import { BrowserRouter, Routes, Route, } from "react-router-dom";
-import { useState } from 'react';
+import { BrowserRouter, Routes, Route, redirect, } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { checkAuth } from "./services/api.js";
 import Navbar from "./components/Navbar";
 import AllEvents from "./components/AllEvents";
 import AddEvent from "./components/AddEvent";
@@ -17,6 +18,18 @@ import Register from "./components/Register";
 function App() {
 
   const [auth, setAuth] = useState(true);
+
+  useEffect(() => {
+    checkUserAuth();
+  }, [auth]);
+
+  const checkUserAuth = async () => {
+    let response = await checkAuth();
+    if(response.data.status === "failed") {
+      setAuth(false);
+      redirect("/");
+    }
+  }
 
   return (
     <>

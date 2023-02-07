@@ -71,6 +71,22 @@ export const loginAdmin = async (req, res) => {
     }
 }
 
+export const checkAuth = async (req, res) => {
+    try {
+        const token = req.cookies.jwt;
+        if(token) {
+            const decoded = await jwt.verify(token, process.env.JWT_SECRET_KEY);
+            const currentStaff = await Staff.findById(decoded.userID).select('-password');
+            console.log(currentStaff);
+            res.status(201).send({ "status": "success", "message": "Authorized user", "currentStaff": currentStaff});
+        } else {
+            res.send({ "status": "failed", "message": "Unauthorized user" });
+        }
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
 export const addStaff = async (req, res) => {
     const { name, username, dob, wage, role, category, password, confpassword, phone } = req.body;
     const staff = await Staff.findOne({ username: username });

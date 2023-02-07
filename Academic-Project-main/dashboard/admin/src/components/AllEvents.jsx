@@ -36,7 +36,7 @@ const AllEvents = () => {
 
     const deleteEventDetails = async (id) => {
         let response = await deleteEvent(id);
-        console.log(response.data);
+        response && alert(response.data.message);
         getAllEvents();
     }
 

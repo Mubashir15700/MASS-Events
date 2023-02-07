@@ -1,5 +1,7 @@
+import { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { getCurrStaff } from '../services/api';
 import Events from "../components/Events";
 import EventReport from "../components/EventReport";
 import Payments from "../components/Payments";
@@ -8,6 +10,18 @@ import Attendance from "../components/Attendance";
 const Tab = createBottomTabNavigator();
 
 export default Combined = () => {
+
+    const [currentstaff, setCurrentStaff] = useState([]);
+
+    useEffect(() => {
+        getCurrentStaff();
+    }, [])
+
+    const getCurrentStaff = async () => {
+        let response = await getCurrStaff();
+        response && setCurrentStaff(response.data.currentStaff);
+    }
+
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -32,7 +46,8 @@ export default Combined = () => {
             <Tab.Screen name="Events" component={Events} />
             <Tab.Screen name="EventReport" component={EventReport} />
             <Tab.Screen name="Payments" component={Payments} />
-            <Tab.Screen name="Attendance" component={Attendance} />
+            {currentstaff.category !== "boy" && <Tab.Screen name="Attendance" component={Attendance} />}
+            
         </Tab.Navigator>
     );
 }

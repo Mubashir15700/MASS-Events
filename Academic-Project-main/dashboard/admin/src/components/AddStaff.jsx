@@ -36,8 +36,8 @@ const AddStaff = () => {
     const addStaffDetails = async () => {
         let response = await addStaff(staff);
         if (response) {
-            console.log(response.data);
-            navigate("/allstaffs");
+            alert(response.data.message);
+            response.data.status === "success" && navigate("/allstaffs");
         }
     }
 
