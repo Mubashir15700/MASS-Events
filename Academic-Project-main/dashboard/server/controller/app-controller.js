@@ -2,24 +2,11 @@ import jwt from 'jsonwebtoken';
 import Staff from "../schema/staff-schema.js";
 import Event from "../schema/event-schema.js";
 
-export const getCurrentStaff = async (req, res) => {
-    try {
-        const token = req.cookies.jwt;
-        const decoded = await jwt.verify(token, process.env.JWT_SECRET_KEY);
-        const currentStaff = await Staff.findById(decoded.userID).select('-password');
-        console.log(currentStaff);
-        res.status(201).send({ "status": "success", "message": "Found current staff successfully", "currentStaff": currentStaff});
-    } catch (error) {
-        res.status(404).json({ message: error.message });
-    }
-}
-
 export const bookEvent = async (req, res) => {
     try {
         const token = req.cookies.jwt;
         const decoded = await jwt.verify(token, process.env.JWT_SECRET_KEY);
         const currentUser = await Staff.findById(decoded.userID).select('-password');
-        console.log(currentUser);
 
         const datas = await req.body;
         await Event.findOneAndUpdate({
@@ -37,12 +24,48 @@ export const bookEvent = async (req, res) => {
     }
 }
 
+export const payments = async (req, res) => {
+    const token = req.cookies.jwt;
+    const decoded = await jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const currentUser = await Staff.findById(decoded.userID).select('-password');
+
+    try {
+
+        const events = await Event.find({
+            payments: {
+                $all: [
+                    {"$elemMatch": {username: currentUser.username}}
+                ]
+            },
+        });
+
+        res.status(200).json(events);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
+export const attendance = async (req, res) => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1;
+    let dd = today.getDate();
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+    const formattedToday = yyyy + '-' + mm + '-' + dd;
+
+    try {
+        const events = await Event.find({date: formattedToday});
+        res.status(200).json(events);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
 export const markAttendance = async (req, res) => {
     try {
         const datas = await req.body;
-        console.log(datas);
         const currentStaff = await Staff.findOne({ username: datas.staff }).select('-password');
-        console.log(currentStaff);
         await Event.findOneAndUpdate({
             eventname: datas.event,
         },

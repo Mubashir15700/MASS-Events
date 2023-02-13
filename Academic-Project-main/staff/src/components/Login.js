@@ -8,9 +8,8 @@ export default Login = () => {
   const [password, setPassword] = useState("");
 
   const submit = async () => {
-    const response = await loginStaff(username, password);
-    Alert.alert(response.data.message);
-    console.log("token: " + response.data.token);
+    let response = await loginStaff(username, password);
+    response && console.log("token: " + response.data.token);
   }
 
   return (

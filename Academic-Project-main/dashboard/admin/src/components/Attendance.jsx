@@ -30,13 +30,13 @@ const Attendance = () => {
 
     const getAllEvents = async () => {
         let response = await getEvents();
-        setLoading(false);
         response && setEvents(response.data);
+        setLoading(false);
     }
 
     const payment = async (eventName, staff) => {
         let response = await payStaff(eventName, staff);
-        console.log(response.data);
+        response && alert(response.data.message);
     }
 
     return (

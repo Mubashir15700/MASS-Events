@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { StyleSheet, Text, View, Pressable, RefreshControl, ScrollView, Alert } from 'react-native';
 import DateIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/Fontisto';
-import { getEvents, markAttendance, cancelAttendance } from "../services/api";
+import { getAttendance, markAttendance, cancelAttendance } from "../services/api";
 
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -16,16 +16,16 @@ export default Attendance = () => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    getAllEvents();
+    getTodayAttendance();
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
   useEffect(() => {
-    getAllEvents();
+    getTodayAttendance();
   }, []);
 
-  const getAllEvents = async () => {
-    let response = await getEvents();
+  const getTodayAttendance = async () => {
+    let response = await getAttendance();
     response && setEvents(response.data);
     setLoading(false);
   }
@@ -33,13 +33,13 @@ export default Attendance = () => {
   const handleAttendance = async (event, staff) => {
     let response = await markAttendance({ event, staff });
     response && Alert.alert(response.data.message);
-    getAllEvents();
+    getTodayAttendance();
   }
 
   const removeAttendance = async (event, staff) => {
     let response = await cancelAttendance({ event, staff });
     response && Alert.alert(response.data.message);
-    getAllEvents();
+    getTodayAttendance();
   }
 
   return (
@@ -50,55 +50,64 @@ export default Attendance = () => {
           onRefresh={onRefresh}
         />
       }>
-      {loading ? <Text>Loading...</Text> 
-      :
-      events.length ?
-        events.map((event, index) => {
-          return (
-            <View key={index} style={styles.row}>
-              <View style={{ backgroundColor: 'pink', width: '100%', borderTopStartRadius: 10, alignItems: 'center', flexDirection: 'row' }}>
-                <View style={{ marginHorizontal: 10, padding: 10 }}>
-                  <DateIcon name={'calendar-clock-outline'} size={20} color={'black'} />
-                  <Text style={{ fontWeight: 'bold' }}>{event.date}</Text>
-                  <Text style={{ fontWeight: 'bold' }}>{event.time}</Text>
-                </View>
-                <View>
-                  <Text style={{ fontWeight: 'bold' }}>{event.eventname}</Text>
-                </View>
-              </View>
-                {event.bookings.length ? 
-                  event.bookings.map((booking, index) => {
-                    return (
-                      <View key={index} style={{ alignItems: 'center', flexDirection: 'row',  padding: 10 }}>
-                        <View>
-                          <Icon name={'male'} size={20} color={'black'} />
-                        </View>
-                        <View style={{ marginLeft: 10, width: '70%' }}>
-                          <Text>{booking.username}</Text>
-                          <Text><Icon name={'phone'} size={12} color={'black'} /> {booking.phone}</Text>
-                        </View>
-                        <View>
-                          {event.attendance.some((staff) => staff.username === booking.username) ? 
-                          <Pressable style={styles.actionBtn} onPress={() => removeAttendance(event.eventname, booking.username)}>
-                            <Icon name={'checkbox-active'} size={20} color={'pink'} />
-                          </Pressable> :
-                          <Pressable style={styles.actionBtn} onPress={() => handleAttendance(event.eventname, booking.username)}>
-                            <Icon name={'checkbox-passive'} size={20} color={'gray'} />
-                          </Pressable>}
-                        </View>
-                      </View>
-                    );
-                  }) :
-                  <View style={{ padding: 10 }}>
-                    <Text>No bookings yet</Text>
+      {loading ?
+        <View style={styles.row}>
+          <Text>Loading...</Text>
+        </View>
+        :
+        events.length ?
+          <View style={{alignItems: 'center'}}>
+            <Text>Today's Event(s)</Text>
+            {events.map((event) => {
+              return (
+                <View key={event._id} style={styles.row}>
+                  <View style={{ backgroundColor: 'pink', width: '100%', borderTopStartRadius: 10, alignItems: 'center', flexDirection: 'row' }}>
+                    <View style={{ marginHorizontal: 10, padding: 10 }}>
+                      <DateIcon name={'calendar-clock-outline'} size={20} color={'black'} />
+                      <Text style={{ fontWeight: 'bold' }}>{event.date}</Text>
+                      <Text style={{ fontWeight: 'bold' }}>{event.time}</Text>
+                    </View>
+                    <View>
+                      <Text style={{ fontWeight: 'bold' }}>{event.eventname}</Text>
+                    </View>
                   </View>
-                }
-              </View>
-            );
-          })
-          :
-          <Text>No data found</Text>
-        }
+                  {event.bookings.length ?
+                    event.bookings.map((booking) => {
+                      return (
+                        <View key={booking._id} style={{ alignItems: 'center', flexDirection: 'row', padding: 10 }}>
+                          <View>
+                            <Icon name={'male'} size={20} color={'black'} />
+                          </View>
+                          <View style={{ marginLeft: 10, width: '70%' }}>
+                            <Text>{booking.username}</Text>
+                            <Text><Icon name={'phone'} size={12} color={'black'} /> {booking.phone}</Text>
+                          </View>
+                          <View>
+                            {event.attendance.some((staff) => staff.username === booking.username) ?
+                              <Pressable style={styles.actionBtn} onPress={() => removeAttendance(event.eventname, booking.username)}>
+                                <Icon name={'checkbox-active'} size={20} color={'pink'} />
+                              </Pressable> :
+                              <Pressable style={styles.actionBtn} onPress={() => handleAttendance(event.eventname, booking.username)}>
+                                <Icon name={'checkbox-passive'} size={20} color={'gray'} />
+                              </Pressable>}
+                          </View>
+                        </View>
+                      );
+                    })
+                    :
+                    <View style={{ padding: 10 }}>
+                      <Text>No bookings yet</Text>
+                    </View>
+                  }
+                </View>
+              );
+            })}
+          </View>
+        :
+        <View style={styles.row}>
+          <Text>No events today</Text>
+        </View>
+      }
     </ScrollView>
   );
 }

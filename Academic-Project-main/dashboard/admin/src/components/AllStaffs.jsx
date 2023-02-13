@@ -30,8 +30,8 @@ const AllStaffs = () => {
 
     const getAllStaffs = async () => {
         let response = await getStaffs();
-        setLoading(false);
         response && setStaffs(response.data);
+        setLoading(false);
     }
 
     const deleteStaffDetails = async (id) => {

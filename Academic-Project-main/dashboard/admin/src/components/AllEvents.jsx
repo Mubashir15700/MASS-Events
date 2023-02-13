@@ -30,8 +30,8 @@ const AllEvents = () => {
 
     const getAllEvents = async () => {
         let response = await getEvents();
-        setLoading(false);
         response && setEvents(response.data);
+        setLoading(false);
     }
 
     const deleteEventDetails = async (id) => {
@@ -40,17 +40,27 @@ const AllEvents = () => {
         getAllEvents();
     }
 
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1;
+    let dd = today.getDate();
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+    const formattedToday = yyyy + '-' + mm + '-' + dd;
+
     return (
         <Container>
             <TableHead>
                 <THead>
                     <TableCell>Date</TableCell>
                     <TableCell>Time</TableCell>
+                    <TableCell>Duration(hrs)</TableCell>
                     <TableCell>Event Name</TableCell>
                     <TableCell>Location</TableCell>
                     <TableCell>
-                        Booked/Required Staffs
+                        Staffs Booked/Required
                     </TableCell>
+                    <TableCell>Status</TableCell>
                     <TableCell>Actions</TableCell>
                 </THead>
             </TableHead>
@@ -66,10 +76,19 @@ const AllEvents = () => {
                             <TableRow key={event._id}>
                                 <TableCell>{event.date}</TableCell>
                                 <TableCell>{event.time}</TableCell>
+                                <TableCell>{event.duration}</TableCell>
                                 <TableCell>{event.eventname}</TableCell>
                                 <TableCell>{event.location}</TableCell>
                                 <TableCell>
                                     {event.bookings.length}/{event.reqstaffs}
+                                </TableCell>
+                                <TableCell>
+                                    {(formattedToday > event.date) ?
+                                        'Done' :   
+                                    (formattedToday < event.date) ?
+                                        'Upcoming' :
+                                        'Today' 
+                                    }
                                 </TableCell>
                                 <TableCell>
                                     <Button 

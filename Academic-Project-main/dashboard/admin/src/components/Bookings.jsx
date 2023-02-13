@@ -29,14 +29,16 @@ const Bookings = () => {
 
     const getAllEvents = async () => {
         let response = await getEvents();
-        setLoading(false);
         response && setEvents(response.data);
+        setLoading(false);
     }
 
     const cancelEventBooking = async (eventname, staff) => {
         let response = await cancelBooking(eventname, staff);
-        getAllEvents();
-        console.log(response.data);
+        if(response.data.status === "success") {
+            getAllEvents();
+            alert(response.data.message);
+        }
     }
 
     return (

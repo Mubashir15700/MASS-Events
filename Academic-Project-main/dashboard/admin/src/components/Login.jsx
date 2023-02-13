@@ -28,11 +28,9 @@ const Login = () => {
     }
     
     const login = async () => {
-        const response = await loginAdmin(admin);
-        alert(response.data.message);
-        if(response.data.status === "success") {
-            console.log("token: " + response.data.token);
-            navigate("/");
+        let response = await loginAdmin(admin);
+        if (response) {
+            response.data.status === "success" ? navigate("/") : alert(response.data.message);
         }
     }
 

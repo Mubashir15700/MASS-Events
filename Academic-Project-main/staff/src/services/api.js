@@ -42,6 +42,22 @@ export const bookEvent = async (data) => {
     }
 }
 
+export const getPayments = async () => {
+    try {
+        return await axios.get(`${URL}/staff/events/payments`);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getAttendance = async () => {
+    try {
+        return await axios.get(`${URL}/staff/events/attendance`);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const markAttendance = async (data) => {
     try {
         return await axios.post(`${URL}/staff/events/markattendance`, data);

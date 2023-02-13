@@ -28,7 +28,7 @@ export default EventReport = () => {
 
   const getAllEvents = async () => {
     let response = await getEvents();
-    setEvents(response.data);
+    response && setEvents(response.data);
     setLoading(false);
   }
 
@@ -45,7 +45,10 @@ export default EventReport = () => {
           onRefresh={onRefresh}
         />
       }>
-      {loading ? <Text>Loading...</Text>
+      {loading ? 
+        <View style={styles.row}>
+          <Text>Loading...</Text>
+        </View>
       :
       events.length ?
         events.map((event) => {
@@ -75,7 +78,9 @@ export default EventReport = () => {
           );
         })
       :
-      <Text>No data found</Text>
+      <View style={styles.row}>
+        <Text>No data found</Text>
+      </View>
     }
     </ScrollView>
   );

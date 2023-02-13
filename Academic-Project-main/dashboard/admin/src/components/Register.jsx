@@ -35,10 +35,11 @@ const Register = () => {
     
     const register = async () => {
         let response = await registerAdmin(admin);
-        alert(response.data.message);
-        if(response.data.status === "success" || response.data.message === "Admin already exists") {
-            console.log("token: " + response.data.token);
-            navigate("/");
+        if (response) {
+            alert(response.data.message);
+            if(response.data.status === "success" || response.data.message === "Admin already exists") {
+                navigate("/");
+            }
         }
     }
     

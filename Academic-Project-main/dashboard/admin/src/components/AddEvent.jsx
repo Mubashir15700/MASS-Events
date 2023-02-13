@@ -14,6 +14,7 @@ const Container = styled(FormGroup)`
 const defaultValue = {
     date: '',
     time: '',
+    duration: '',
     eventname: '',
     location: '',
     reqstaffs: '',
@@ -32,8 +33,7 @@ const AddEvent = () => {
     const addEventDetails = async () => {
         let response = await addEvent(event);
         if (response) {
-            alert(response.data.message);
-            response.data.status === "success" && navigate("/");
+            response.data.status === "success" ? navigate("/") : alert(response.data.message);
         }
     }
 
@@ -47,6 +47,10 @@ const AddEvent = () => {
             <FormControl>
                 <InputLabel>Time</InputLabel><br/><br/>
                 <Input type="time" onChange={(e) => handleChange(e)} name="time" />
+            </FormControl>
+            <FormControl>
+                <InputLabel>Duration(hrs)</InputLabel><br/><br/>
+                <Input type="number" onChange={(e) => handleChange(e)} name="duration" />
             </FormControl>
             <FormControl>
                 <InputLabel>Event Name</InputLabel>

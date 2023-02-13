@@ -34,7 +34,7 @@ const EditStaff = () => {
 
     const loadStaffDetails = async () => {
         let response = await getStaff(id);
-        setStaff(response.data);
+        response && setStaff(response.data);
     }
 
     const handleChange = (e) => {
@@ -44,8 +44,7 @@ const EditStaff = () => {
     const editStaffDetails = async () => {
         let response = await editStaff(id, staff);
         if (response) {
-            alert(response.data.message);
-            navigate("/allstaffs");
+            response.data.status === "success" ? navigate("/allstaffs") : alert(response.data.message);
         }
     }
 

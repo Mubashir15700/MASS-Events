@@ -29,8 +29,8 @@ const Payments = () => {
 
     const getAllEvents = async () => {
         let response = await getEvents();
-        setLoading(false);
         response && setEvents(response.data);
+        setLoading(false);
     }
 
     return (
@@ -61,8 +61,8 @@ const Payments = () => {
                                     <TableCell style={{ fontWeight: 'bold' }}>{event.date} {event.time}</TableCell>
                                     <TableCell style={{ fontWeight: 'bold' }}>{event.eventname}</TableCell>
                                 </TableRow>
-                                {event.attendance.length ?
-                                    event.attendance.map((attendance) => {
+                                {event.payments.length ?
+                                    event.payments.map((attendance) => {
                                         return (
                                             <TableRow key={attendance._id}>
                                                 <TableCell></TableCell>

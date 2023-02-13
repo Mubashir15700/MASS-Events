@@ -14,6 +14,7 @@ const Container = styled(FormGroup)`
 const defaultValue = {
     date: '',
     time: '',
+    duration: '',
     eventname: '',
     location: '',
     reqstaffs: '',
@@ -32,7 +33,7 @@ const EditEvent = () => {
 
     const loadEventDetails = async () => {
         let response = await getEvent(id);
-        setEvent(response.data);
+        response && setEvent(response.data);
     }
 
     const handleChange = (e) => {
@@ -42,8 +43,7 @@ const EditEvent = () => {
     const editEventDetails = async () => {
         let response = await editEvent(id, event);
         if (response) {
-            alert(response.data.message);
-            navigate("/");
+            response.data.status === "success" ? navigate("/") : alert(response.data.message);
         }
     }
 
@@ -57,6 +57,10 @@ const EditEvent = () => {
             <FormControl>
                 <InputLabel>Time</InputLabel><br></br><br></br>
                 <Input type="time" onChange={(e) => handleChange(e)} name="time" value={event.time} />
+            </FormControl>
+            <FormControl>
+                <InputLabel>Duration(hrs)</InputLabel><br/><br/>
+                <Input type="number" onChange={(e) => handleChange(e)} name="duration" value={event.duration} />
             </FormControl>
             <FormControl>
                 <InputLabel>Event Name</InputLabel>

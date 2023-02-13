@@ -25,7 +25,7 @@ export default Combined = () => {
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
-                tabBarIcon: ({ focused, color, size }) => {
+                tabBarIcon: ({ focused, color }) => {
                     let iconName;
                     if (route.name === 'Events') {
                         iconName = focused ? 'calendar-check' : 'calendar-minus';
@@ -36,7 +36,7 @@ export default Combined = () => {
                     } else if (route.name === 'Attendance') {
                         iconName = focused ? 'user-check' : 'user-check';
                     }
-                    return <Icon name={iconName} size={size} color={color} />;
+                    return <Icon name={iconName} size={20} color={color} />;
                 },
                 tabBarActiveTintColor: 'pink',
                 tabBarInactiveTintColor: 'gray',
@@ -46,7 +46,10 @@ export default Combined = () => {
             <Tab.Screen name="Events" component={Events} />
             <Tab.Screen name="EventReport" component={EventReport} />
             <Tab.Screen name="Payments" component={Payments} />
-            {currentstaff.category !== "boy" && <Tab.Screen name="Attendance" component={Attendance} />}
+            
+            {(currentstaff && currentstaff.category !== "boy") && 
+                <Tab.Screen name="Attendance" component={Attendance} />
+            }
             
         </Tab.Navigator>
     );
