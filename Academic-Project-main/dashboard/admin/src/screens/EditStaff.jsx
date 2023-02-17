@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const Container = styled(FormGroup)`
     width: 50%;
-    margin: 3% auto 0 auto;
+    margin: 5% auto 0 auto;
     & > div {
         margin-top: 8px;
     }
@@ -15,9 +15,9 @@ const defaultValue = {
     name: '',
     username: '',
     dob: '',
-    wage: '',
     role: 'staff',
     category: '',
+    wage: '',
     phone: ''
 }
 
@@ -41,7 +41,7 @@ const EditStaff = () => {
         setStaff({ ...staff, [e.target.name]: e.target.value });
     }
 
-    const editStaffDetails = async () => {
+    const editThisStaff = async () => {
         let response = await editStaff(id, staff);
         if (response) {
             response.data.status === "success" ? navigate("/allstaffs") : alert(response.data.message);
@@ -60,12 +60,8 @@ const EditStaff = () => {
                 <Input onChange={(e) => handleChange(e)} name="username" value={staff.username} />
             </FormControl>
             <FormControl>
-                <InputLabel>D/B</InputLabel>
+                <InputLabel>DOB</InputLabel>
                 <Input type="date" onChange={(e) => handleChange(e)} name="dob" value={staff.dob} />
-            </FormControl>
-            <FormControl>
-                <InputLabel>Wage</InputLabel>
-                <Input type="number" onChange={(e) => handleChange(e)} name="wage" value={staff.wage} />
             </FormControl>
             <FormControl>
                 <InputLabel>Category</InputLabel>
@@ -75,17 +71,21 @@ const EditStaff = () => {
                     name="category"
                     onChange={(e) => handleChange(e)}
                 >
-                    <MenuItem value={"boy"}>Boy</MenuItem>
-                    <MenuItem value={"head"}>Head</MenuItem>
-                    <MenuItem value={"supervisor"}>Supervisor</MenuItem>
+                    <MenuItem value={"Boy"}>Boy</MenuItem>
+                    <MenuItem value={"Head"}>Head</MenuItem>
+                    <MenuItem value={"Supervisor"}>Supervisor</MenuItem>
                 </Select>
+            </FormControl>
+            <FormControl>
+                <InputLabel>Wage</InputLabel>
+                <Input type="number" onChange={(e) => handleChange(e)} name="wage" value={staff.wage} />
             </FormControl>
             <FormControl>
                 <InputLabel>Phone</InputLabel>
                 <Input type="number" onChange={(e) => handleChange(e)} name="phone" value={staff.phone} />
             </FormControl>
             <FormControl>
-                <Button variant='contained' onClick={() => editStaffDetails()}>Edit Staff</Button>
+                <Button variant='contained' onClick={() => editThisStaff()}>Edit Staff</Button>
             </FormControl>
         </Container>
     );

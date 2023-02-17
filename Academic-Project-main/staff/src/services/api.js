@@ -18,9 +18,9 @@ export const checkAuth = async () => {
     }
 }
 
-export const getEvents = async () => {
+export const getNewEvents = async () => {
     try {
-        return await axios.get(`${URL}/staff/events/getevents`);
+        return await axios.get(`${URL}/staff/events/getnewevents`);
     } catch (error) {
         console.log(error);
     }

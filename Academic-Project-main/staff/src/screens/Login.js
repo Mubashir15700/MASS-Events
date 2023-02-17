@@ -7,9 +7,11 @@ export default Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const submit = async () => {
+  const login = async () => {
     let response = await loginStaff(username, password);
-    response && console.log("token: " + response.data.token);
+    if (response) {
+        response.data.status === "success" ? console.log("token: " + response.data.token) : Alert.alert(response.data.message);
+    }
   }
 
   return (
@@ -32,7 +34,7 @@ export default Login = () => {
           />
           <TouchableOpacity 
             style={styles.loginBtn}
-            onPress={() => submit()}
+            onPress={() => login()}
           >
             <Text style={styles.loginText}>Login</Text>
           </TouchableOpacity>

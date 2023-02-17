@@ -132,3 +132,11 @@ export const payStaff = async (eventName, staff) => {
         alert(error.response.data.message);
     }
 }
+
+export const logoutAdmin = async () => {
+    try {
+        return await axios.get(`${URL}/admin/logout/`);
+    } catch (error) {
+        alert(error.response.data.message);
+    }
+}

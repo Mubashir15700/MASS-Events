@@ -4,11 +4,8 @@ import { getEvents, cancelBooking } from "../services/api.js";
 
 const Container = styled(Table)`
     width: 95%;
-    margin: 2% auto 0 auto;
-    & > div {
-        margin-top: 10px;
-    }
-    background-color: #e5e5e5;
+    margin: 5% auto 0 auto;
+    background-color: darkgray;
 `
 
 const THead = styled(TableRow)`
@@ -33,9 +30,9 @@ const Bookings = () => {
         setLoading(false);
     }
 
-    const cancelEventBooking = async (eventname, staff) => {
+    const cancelThisBooking = async (eventname, staff) => {
         let response = await cancelBooking(eventname, staff);
-        if(response.data.status === "success") {
+        if (response.data.status === "success") {
             getAllEvents();
             alert(response.data.message);
         }
@@ -54,44 +51,38 @@ const Bookings = () => {
                     <TableCell>Actions</TableCell>
                 </THead>
             </TableHead>
-            <TableBody>
-                {loading ? 
+
+            {loading ?
+                <TableBody>
                     <TableRow>
                         <TableCell>Loading...</TableCell>
-                    </TableRow> 
+                    </TableRow>
+                </TableBody>
                 :
                 events.length ?
                     events.map((event) => {
                         return (
-                            <>
-                                <TableRow key={event._id}>
-                                    <TableCell style={{ fontWeight: 'bold' }}>{event.date} {event.time}</TableCell>
+                            <TableBody key={event._id}>
+                                <TableRow>
+                                    <TableCell style={{ fontWeight: 'bold' }}><p>{event.date}</p> <p>{event.time}</p></TableCell>
                                     <TableCell style={{ fontWeight: 'bold' }}>{event.eventname}</TableCell>
                                 </TableRow>
                                 {event.bookings.length ?
                                     event.bookings.map((booking) => {
                                         return (
-                                            <TableRow key={booking._id}>
+                                            <TableRow key={booking._id} style={{ backgroundColor: '#e5e5e5' }}>
                                                 <TableCell></TableCell>
                                                 <TableCell></TableCell>
+                                                <TableCell>{booking._id}</TableCell>
+                                                <TableCell>{booking.username}</TableCell>
+                                                <TableCell>{booking.category}</TableCell>
+                                                <TableCell>{booking.phone}</TableCell>
                                                 <TableCell>
-                                                    {booking._id}
-                                                </TableCell>
-                                                <TableCell>
-                                                    {booking.username}
-                                                </TableCell>
-                                                <TableCell>
-                                                    {booking.category}
-                                                </TableCell>
-                                                <TableCell>
-                                                    {booking.phone}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Button 
-                                                    variant="contained" 
-                                                    color="secondary" 
-                                                    onClick={() => 
-                                                        cancelEventBooking(event.eventname, booking.username)
+                                                    <Button
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    onClick={() =>
+                                                        cancelThisBooking(event.eventname, booking.username)
                                                     }
                                                     >
                                                         Cancel
@@ -101,21 +92,26 @@ const Bookings = () => {
                                         );
                                     })
                                 :
-                                <TableRow>
+                                <TableRow style={{ backgroundColor: '#e5e5e5' }}>
                                     <TableCell></TableCell>
                                     <TableCell></TableCell>
                                     <TableCell>No Bookings Yet!</TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
                                 </TableRow>
                                 }
-                            </>
+                            </TableBody>
                         );
-                    }) 
-                    :
+                    })
+                :
+                <TableBody>
                     <TableRow>
                         <TableCell>No data found</TableCell>
                     </TableRow>
-                }
-            </TableBody>
+                </TableBody>
+            }
         </Container>
     );
 }

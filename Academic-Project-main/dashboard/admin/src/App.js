@@ -3,17 +3,17 @@ import { BrowserRouter, Routes, Route, redirect, } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { checkAuth } from "./services/api.js";
 import Navbar from "./components/Navbar";
-import AllEvents from "./components/AllEvents";
-import AddEvent from "./components/AddEvent";
-import EditEvent from "./components/EditEvent";
-import AllStaffs from "./components/AllStaffs";
-import AddStaff from "./components/AddStaff";
-import EditStaff from "./components/EditStaff";
-import Bookings from "./components/Bookings";
-import Attendance from "./components/Attendance";
-import Payments from './components/Payments';
-import Login from "./components/Login";
-import Register from "./components/Register";
+import AllEvents from "./screens/AllEvents";
+import AddEvent from "./screens/AddEvent";
+import EditEvent from "./screens/EditEvent";
+import AllStaffs from "./screens/AllStaffs";
+import AddStaff from "./screens/AddStaff";
+import EditStaff from "./screens/EditStaff";
+import Bookings from "./screens/Bookings";
+import Attendance from "./screens/Attendance";
+import Payments from './screens/Payments';
+import Login from "./screens/Login";
+import Register from "./screens/Register";
 
 function App() {
 
@@ -38,14 +38,14 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<AllEvents />} />
+            <Route path="/editevent/:id" element={<EditEvent />} />
             <Route path="/addevent" element={<AddEvent />} />
             <Route path="/bookings" element={<Bookings />} />
             <Route path="/attendance" element={<Attendance />} />
             <Route path="/payments" element={<Payments />} />
-            <Route path="/editevent/:id" element={<EditEvent />} />
             <Route path="/allstaffs" element={<AllStaffs />} />
-            <Route path="/addstaff" element={<AddStaff />} />
             <Route path="/editstaff/:id" element={<EditStaff />} />
+            <Route path="/addstaff" element={<AddStaff />} />
           </Routes>
         </BrowserRouter> 
         :

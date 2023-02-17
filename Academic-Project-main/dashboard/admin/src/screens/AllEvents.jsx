@@ -5,10 +5,7 @@ import { Link } from "react-router-dom";
 
 const Container = styled(Table)`
     width: 95%;
-    margin: 2% auto 0 auto;
-    & > div {
-        margin-top: 10px;
-    }
+    margin: 5% auto 0 auto;
     background-color: #e5e5e5;
 `
 
@@ -34,7 +31,7 @@ const AllEvents = () => {
         setLoading(false);
     }
 
-    const deleteEventDetails = async (id) => {
+    const deleteThisEvent = async (id) => {
         let response = await deleteEvent(id);
         response && alert(response.data.message);
         getAllEvents();
@@ -102,7 +99,7 @@ const AllEvents = () => {
                                     <Button 
                                     variant="contained" 
                                     color="secondary" 
-                                    onClick={() => deleteEventDetails(event._id)}
+                                    onClick={() => deleteThisEvent(event._id)}
                                     >
                                         Delete
                                     </Button>

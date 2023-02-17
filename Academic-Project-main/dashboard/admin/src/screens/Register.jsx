@@ -15,7 +15,7 @@ const defaultValue = {
     name: '',
     username: '',
     dob: '00/00/0000',
-    wage: '0',
+    wage: '000',
     role: 'admin',
     category: '-',
     password: '',

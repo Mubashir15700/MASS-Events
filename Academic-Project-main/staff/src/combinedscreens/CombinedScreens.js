@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { getCurrStaff } from '../services/api';
-import Events from "../components/Events";
-import EventReport from "../components/EventReport";
-import Payments from "../components/Payments";
-import Attendance from "../components/Attendance";
+import Events from "../screens/Events";
+import EventReport from "../screens/EventReport";
+import Payments from "../screens/Payments";
+import Attendance from "../screens/Attendance";
 
 const Tab = createBottomTabNavigator();
 
-export default Combined = () => {
+export default CombinedScreens = () => {
 
     const [currentstaff, setCurrentStaff] = useState([]);
 

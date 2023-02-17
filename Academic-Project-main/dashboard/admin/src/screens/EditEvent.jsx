@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const Container = styled(FormGroup)`
     width: 50%;
-    margin: 3% auto 0 auto;
+    margin: 5% auto 0 auto;
     & > div {
         margin-top: 8px;
     }
@@ -40,7 +40,7 @@ const EditEvent = () => {
         setEvent({ ...event, [e.target.name]: e.target.value });
     }
 
-    const editEventDetails = async () => {
+    const editThisEvent = async () => {
         let response = await editEvent(id, event);
         if (response) {
             response.data.status === "success" ? navigate("/") : alert(response.data.message);
@@ -75,7 +75,7 @@ const EditEvent = () => {
                 <Input type="number" onChange={(e) => handleChange(e)} name="reqstaffs" value={event.reqstaffs} />
             </FormControl>
             <FormControl>
-                <Button variant='contained' onClick={() => editEventDetails()}>Edit Event</Button>
+                <Button variant='contained' onClick={() => editThisEvent()}>Edit Event</Button>
             </FormControl>
         </Container>
     );

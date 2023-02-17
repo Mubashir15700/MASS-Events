@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Container = styled(Table)`
     width: 95%;
-    margin: 2% auto 0 auto;
+    margin: 5% auto 0 auto;
     & > div {
         margin-top: 10px;
     }
@@ -34,7 +34,7 @@ const AllStaffs = () => {
         setLoading(false);
     }
 
-    const deleteStaffDetails = async (id) => {
+    const deleteThisStaff = async (id) => {
         let response = await deleteStaff(id);
         response && alert(response.data.message);
         getAllStaffs();
@@ -46,9 +46,9 @@ const AllStaffs = () => {
                 <THead>
                     <TableCell>Name</TableCell>
                     <TableCell>Username</TableCell>
-                    <TableCell>D/B</TableCell>
-                    <TableCell>Wage</TableCell>
+                    <TableCell>DOB</TableCell>
                     <TableCell>Category</TableCell>
+                    <TableCell>Wage</TableCell>
                     <TableCell>Phone</TableCell>
                     <TableCell>Actions</TableCell>
                 </THead>
@@ -66,8 +66,8 @@ const AllStaffs = () => {
                                 <TableCell>{staff.name}</TableCell>
                                 <TableCell>{staff.username}</TableCell>
                                 <TableCell>{staff.dob}</TableCell>
-                                <TableCell>{staff.wage}</TableCell>
                                 <TableCell>{staff.category}</TableCell>
+                                <TableCell>{staff.wage}</TableCell>
                                 <TableCell>{staff.phone}</TableCell>
                                 <TableCell>
                                     <Button 
@@ -81,7 +81,7 @@ const AllStaffs = () => {
                                     <Button 
                                     variant="contained" 
                                     color="secondary" 
-                                    onClick={() => deleteStaffDetails(staff._id)}
+                                    onClick={() => deleteThisStaff(staff._id)}
                                     >
                                         Delete
                                     </Button>

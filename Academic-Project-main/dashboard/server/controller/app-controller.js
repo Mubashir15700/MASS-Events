@@ -2,12 +2,33 @@ import jwt from 'jsonwebtoken';
 import Staff from "../schema/staff-schema.js";
 import Event from "../schema/event-schema.js";
 
+const getCurrentUser = async (jwtToken) => {
+    const tokenDecoded = await jwt.verify(jwtToken, process.env.JWT_SECRET_KEY);
+    const currentStaff = await Staff.findById(tokenDecoded.userID).select('-password');
+    return currentStaff;
+}
+
+const today = new Date();
+const yyyy = today.getFullYear();
+let mm = today.getMonth() + 1;
+let dd = today.getDate();
+if (dd < 10) dd = '0' + dd;
+if (mm < 10) mm = '0' + mm;
+const formattedToday = yyyy + '-' + mm + '-' + dd;
+
+export const getNewEvents = async (req, res) => {
+    try {
+        const newEvents = await Event.find({date: { $gte: formattedToday } });
+        console.log("n" + newEvents);
+        res.status(200).json(newEvents);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
 export const bookEvent = async (req, res) => {
     try {
-        const token = req.cookies.jwt;
-        const decoded = await jwt.verify(token, process.env.JWT_SECRET_KEY);
-        const currentUser = await Staff.findById(decoded.userID).select('-password');
-
+        const currentUser = await getCurrentUser(req.cookies.jwt);
         const datas = await req.body;
         await Event.findOneAndUpdate({
             eventname: datas.event,
@@ -25,12 +46,8 @@ export const bookEvent = async (req, res) => {
 }
 
 export const payments = async (req, res) => {
-    const token = req.cookies.jwt;
-    const decoded = await jwt.verify(token, process.env.JWT_SECRET_KEY);
-    const currentUser = await Staff.findById(decoded.userID).select('-password');
-
+    const currentUser = await getCurrentUser(req.cookies.jwt);
     try {
-
         const events = await Event.find({
             payments: {
                 $all: [
@@ -46,14 +63,6 @@ export const payments = async (req, res) => {
 }
 
 export const attendance = async (req, res) => {
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    let mm = today.getMonth() + 1;
-    let dd = today.getDate();
-    if (dd < 10) dd = '0' + dd;
-    if (mm < 10) mm = '0' + mm;
-    const formattedToday = yyyy + '-' + mm + '-' + dd;
-
     try {
         const events = await Event.find({date: formattedToday});
         res.status(200).json(events);
@@ -84,9 +93,7 @@ export const markAttendance = async (req, res) => {
 export const cancelAttendance = async (req, res) => {
     try {
         const datas = await req.body;
-        console.log(datas);
         const currentStaff = await Staff.findOne({ username: datas.eventName.staff }).select('-password');
-        console.log("staff: " + currentStaff);
         await Event.findOneAndUpdate({
             eventname: datas.eventName.event,
         },

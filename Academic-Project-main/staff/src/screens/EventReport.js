@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback } from 'react';
-import { StyleSheet, Text, View, Pressable, RefreshControl, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, View, RefreshControl, ScrollView } from 'react-native';
 import DateIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/Fontisto';
-import { getEvents, getCurrStaff } from "../services/api";
+import { getNewEvents, getCurrStaff } from "../services/api";
 
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -27,7 +27,7 @@ export default EventReport = () => {
   }, []);
 
   const getAllEvents = async () => {
-    let response = await getEvents();
+    let response = await getNewEvents();
     response && setEvents(response.data);
     setLoading(false);
   }
@@ -56,22 +56,20 @@ export default EventReport = () => {
             event.payments.map((evt) => {
               return (
                 (evt.username === currentStaff.username) &&
-                  <View key={evt._id}>
-                    <View style={styles.row}>
-                      <View style={{ backgroundColor: 'pink', width: '100%', borderTopStartRadius: 10, alignItems: 'center', flexDirection: 'row' }}>
-                        <View style={{ marginHorizontal: 10, padding: 10 }}>
-                          <DateIcon name={'calendar-outline'} size={20} color={'black'} />
-                          <Text>{event.date}</Text>
-                        </View>
-                        <View>
-                          <Text>{event.eventname}</Text>
-                        </View>
+                  <View key={evt._id} style={[styles.row, { borderWidth: 1, borderColor: 'pink' }]}>
+                    <View style={{ backgroundColor: 'pink', width: '100%', borderTopStartRadius: 10, borderTopEndRadius: 10, alignItems: 'center', flexDirection: 'row' }}>
+                      <View style={{ marginHorizontal: 10, padding: 10 }}>
+                        <DateIcon name={'calendar-outline'} size={20} color={'black'} />
+                        <Text>{event.date}</Text>
                       </View>
-                      <View style={{ padding: 10 }}>
-                        <Text style={{fontWeight: 'bold'}}>{evt.username}</Text>
-                        <Text>Recieved: {evt.wage}</Text> 
+                      <View>
+                        <Text>{event.eventname}</Text>
                       </View>
-                  </View>
+                    </View>
+                    <View style={{ padding: 10 }}>
+                      <Text style={{fontWeight: 'bold'}}>{evt.username}</Text>
+                      <Text>Recieved: {evt.wage}</Text> 
+                    </View>
                 </View>
               );
             })
@@ -95,7 +93,7 @@ const styles = StyleSheet.create({
   row: {
     width: '90%',
     elevation: 15,
-    borderRadius: 10,
+    borderRadius: 12,
     backgroundColor: '#fff',
     marginVertical: 5,
     marginHorizontal: 20,

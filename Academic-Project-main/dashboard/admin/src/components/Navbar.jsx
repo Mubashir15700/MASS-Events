@@ -1,6 +1,7 @@
 import { AppBar, Toolbar, styled } from "@mui/material";
 import { NavLink } from "react-router-dom";
-import "./styles.css";
+import Sidebar from './Sidebar';
+import "./Navbar.css";
 
 const Header = styled(AppBar)`
   background: #111111;
@@ -15,8 +16,9 @@ const Tabs = styled(NavLink)`
 
 const Navbar = () => {
   return (
-    <Header position="static" className="app">
-      <Toolbar className="nav">
+    <Header position="fixed" className="app">
+      <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
+      <Toolbar className="nav" style={{ marginLeft: 80 }}>
         <Tabs to="/" 
           className={({ isActive }) => 
             isActive ? 'active' : 'inactive'
@@ -24,12 +26,10 @@ const Navbar = () => {
         >
           All Events
         </Tabs>
-        <Tabs to="/addevent">Add Event</Tabs>
         <Tabs to="/bookings">Bookings</Tabs>
         <Tabs to="/attendance">Attendance</Tabs>
         <Tabs to="/payments">Payments</Tabs>
         <Tabs to="/allstaffs">All Staffs</Tabs>
-        <Tabs to="/addstaff">Add Staff</Tabs>
       </Toolbar>
     </Header>
   );

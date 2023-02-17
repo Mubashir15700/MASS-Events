@@ -5,7 +5,7 @@ import { addEvent } from "../services/api";
 
 const Container = styled(FormGroup)`
     width: 60%;
-    margin: 2% auto 0 auto;
+    margin: 5% auto 0 auto;
     & > div {
         margin-top: 8px;
     }
@@ -30,7 +30,7 @@ const AddEvent = () => {
         setEvent({ ...event, [e.target.name]: e.target.value });
     }
 
-    const addEventDetails = async () => {
+    const addNewEvent = async () => {
         let response = await addEvent(event);
         if (response) {
             response.data.status === "success" ? navigate("/") : alert(response.data.message);
@@ -65,7 +65,7 @@ const AddEvent = () => {
                 <Input type="number" onChange={(e) => handleChange(e)} name="reqstaffs" />
             </FormControl>
             <FormControl>
-                <Button variant='contained' onClick={() => addEventDetails()}>Add Event</Button>
+                <Button variant='contained' onClick={() => addNewEvent()}>Add Event</Button>
             </FormControl>
         </Container>
     );

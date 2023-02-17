@@ -78,3 +78,17 @@ export const payStaff = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 }
+
+export const logoutAdmin = async (req, res) => {
+    try {
+        console.log("here");
+        // res.cookie('jwt', {
+        //     maxAge: 10000,
+        //     httpOnly: true,
+        //     overwrite: true,
+        // });
+        res.clearCookie('jwt',  {domain: 'localhost', path:'/'});
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}

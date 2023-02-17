@@ -5,7 +5,7 @@ import { addStaff } from "../services/api";
 
 const Container = styled(FormGroup)`
     width: 50%;
-    margin: 2% auto 0 auto;
+    margin: 5% auto 0 auto;
     & > div {
         margin-top: 5px;
     }
@@ -15,9 +15,9 @@ const defaultValue = {
     name: '',
     username: '',
     dob: '',
-    wage: '',
     role: 'staff',
     category: '',
+    wage: '',
     password: '',
     confpassword: '',
     phone: '',
@@ -33,7 +33,7 @@ const AddStaff = () => {
         setStaff({ ...staff, [e.target.name]: e.target.value });
     }
 
-    const addStaffDetails = async () => {
+    const addNewStaff = async () => {
         let response = await addStaff(staff);
         if (response) {
             response.data.status === "success" ? navigate("/allstaffs") : alert(response.data.message);
@@ -52,12 +52,8 @@ const AddStaff = () => {
                 <Input onChange={(e) => handleChange(e)} name="username" />
             </FormControl>
             <FormControl>
-                <InputLabel>D/B</InputLabel><br></br><br></br>
+                <InputLabel>DOB</InputLabel><br></br><br></br>
                 <Input type="date" onChange={(e) => handleChange(e)} name="dob" />
-            </FormControl>
-            <FormControl>
-                <InputLabel>Wage</InputLabel>
-                <Input type="number" onChange={(e) => handleChange(e)} name="wage" />
             </FormControl>
             <FormControl>
                 <InputLabel>Category</InputLabel>
@@ -67,10 +63,14 @@ const AddStaff = () => {
                     name="category"
                     onChange={(e) => handleChange(e)}
                 >
-                    <MenuItem value={"boy"}>Boy</MenuItem>
-                    <MenuItem value={"head"}>Head</MenuItem>
-                    <MenuItem value={"supervisor"}>Supervisor</MenuItem>
+                    <MenuItem value={"Boy"}>Boy</MenuItem>
+                    <MenuItem value={"Head"}>Head</MenuItem>
+                    <MenuItem value={"Supervisor"}>Supervisor</MenuItem>
                 </Select>
+            </FormControl>
+            <FormControl>
+                <InputLabel>Wage</InputLabel>
+                <Input type="number" onChange={(e) => handleChange(e)} name="wage" />
             </FormControl>
             <FormControl>
                 <InputLabel>Password</InputLabel>
@@ -85,7 +85,7 @@ const AddStaff = () => {
                 <Input type="number" onChange={(e) => handleChange(e)} name="phone" />
             </FormControl>
             <FormControl>
-                <Button variant='contained' onClick={() => addStaffDetails()}>Add Staff</Button>
+                <Button variant='contained' onClick={() => addNewStaff()}>Add Staff</Button>
             </FormControl>
         </Container>
     );

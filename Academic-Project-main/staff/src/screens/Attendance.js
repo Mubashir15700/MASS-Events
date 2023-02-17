@@ -56,12 +56,12 @@ export default Attendance = () => {
         </View>
         :
         events.length ?
-          <View style={{alignItems: 'center'}}>
+          <View style={{alignItems: 'center', borderTopRadius: 10}}>
             <Text>Today's Event(s)</Text>
             {events.map((event) => {
               return (
-                <View key={event._id} style={styles.row}>
-                  <View style={{ backgroundColor: 'pink', width: '100%', borderTopStartRadius: 10, alignItems: 'center', flexDirection: 'row' }}>
+                <View key={event._id} style={[styles.row, { borderWidth: 1, borderColor: 'pink' }]}>
+                  <View style={{ backgroundColor: 'pink', width: '100%', alignItems: 'center', flexDirection: 'row', borderTopStartRadius: 10, borderTopEndRadius: 10 }}>
                     <View style={{ marginHorizontal: 10, padding: 10 }}>
                       <DateIcon name={'calendar-clock-outline'} size={20} color={'black'} />
                       <Text style={{ fontWeight: 'bold' }}>{event.date}</Text>
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   row: {
     width: '90%',
     elevation: 15,
-    borderRadius: 10,
+    borderRadius: 12,
     backgroundColor: '#fff',
     marginVertical: 5,
     marginHorizontal: 20,

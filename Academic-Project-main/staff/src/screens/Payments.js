@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { StyleSheet, Text, View, Pressable, RefreshControl, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, View, RefreshControl, ScrollView } from 'react-native';
 import DateIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getPayments } from "../services/api";
 
@@ -50,8 +50,8 @@ export default Payments = () => {
               <View key={index}>
                 {event.payments.map((evt) => {
                   return (
-                    <View key={evt._id} style={styles.row}>
-                      <View style={{ backgroundColor: 'pink', width: '100%', borderTopStartRadius: 10, alignItems: 'center', flexDirection: 'row' }}>
+                    <View key={evt._id} style={[styles.row, { borderWidth: 1, borderColor: 'pink' }]}>
+                      <View style={{ backgroundColor: 'pink', width: '100%',  borderTopStartRadius: 10, borderTopEndRadius: 10, alignItems: 'center', flexDirection: 'row' }}>
                         <View style={{ marginHorizontal: 10, padding: 10 }}>
                           <DateIcon name={'calendar-outline'} size={20} color={'black'} />
                           <Text>{event.date}</Text>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   row: {
     width: '90%',
     elevation: 15,
-    borderRadius: 10,
+    borderRadius: 12,
     backgroundColor: '#fff',
     marginVertical: 5,
     marginHorizontal: 20,
