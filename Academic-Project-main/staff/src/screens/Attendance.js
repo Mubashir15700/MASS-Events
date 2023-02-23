@@ -61,7 +61,7 @@ export default Attendance = () => {
             {events.map((event) => {
               return (
                 <View key={event._id} style={[styles.row, { borderWidth: 1, borderColor: 'pink' }]}>
-                  <View style={{ backgroundColor: 'pink', width: '100%', alignItems: 'center', flexDirection: 'row', borderTopStartRadius: 10, borderTopEndRadius: 10 }}>
+                  <View style={styles.innerRow}>
                     <View style={{ marginHorizontal: 10, padding: 10 }}>
                       <DateIcon name={'calendar-clock-outline'} size={20} color={'black'} />
                       <Text style={{ fontWeight: 'bold' }}>{event.date}</Text>
@@ -84,10 +84,14 @@ export default Attendance = () => {
                           </View>
                           <View>
                             {event.attendance.some((staff) => staff.username === booking.username) ?
-                              <Pressable style={styles.actionBtn} onPress={() => removeAttendance(event.eventname, booking.username)}>
+                              <Pressable style={styles.actionBtn} onPress={() => 
+                                removeAttendance(event.eventname, booking.username)}
+                              >
                                 <Icon name={'checkbox-active'} size={20} color={'pink'} />
                               </Pressable> :
-                              <Pressable style={styles.actionBtn} onPress={() => handleAttendance(event.eventname, booking.username)}>
+                              <Pressable style={styles.actionBtn} onPress={() => 
+                                handleAttendance(event.eventname, booking.username)}
+                              >
                                 <Icon name={'checkbox-passive'} size={20} color={'gray'} />
                               </Pressable>}
                           </View>
@@ -129,6 +133,14 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     marginBottom: 10,
+  },
+  innerRow: { 
+    backgroundColor: 'pink', 
+    width: '100%', 
+    alignItems: 'center', 
+    flexDirection: 'row', 
+    borderTopStartRadius: 10, 
+    borderTopEndRadius: 10 
   },
   actionBtn: {
     width: 30,

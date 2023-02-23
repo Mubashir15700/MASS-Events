@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Table, TableHead, TableBody, TableRow, TableCell, styled, Button } from "@mui/material";
+import { Table, TableHead, TableBody, TableRow, TableCell, styled } from "@mui/material";
 import { getEvents, cancelBooking } from "../services/api.js";
+import { DisplayBookings } from "../components/DisplayBookings.jsx";
 
 const Container = styled(Table)`
     width: 95%;
@@ -17,7 +18,9 @@ const THead = styled(TableRow)`
 
 const Bookings = () => {
 
-    const [events, setEvents] = useState([]);
+    const [todays, setTodays] = useState([]);
+    const [upcomings, setUpcomings] = useState([]);
+    const [dones, setDones] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -26,7 +29,11 @@ const Bookings = () => {
 
     const getAllEvents = async () => {
         let response = await getEvents();
-        response && setEvents(response.data);
+        if (response) {
+            setTodays(response.data.todaysEvents);
+            setUpcomings(response.data.upcomingEvents);
+            setDones(response.data.doneEvents);
+        }
         setLoading(false);
     }
 
@@ -52,66 +59,33 @@ const Bookings = () => {
                 </THead>
             </TableHead>
 
-            {loading ?
+            {loading &&
                 <TableBody>
                     <TableRow>
                         <TableCell>Loading...</TableCell>
                     </TableRow>
                 </TableBody>
-                :
-                events.length ?
-                    events.map((event) => {
-                        return (
-                            <TableBody key={event._id}>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}><p>{event.date}</p> <p>{event.time}</p></TableCell>
-                                    <TableCell style={{ fontWeight: 'bold' }}>{event.eventname}</TableCell>
-                                </TableRow>
-                                {event.bookings.length ?
-                                    event.bookings.map((booking) => {
-                                        return (
-                                            <TableRow key={booking._id} style={{ backgroundColor: '#e5e5e5' }}>
-                                                <TableCell></TableCell>
-                                                <TableCell></TableCell>
-                                                <TableCell>{booking._id}</TableCell>
-                                                <TableCell>{booking.username}</TableCell>
-                                                <TableCell>{booking.category}</TableCell>
-                                                <TableCell>{booking.phone}</TableCell>
-                                                <TableCell>
-                                                    <Button
-                                                    variant="contained"
-                                                    color="secondary"
-                                                    onClick={() =>
-                                                        cancelThisBooking(event.eventname, booking.username)
-                                                    }
-                                                    >
-                                                        Cancel
-                                                    </Button>
-                                                </TableCell>
-                                            </TableRow>
-                                        );
-                                    })
-                                :
-                                <TableRow style={{ backgroundColor: '#e5e5e5' }}>
-                                    <TableCell></TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell>No Bookings Yet!</TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell></TableCell>
-                                </TableRow>
-                                }
-                            </TableBody>
-                        );
-                    })
-                :
-                <TableBody>
-                    <TableRow>
-                        <TableCell>No data found</TableCell>
-                    </TableRow>
-                </TableBody>
             }
+            {((todays.length === 0) && (upcomings.length === 0) && (dones.length === 0)) &&
+                <TableRow>
+                    <TableCell>No data found</TableCell>
+                </TableRow>
+            }
+            {todays.map((today) => {
+                return (
+                    <DisplayBookings key={today._id} status={today} handleClick={cancelThisBooking} />
+                );
+            })}
+            {upcomings.map((upcoming) => {
+                return (
+                    <DisplayBookings key={upcoming._id} status={upcoming} handleClick={cancelThisBooking} />
+                );
+            })}
+            {dones.map((done) => {
+                return (
+                    <DisplayBookings key={done._id} status={done} handleClick={cancelThisBooking} />
+                );
+            })}
         </Container>
     );
 }

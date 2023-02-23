@@ -84,18 +84,26 @@ export default Events = () => {
               }}>
                 <Text style={{ fontSize: 13, color: 'grey' }}>{event.eventname}</Text>
                 <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{event.location}</Text>
-                <Text style={{ fontSize: 13, fontWeight: 'bold', marginTop: 3 }}>Avail Slots: {event.reqstaffs - event.bookings.length}</Text>
+                <Text style={{ fontSize: 13, fontWeight: 'bold', marginTop: 3 }}>
+                  Avail Slots: {event.reqstaffs - event.bookings.length}
+                </Text>
               </View>
               {event.bookings.some((staff) => staff.username === currentstaff.username) ?
-                <Pressable style={[styles.actionBtn, {backgroundColor: 'pink'}]} onPress={() => {Alert.alert("Already booked this event")}}>
+                <Pressable style={[styles.actionBtn, {backgroundColor: 'pink'}]} onPress={() => {
+                  Alert.alert("Already booked this event")}}
+                >
                   <Text>Booked</Text>
                 </Pressable>
               : (event.reqstaffs <= event.bookings.length) ?
-                <Pressable style={[styles.actionBtn, {backgroundColor: '#d3d3d3'}]} onPress={() => {Alert.alert("Booking full")}}>
+                <Pressable style={[styles.actionBtn, {backgroundColor: '#d3d3d3'}]} onPress={() => {
+                  Alert.alert("Booking full")}}
+                >
                   <Text>Full</Text>
                 </Pressable> 
               :
-                <Pressable style={[styles.actionBtn, { borderWidth: 1, borderColor: 'gray',}]} onPress={() => bookThisEvent(event.eventname)}>
+                <Pressable style={[styles.actionBtn, { borderWidth: 1, borderColor: 'gray',}]} onPress={() => 
+                  bookThisEvent(event.eventname)}
+                >
                   <Text>Book</Text>
                 </Pressable> 
               }

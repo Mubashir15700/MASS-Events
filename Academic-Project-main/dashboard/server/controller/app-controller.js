@@ -18,8 +18,7 @@ const formattedToday = yyyy + '-' + mm + '-' + dd;
 
 export const getNewEvents = async (req, res) => {
     try {
-        const newEvents = await Event.find({date: { $gte: formattedToday } });
-        console.log("n" + newEvents);
+        const newEvents = await Event.find({date: { $gte: formattedToday } }).sort({ date: 1, time: 1 });
         res.status(200).json(newEvents);
     } catch (error) {
         res.status(404).json({ message: error.message });

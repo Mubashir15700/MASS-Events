@@ -10,7 +10,9 @@ export default Login = () => {
   const login = async () => {
     let response = await loginStaff(username, password);
     if (response) {
-        response.data.status === "success" ? console.log("token: " + response.data.token) : Alert.alert(response.data.message);
+        response.data.status === "success" ? console.log("token: " + response.data.token) 
+        : 
+        Alert.alert(response.data.message);
     }
   }
 

@@ -15,8 +15,8 @@ export default App = () => {
 
   const checkUserAuth = async () => {
     let response = await checkAuth();
-    if(response.data.status === "failed") {
-      setAuth(false);
+    if(response) {
+      response.data.status === "failed" && setAuth(false);
     }
   }
 

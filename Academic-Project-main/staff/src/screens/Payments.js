@@ -51,7 +51,7 @@ export default Payments = () => {
                 {event.payments.map((evt) => {
                   return (
                     <View key={evt._id} style={[styles.row, { borderWidth: 1, borderColor: 'pink' }]}>
-                      <View style={{ backgroundColor: 'pink', width: '100%',  borderTopStartRadius: 10, borderTopEndRadius: 10, alignItems: 'center', flexDirection: 'row' }}>
+                      <View style={styles.innerRow}>
                         <View style={{ marginHorizontal: 10, padding: 10 }}>
                           <DateIcon name={'calendar-outline'} size={20} color={'black'} />
                           <Text>{event.date}</Text>
@@ -97,6 +97,14 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     marginBottom: 10,
+  },
+  innerRow: { 
+    backgroundColor: 'pink', 
+    width: '100%',  
+    borderTopStartRadius: 10, 
+    borderTopEndRadius: 10, 
+    alignItems: 'center', 
+    flexDirection: 'row' 
   },
   actionBtn: {
     width: 30,

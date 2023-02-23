@@ -46,8 +46,12 @@ const Login = () => {
                 <Input type="password" onChange={(e) => handleChange(e)} name="password" />
             </FormControl>
             <FormControl>
-                <Button variant="contained" style={{ marginBottom: "5px"}} onClick={() => login()}>Login</Button>
-                <Button variant="contained" color="secondary" component={Link} to={"/register"}>Register</Button>
+                <Button variant="contained" style={{ marginBottom: "5px"}} onClick={() => login()}>
+                    Login
+                </Button>
+                <Button variant="contained" color="secondary" component={Link} to={"/register"}>
+                    Register
+                </Button>
             </FormControl>
         </Container>
     );
