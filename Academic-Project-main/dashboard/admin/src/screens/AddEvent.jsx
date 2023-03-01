@@ -4,8 +4,8 @@ import { FormControl, FormGroup, InputLabel, Input, Typography, styled, Button }
 import { addEvent } from "../services/api";
 
 const Container = styled(FormGroup)`
-    width: 60%;
-    margin: 5% auto 0 auto;
+    width: 50%;
+    margin: 7% auto 0 auto;
     & > div {
         margin-top: 8px;
     }
@@ -39,17 +39,16 @@ const AddEvent = () => {
 
     return (
         <Container>
-            <Typography variant='h6'>Add Event</Typography>
             <FormControl>
-                <InputLabel>Date</InputLabel><br/><br/>
+                <InputLabel>Date</InputLabel><br /><br />
                 <Input type="date" onChange={(e) => handleChange(e)} name="date" />
             </FormControl>
             <FormControl>
-                <InputLabel>Time</InputLabel><br/><br/>
+                <InputLabel>Time</InputLabel><br /><br />
                 <Input type="time" onChange={(e) => handleChange(e)} name="time" />
             </FormControl>
             <FormControl>
-                <InputLabel>Duration(hrs)</InputLabel><br/><br/>
+                <InputLabel>Duration(hrs)</InputLabel><br /><br />
                 <Input type="number" onChange={(e) => handleChange(e)} name="duration" />
             </FormControl>
             <FormControl>

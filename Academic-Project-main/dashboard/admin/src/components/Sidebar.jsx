@@ -8,16 +8,16 @@ import './Sidebar.css';
 export default props => {
     return (
         <Menu>
-            <NavLink className="menu-item" to={"/addevent"}>
-                Add Event
+            <NavLink className="menu-item" to={"/bookings"}>
+                Bookings
             </NavLink>
-            <NavLink className="menu-item" to={"/addstaff"}>
-                Add Staff
+            <NavLink className="menu-item" to={"/payments"}>
+                Payments
             </NavLink>
             <Button
-                variant="contained" 
+                variant="contained"
                 color="secondary"
-                onClick={() => 
+                onClick={() =>
                     logoutAdmin()
                 }
             >

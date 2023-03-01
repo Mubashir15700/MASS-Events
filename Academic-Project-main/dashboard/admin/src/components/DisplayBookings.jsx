@@ -1,8 +1,8 @@
-import { TableBody, TableRow, TableCell, Button } from "@mui/material";
+import { TableBody, TableRow, TableCell } from "@mui/material";
 
 export const DisplayBookings = (props) => {
     return (
-        <TableBody key={props.status._id}>
+        <TableBody>
             <TableRow>
                 <TableCell style={{ fontWeight: 'bold' }}>
                     <p>{props.status.date}</p>
@@ -18,20 +18,13 @@ export const DisplayBookings = (props) => {
                         <TableRow key={booking._id} style={{ backgroundColor: '#e5e5e5' }}>
                             <TableCell></TableCell>
                             <TableCell></TableCell>
-                            <TableCell>{booking._id}</TableCell>
                             <TableCell>{booking.username}</TableCell>
                             <TableCell>{booking.category}</TableCell>
                             <TableCell>{booking.phone}</TableCell>
-                            <TableCell>
-                                <Button
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={() =>
-                                        props.handleClick(props.status.eventname, booking.username)
-                                    }
-                                >
-                                    Cancel
-                                </Button>
+                            <TableCell style={{ fontSize: 15 }}>
+                                {props.status.attendance.some((staff) => staff.username === booking.username) ?
+                                    '☑️' : '☐'
+                                }
                             </TableCell>
                         </TableRow>
                     );
@@ -41,10 +34,6 @@ export const DisplayBookings = (props) => {
                     <TableCell></TableCell>
                     <TableCell></TableCell>
                     <TableCell>No Bookings Yet!</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
                 </TableRow>
             }
         </TableBody>

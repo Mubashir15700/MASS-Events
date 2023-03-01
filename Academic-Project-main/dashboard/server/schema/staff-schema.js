@@ -16,6 +16,17 @@ const staffsSchema = mongoose.Schema({
         required: true,
         type: String,
     },
+    place: {
+        required: true,
+        type: String,
+    },
+    phone: {
+        required: true,
+        type: Number,
+        unique: true,
+        minLength: 10,
+        maxLength: 10,
+    },
     role: {
         required: true,
         type: String,
@@ -31,14 +42,7 @@ const staffsSchema = mongoose.Schema({
     password: {
         required: true,
         type: String,
-        minLength: 6,
-    },
-    phone: {
-        required: true,
-        type: Number,
-        unique: true,
-        minLength: 10,
-        maxLength: 10,
+        minLength: 4,
     },
 });
 

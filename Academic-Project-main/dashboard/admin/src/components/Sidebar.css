@@ -74,9 +74,8 @@
 /* Individual item */
 .bm-item {
     display: inline-block;
-
     color: #d1d1d1;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     text-align: left;
     text-decoration: none;
     transition: color 0.2s;

@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const Container = styled(FormGroup)`
     width: 50%;
-    margin: 5% auto 0 auto;
+    margin: 7% auto 0 auto;
     & > div {
         margin-top: 8px;
     }
@@ -49,7 +49,7 @@ const EditEvent = () => {
 
     return (
         <Container>
-            <Typography variant='h4'>Edit Event</Typography>
+            <Typography variant='h6' style={{ textAlign: 'center' }}>Edit Event</Typography>
             <FormControl>
                 <InputLabel>Date</InputLabel><br /><br />
                 <Input type="date" onChange={(e) => handleChange(e)} name="date" value={event.date} />
@@ -59,7 +59,7 @@ const EditEvent = () => {
                 <Input type="time" onChange={(e) => handleChange(e)} name="time" value={event.time} />
             </FormControl>
             <FormControl>
-                <InputLabel>Duration(hrs)</InputLabel><br/><br/>
+                <InputLabel>Duration(hrs)</InputLabel><br /><br />
                 <Input type="number" onChange={(e) => handleChange(e)} name="duration" value={event.duration} />
             </FormControl>
             <FormControl>

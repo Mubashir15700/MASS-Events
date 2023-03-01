@@ -1,8 +1,8 @@
-import { TableBody, TableRow, TableCell, Button } from "@mui/material";
+import { TableBody, TableRow, TableCell } from "@mui/material";
 
 export const DisplayPayments = (props) => {
     return (
-        <TableBody key={props.status._id}>
+        <TableBody>
             <TableRow>
                 <TableCell style={{ fontWeight: 'bold' }}>
                     <p>{props.status.date}</p>
@@ -12,36 +12,16 @@ export const DisplayPayments = (props) => {
                     {props.status.eventname}
                 </TableCell>
             </TableRow>
-            {props.status.attendance.length ?
-                props.status.attendance.map((payments) => {
+            {props.status.payments.length ?
+                props.status.payments.map((payment) => {
                     return (
-                        <TableRow key={payments._id} style={{ backgroundColor: '#e5e5e5' }}>
+                        <TableRow key={payment._id} style={{ backgroundColor: '#e5e5e5' }}>
                             <TableCell></TableCell>
                             <TableCell></TableCell>
-                            <TableCell>{payments._id}</TableCell>
-                            <TableCell>{payments.username}</TableCell>
-                            <TableCell>{payments.category}</TableCell>
-                            <TableCell>{payments.phone}</TableCell>
-                            <TableCell>{payments.wage}</TableCell>
-                            <TableCell>
-                                {props.status.payments.some((staff) => staff.username === payments.username) ?
-                                <Button 
-                                variant="contained" 
-                                style={{ marginRight: "10px" }}
-                                disabled={true}
-                                >
-                                    paid
-                                </Button>
-                                :
-                                <Button 
-                                variant="contained" 
-                                style={{ marginRight: "10px" }}
-                                onClick={() => props.handleClick(props.status.eventname, payments.username)}
-                                >
-                                    pay
-                                </Button>
-                                }
-                            </TableCell>
+                            <TableCell>{payment.username}</TableCell>
+                            <TableCell>{payment.category}</TableCell>
+                            <TableCell>{payment.phone}</TableCell>
+                            <TableCell>{payment.wage}</TableCell>
                         </TableRow>
                     );
                 })
@@ -50,11 +30,6 @@ export const DisplayPayments = (props) => {
                     <TableCell></TableCell>
                     <TableCell></TableCell>
                     <TableCell>No data found</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
                 </TableRow>
             }
         </TableBody>

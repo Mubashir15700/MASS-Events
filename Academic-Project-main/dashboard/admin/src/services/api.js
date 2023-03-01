@@ -54,6 +54,14 @@ export const editEvent = async (id, event) => {
     }
 }
 
+export const getEventBooking = async (id) => {
+    try {
+        return await axios.get(`${URL}/events/geteventbooking/${id}`);
+    } catch (error) {
+        alert(error.response.data.message);
+    }
+}
+
 export const deleteEvent = async (id) => {
     try {
         return await axios.delete(`${URL}/events/deleteevent/${id}`);

@@ -15,12 +15,13 @@ const defaultValue = {
     name: '',
     username: '',
     dob: '',
+    place: '',
+    phone: '',
     role: 'staff',
     category: '',
     wage: '',
     password: '',
     confpassword: '',
-    phone: '',
 }
 
 const AddStaff = () => {
@@ -42,7 +43,6 @@ const AddStaff = () => {
 
     return (
         <Container>
-            <Typography variant='h6'>Add Staff</Typography>
             <FormControl>
                 <InputLabel>Name</InputLabel>
                 <Input onChange={(e) => handleChange(e)} name="name" />
@@ -56,6 +56,14 @@ const AddStaff = () => {
                 <Input type="date" onChange={(e) => handleChange(e)} name="dob" />
             </FormControl>
             <FormControl>
+                <InputLabel>Place</InputLabel>
+                <Input onChange={(e) => handleChange(e)} name="place" />
+            </FormControl>
+            <FormControl>
+                <InputLabel>Phone</InputLabel>
+                <Input type="number" onChange={(e) => handleChange(e)} name="phone" />
+            </FormControl>
+            <FormControl>
                 <InputLabel>Category</InputLabel>
                 <Select
                     value={staff.category}
@@ -65,7 +73,6 @@ const AddStaff = () => {
                 >
                     <MenuItem value={"Boy"}>Boy</MenuItem>
                     <MenuItem value={"Head"}>Head</MenuItem>
-                    <MenuItem value={"Supervisor"}>Supervisor</MenuItem>
                 </Select>
             </FormControl>
             <FormControl>
@@ -79,10 +86,6 @@ const AddStaff = () => {
             <FormControl>
                 <InputLabel>Confirm Password</InputLabel>
                 <Input type="password" onChange={(e) => handleChange(e)} name="confpassword" />
-            </FormControl>
-            <FormControl>
-                <InputLabel>Phone</InputLabel>
-                <Input type="number" onChange={(e) => handleChange(e)} name="phone" />
             </FormControl>
             <FormControl>
                 <Button variant='contained' onClick={() => addNewStaff()}>Add Staff</Button>

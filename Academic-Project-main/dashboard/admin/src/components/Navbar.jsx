@@ -19,17 +19,16 @@ const Navbar = () => {
     <Header position="fixed" className="app">
       <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
       <Toolbar className="nav" style={{ marginLeft: 80 }}>
-        <Tabs to="/" 
-          className={({ isActive }) => 
+        <Tabs to="/"
+          className={({ isActive }) =>
             isActive ? 'active' : 'inactive'
           }
         >
           All Events
         </Tabs>
-        <Tabs to="/bookings">Bookings</Tabs>
-        <Tabs to="/attendance">Attendance</Tabs>
-        <Tabs to="/payments">Payments</Tabs>
+        <Tabs to="/addevent">Add Event</Tabs>
         <Tabs to="/allstaffs">All Staffs</Tabs>
+        <Tabs to="/addstaff">Add Staff</Tabs>
       </Toolbar>
     </Header>
   );

@@ -6,7 +6,7 @@ import { DisplayBookings } from "../components/DisplayBookings.jsx";
 const Container = styled(Table)`
     width: 95%;
     margin: 5% auto 0 auto;
-    background-color: darkgray;
+    background-color: #e5e5e5;
 `
 
 const THead = styled(TableRow)`
@@ -51,11 +51,10 @@ const Bookings = () => {
                 <THead>
                     <TableCell>Date and Time</TableCell>
                     <TableCell>Event Name</TableCell>
-                    <TableCell>Staff ID</TableCell>
                     <TableCell>User Name</TableCell>
                     <TableCell>Category</TableCell>
                     <TableCell>Phone</TableCell>
-                    <TableCell>Actions</TableCell>
+                    <TableCell>Attendance</TableCell>
                 </THead>
             </TableHead>
 
@@ -67,9 +66,11 @@ const Bookings = () => {
                 </TableBody>
             }
             {((todays.length === 0) && (upcomings.length === 0) && (dones.length === 0)) &&
-                <TableRow>
-                    <TableCell>No data found</TableCell>
-                </TableRow>
+                <TableBody>
+                    <TableRow>
+                        <TableCell>No data found</TableCell>
+                    </TableRow>
+                </TableBody>
             }
             {todays.map((today) => {
                 return (

@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const Container = styled(FormGroup)`
     width: 50%;
-    margin: 5% auto 0 auto;
+    margin: 7% auto 0 auto;
     & > div {
         margin-top: 8px;
     }
@@ -15,10 +15,11 @@ const defaultValue = {
     name: '',
     username: '',
     dob: '',
+    place: '',
+    phone: '',
     role: 'staff',
     category: '',
     wage: '',
-    phone: ''
 }
 
 const EditStaff = () => {
@@ -50,7 +51,7 @@ const EditStaff = () => {
 
     return (
         <Container>
-            <Typography variant='h4'>Edit Staff</Typography>
+            <Typography variant='h6' style={{ textAlign: 'center' }}>Edit Staff</Typography>
             <FormControl>
                 <InputLabel>Name</InputLabel>
                 <Input onChange={(e) => handleChange(e)} name="name" value={staff.name} />
@@ -64,6 +65,14 @@ const EditStaff = () => {
                 <Input type="date" onChange={(e) => handleChange(e)} name="dob" value={staff.dob} />
             </FormControl>
             <FormControl>
+                <InputLabel>Place</InputLabel>
+                <Input onChange={(e) => handleChange(e)} name="place" value={staff.place} />
+            </FormControl>
+            <FormControl>
+                <InputLabel>Phone</InputLabel>
+                <Input type="number" onChange={(e) => handleChange(e)} name="phone" value={staff.phone} />
+            </FormControl>
+            <FormControl>
                 <InputLabel>Category</InputLabel>
                 <Select
                     value={staff.category}
@@ -73,16 +82,11 @@ const EditStaff = () => {
                 >
                     <MenuItem value={"Boy"}>Boy</MenuItem>
                     <MenuItem value={"Head"}>Head</MenuItem>
-                    <MenuItem value={"Supervisor"}>Supervisor</MenuItem>
                 </Select>
             </FormControl>
             <FormControl>
                 <InputLabel>Wage</InputLabel>
                 <Input type="number" onChange={(e) => handleChange(e)} name="wage" value={staff.wage} />
-            </FormControl>
-            <FormControl>
-                <InputLabel>Phone</InputLabel>
-                <Input type="number" onChange={(e) => handleChange(e)} name="phone" value={staff.phone} />
             </FormControl>
             <FormControl>
                 <Button variant='contained' onClick={() => editThisStaff()}>Edit Staff</Button>

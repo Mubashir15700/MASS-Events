@@ -6,7 +6,7 @@ import { DisplayPayments } from "../components/DisplayPayments.jsx";
 const Container = styled(Table)`
     width: 95%;
     margin: 5% auto 0 auto;
-    background-color: darkgray;
+    background-color: #e5e5e5;
 `
 
 const THead = styled(TableRow)`
@@ -39,8 +39,8 @@ const Payments = () => {
 
     const payThisStaff = async (eventName, staff) => {
         let response = await payStaff(eventName, staff);
-        if(response) {
-            response.data.status === "success" ? alert("Paid successfully") : alert("failed") ;
+        if (response) {
+            response.data.status === "success" ? alert("Paid successfully") : alert("failed");
         }
     }
 
@@ -50,12 +50,10 @@ const Payments = () => {
                 <THead>
                     <TableCell>Date and Time</TableCell>
                     <TableCell>Event Name</TableCell>
-                    <TableCell>Staff ID</TableCell>
                     <TableCell>User Name</TableCell>
                     <TableCell>Category</TableCell>
                     <TableCell>Phone</TableCell>
-                    <TableCell>Payable</TableCell>
-                    <TableCell>Actions</TableCell>
+                    <TableCell>Amount Paid</TableCell>
                 </THead>
             </TableHead>
 
@@ -65,11 +63,13 @@ const Payments = () => {
                         <TableCell>Loading...</TableCell>
                     </TableRow>
                 </TableBody>
-            }   
+            }
             {((todays.length === 0) && (upcomings.length === 0) && (dones.length === 0)) &&
-                <TableRow>
-                    <TableCell>No data found</TableCell>
-                </TableRow>
+                <TableBody>
+                    <TableRow>
+                        <TableCell>No data found</TableCell>
+                    </TableRow>
+                </TableBody>
             }
             {todays.map((today) => {
                 return (

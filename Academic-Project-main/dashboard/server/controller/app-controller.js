@@ -8,17 +8,20 @@ const getCurrentUser = async (jwtToken) => {
     return currentStaff;
 }
 
-const today = new Date();
-const yyyy = today.getFullYear();
-let mm = today.getMonth() + 1;
-let dd = today.getDate();
-if (dd < 10) dd = '0' + dd;
-if (mm < 10) mm = '0' + mm;
-const formattedToday = yyyy + '-' + mm + '-' + dd;
+const getToday = () => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1;
+    let dd = today.getDate();
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+    return (yyyy + '-' + mm + '-' + dd);
+}
 
 export const getNewEvents = async (req, res) => {
     try {
-        const newEvents = await Event.find({date: { $gte: formattedToday } }).sort({ date: 1, time: 1 });
+        const getFormattedToday =  getToday();
+        const newEvents = await Event.find({date: { $gte: getFormattedToday } }).sort({ date: 1, time: 1 });
         res.status(200).json(newEvents);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -63,7 +66,8 @@ export const payments = async (req, res) => {
 
 export const attendance = async (req, res) => {
     try {
-        const events = await Event.find({date: formattedToday});
+        const getFormattedToday =  getToday();
+        const events = await Event.find({date: getFormattedToday});
         res.status(200).json(events);
     } catch (error) {
         res.status(404).json({ message: error.message });

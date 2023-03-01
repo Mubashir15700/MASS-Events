@@ -32,17 +32,17 @@ const Register = () => {
     const handleChange = (e) => {
         setAdmin({ ...admin, [e.target.name]: e.target.value });
     }
-    
+
     const register = async () => {
         let response = await registerAdmin(admin);
         if (response) {
             alert(response.data.message);
-            if(response.data.status === "success" || response.data.message === "Admin already exists") {
+            if (response.data.status === "success" || response.data.message === "Admin already exists") {
                 navigate("/");
             }
         }
     }
-    
+
     return (
         <Container>
             <Typography variant='h5'>Register</Typography>
@@ -67,7 +67,7 @@ const Register = () => {
                 <Input type="number" onChange={(e) => handleChange(e)} name="phone" />
             </FormControl>
             <FormControl>
-                <Button variant="contained" onClick={() => register()}>Register</Button>
+                <Button variant="contained" style={{ width: 100 }} onClick={() => register()}>Register</Button>
             </FormControl>
         </Container>
     );

@@ -26,7 +26,7 @@ const Login = () => {
     const handleChange = (e) => {
         setAdmin({ ...admin, [e.target.name]: e.target.value });
     }
-    
+
     const login = async () => {
         let response = await loginAdmin(admin);
         if (response) {
@@ -45,11 +45,11 @@ const Login = () => {
                 <InputLabel>password:</InputLabel>
                 <Input type="password" onChange={(e) => handleChange(e)} name="password" />
             </FormControl>
-            <FormControl>
-                <Button variant="contained" style={{ marginBottom: "5px"}} onClick={() => login()}>
+            <FormControl style={{ flexDirection: 'row' }}>
+                <Button variant="contained" style={{ marginRight: 10, width: 100, }} onClick={() => login()}>
                     Login
                 </Button>
-                <Button variant="contained" color="secondary" component={Link} to={"/register"}>
+                <Button variant="contained" color="secondary" style={{ width: 100, }} component={Link} to={"/register"}>
                     Register
                 </Button>
             </FormControl>
