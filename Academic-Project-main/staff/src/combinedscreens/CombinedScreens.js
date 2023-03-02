@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { useLogin } from '../context/authProvider';
 import { getCurrStaff } from '../services/api';
 import Events from "../screens/Events";
 import EventReport from "../screens/EventReport";
 import Payments from "../screens/Payments";
 import Attendance from "../screens/Attendance";
+import Login from '../screens/Login';
 
 const Tab = createBottomTabNavigator();
 
-export default CombinedScreens = () => {
+const CombinedScreen = () => {
 
     const [currentstaff, setCurrentStaff] = useState([]);
 
@@ -29,7 +31,7 @@ export default CombinedScreens = () => {
                     let iconName;
                     if (route.name === 'Events') {
                         iconName = focused ? 'calendar-check' : 'calendar-minus';
-                    } else if (route.name === 'EventReport') {
+                    } else if (route.name === 'Events Report') {
                         iconName = focused ? 'tasks' : 'tasks';
                     } else if (route.name === 'Payments') {
                         iconName = focused ? 'credit-card' : 'credit-card';
@@ -44,13 +46,20 @@ export default CombinedScreens = () => {
             }
         >
             <Tab.Screen name="Events" component={Events} />
-            <Tab.Screen name="EventReport" component={EventReport} />
+            <Tab.Screen name="Events Report" component={EventReport} />
             <Tab.Screen name="Payments" component={Payments} />
             
-            {(currentstaff && currentstaff.category !== "boy") && 
+            {(currentstaff && currentstaff.category !== "Boy") && 
                 <Tab.Screen name="Attendance" component={Attendance} />
             }
             
         </Tab.Navigator>
     );
 }
+
+const CombinedScreens = () => {
+    const {auth} = useLogin();
+    return auth ? <CombinedScreen /> : <Login />;
+}
+
+export default CombinedScreens;

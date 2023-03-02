@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { FormControl, FormGroup, InputLabel, Input, Typography, styled, Button } from '@mui/material';
+import { FormControl, FormGroup, InputLabel, Input, styled, Button } from '@mui/material';
 import { addEvent } from "../services/api";
 
 const Container = styled(FormGroup)`

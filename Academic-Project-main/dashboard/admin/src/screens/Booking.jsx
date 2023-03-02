@@ -97,7 +97,7 @@ const Booking = () => {
                                             variant="contained"
                                             color="secondary"
                                             onClick={() =>
-                                                cancelThisBooking(event.eventname, staffs.username)
+                                                cancelThisBooking(event._id, staffs.username)
                                             }
                                         >
                                             Cancel

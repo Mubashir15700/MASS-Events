@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
 import { FormControl, FormGroup, InputLabel, Input, Typography, styled, Button } from '@mui/material';
 import { Link } from "react-router-dom";
 import { loginAdmin } from '../services/api';
+import { useLogin } from '../context/authProvider';
 
 const Container = styled(FormGroup)`
     width: 50%;
@@ -18,10 +18,8 @@ const defaultValue = {
 }
 
 const Login = () => {
-
     const [admin, setAdmin] = useState(defaultValue);
-
-    const navigate = useNavigate();
+    const { setAuth } = useLogin();
 
     const handleChange = (e) => {
         setAdmin({ ...admin, [e.target.name]: e.target.value });
@@ -30,7 +28,7 @@ const Login = () => {
     const login = async () => {
         let response = await loginAdmin(admin);
         if (response) {
-            response.data.status === "success" ? navigate("/") : alert(response.data.message);
+            response.data.status === "success" ? setAuth(true) : alert(response.data.message);
         }
     }
 

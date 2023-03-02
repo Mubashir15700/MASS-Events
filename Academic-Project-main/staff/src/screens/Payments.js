@@ -10,6 +10,7 @@ const wait = (timeout) => {
 export default Payments = () => {
 
   const [events, setEvents] = useState([]);
+  const [currentUser, setCurrentUser] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -26,7 +27,8 @@ export default Payments = () => {
   const getAllPayments = async () => {
     let response = await getPayments();
     if (response) {
-      setEvents(response.data);
+      setEvents(response.data.events);
+      setCurrentUser(response.data.user);
       setLoading(false);
     }
   }
@@ -50,20 +52,26 @@ export default Payments = () => {
               <View key={index}>
                 {event.payments.map((evt) => {
                   return (
-                    <View key={evt._id} style={[styles.row, { borderWidth: 1, borderColor: 'pink' }]}>
-                      <View style={styles.innerRow}>
-                        <View style={{ marginHorizontal: 10, padding: 10 }}>
-                          <DateIcon name={'calendar-outline'} size={20} color={'black'} />
-                          <Text>{event.date}</Text>
+                    <View key={evt._id}>
+                      {evt.username === currentUser &&
+                        <View style={[styles.row, { borderWidth: 1, borderColor: 'pink' }]}>
+                          <>
+                            <View style={styles.innerRow}>
+                              <View style={{ marginHorizontal: 10, padding: 10 }}>
+                                <DateIcon name={'calendar-outline'} size={20} color={'black'} />
+                                <Text>{event.date}</Text>
+                              </View>
+                              <View>
+                                <Text>{event.eventname}</Text>
+                              </View>
+                            </View>
+                            <View style={{ padding: 10 }}>
+                              <Text style={{ fontWeight: 'bold' }}>{evt.username}</Text>
+                              <Text>Recieved: {evt.wage}</Text>
+                            </View>
+                          </>
                         </View>
-                        <View>
-                          <Text>{event.eventname}</Text>
-                        </View>
-                      </View>
-                      <View style={{ padding: 10 }}>
-                        <Text style={{ fontWeight: 'bold' }}>{evt.username}</Text>
-                        <Text>Recieved: {evt.wage}</Text>
-                      </View>
+                      }
                     </View>
                   );
                 })
@@ -71,10 +79,10 @@ export default Payments = () => {
               </View>
             );
           })
-        :
-        <View style={styles.row}>
-          <Text>No data found</Text>
-        </View>
+          :
+          <View style={styles.row}>
+            <Text>No data found</Text>
+          </View>
       }
     </ScrollView>
   );
@@ -98,13 +106,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
   },
-  innerRow: { 
-    backgroundColor: 'pink', 
-    width: '100%',  
-    borderTopStartRadius: 10, 
-    borderTopEndRadius: 10, 
-    alignItems: 'center', 
-    flexDirection: 'row' 
+  innerRow: {
+    backgroundColor: 'pink',
+    width: '100%',
+    borderTopStartRadius: 10,
+    borderTopEndRadius: 10,
+    alignItems: 'center',
+    flexDirection: 'row'
   },
   actionBtn: {
     width: 30,

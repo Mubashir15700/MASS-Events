@@ -1,8 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { StyleSheet, Text, View, RefreshControl, ScrollView } from 'react-native';
 import DateIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Icon from 'react-native-vector-icons/Fontisto';
-import { getNewEvents, getCurrStaff } from "../services/api";
+import { getPayments } from "../services/api";
 
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -11,30 +10,27 @@ const wait = (timeout) => {
 export default EventReport = () => {
 
   const [events, setEvents] = useState([]);
-  const [currentStaff, setCurrentStaff] = useState([]);
+  const [currentUser, setCurrentUser] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    getAllEvents();
+    getAllPayments();
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
   useEffect(() => {
-    getAllEvents();
-    getCurrentStaff();
+    getAllPayments();
   }, []);
 
-  const getAllEvents = async () => {
-    let response = await getNewEvents();
-    response && setEvents(response.data);
-    setLoading(false);
-  }
-
-  const getCurrentStaff = async () => {
-    let response = await getCurrStaff();
-    response && setCurrentStaff(response.data.currentStaff);
+  const getAllPayments = async () => {
+    let response = await getPayments();
+    if (response) {
+      setEvents(response.data.events);
+      setCurrentUser(response.data.user);
+      setLoading(false);
+    }
   }
 
   return (
@@ -45,41 +41,46 @@ export default EventReport = () => {
           onRefresh={onRefresh}
         />
       }>
-      {loading ? 
+      {loading ?
         <View style={styles.row}>
           <Text>Loading...</Text>
         </View>
-      :
-      events.length ?
-        events.map((event) => {
-          return (
-            event.payments.map((evt) => {
-              return (
-                (evt.username === currentStaff.username) &&
-                  <View key={evt._id} style={[styles.row, { borderWidth: 1, borderColor: 'pink' }]}>
-                    <View style={styles.innerRow}>
-                      <View style={{ marginHorizontal: 10, padding: 10 }}>
-                        <DateIcon name={'calendar-outline'} size={20} color={'black'} />
-                        <Text>{event.date}</Text>
+        :
+        events.length ?
+          events.map((event) => {
+            return (
+              event.payments.map((evt) => {
+                return (
+                  <View key={evt._id}>
+                    {evt.username === currentUser &&
+                      <View style={[styles.row, { borderWidth: 1, borderColor: 'pink' }]}>
+                        <>
+                          <View style={styles.innerRow}>
+                            <View style={{ marginHorizontal: 10, padding: 10 }}>
+                              <DateIcon name={'calendar-outline'} size={20} color={'black'} />
+                              <Text>{event.date}</Text>
+                            </View>
+                            <View>
+                              <Text>{event.eventname}</Text>
+                            </View>
+                          </View>
+                          <View style={{ padding: 10 }}>
+                            <Text style={{ fontWeight: 'bold' }}>{evt.username}</Text>
+                            <Text>Recieved: {evt.wage}</Text>
+                          </View>
+                        </>
                       </View>
-                      <View>
-                        <Text>{event.eventname}</Text>
-                      </View>
-                    </View>
-                    <View style={{ padding: 10 }}>
-                      <Text style={{fontWeight: 'bold'}}>{evt.username}</Text>
-                      <Text>Recieved: {evt.wage}</Text> 
-                    </View>
-                </View>
-              );
-            })
-          );
-        })
-      :
-      <View style={styles.row}>
-        <Text>No data found</Text>
-      </View>
-    }
+                    }
+                  </View>
+                );
+              })
+            );
+          })
+          :
+          <View style={styles.row}>
+            <Text>No data found</Text>
+          </View>
+      }
     </ScrollView>
   );
 }
@@ -102,13 +103,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
   },
-  innerRow: { 
-    backgroundColor: 'pink', 
-    width: '100%', 
-    borderTopStartRadius: 10, 
-    borderTopEndRadius: 10, 
-    alignItems: 'center', 
-    flexDirection: 'row' 
+  innerRow: {
+    backgroundColor: 'pink',
+    width: '100%',
+    borderTopStartRadius: 10,
+    borderTopEndRadius: 10,
+    alignItems: 'center',
+    flexDirection: 'row'
   },
   actionBtn: {
     width: 30,

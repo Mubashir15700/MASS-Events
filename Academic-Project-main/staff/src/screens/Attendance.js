@@ -85,12 +85,12 @@ export default Attendance = () => {
                           <View>
                             {event.attendance.some((staff) => staff.username === booking.username) ?
                               <Pressable style={styles.actionBtn} onPress={() => 
-                                removeAttendance(event.eventname, booking.username)}
+                                removeAttendance(event._id, booking.username)}
                               >
                                 <Icon name={'checkbox-active'} size={20} color={'pink'} />
                               </Pressable> :
                               <Pressable style={styles.actionBtn} onPress={() => 
-                                handleAttendance(event.eventname, booking.username)}
+                                handleAttendance(event._id, booking.username)}
                               >
                                 <Icon name={'checkbox-passive'} size={20} color={'gray'} />
                               </Pressable>}

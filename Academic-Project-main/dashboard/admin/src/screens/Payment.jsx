@@ -88,7 +88,7 @@ const Payment = () => {
                                         <Button
                                             variant="contained"
                                             style={{ marginRight: "10px" }}
-                                            onClick={() => payThisStaff(event.eventname, staffs.username)}
+                                            onClick={() => payThisStaff(event._id, staffs.username)}
                                         >
                                             pay
                                         </Button>

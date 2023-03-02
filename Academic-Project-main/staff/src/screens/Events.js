@@ -102,7 +102,7 @@ export default Events = () => {
                 </Pressable> 
               :
                 <Pressable style={[styles.actionBtn, { borderWidth: 1, borderColor: 'gray',}]} onPress={() => 
-                  bookThisEvent(event.eventname)}
+                  bookThisEvent(event._id)}
                 >
                   <Text>Book</Text>
                 </Pressable> 

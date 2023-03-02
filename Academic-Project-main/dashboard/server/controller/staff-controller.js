@@ -50,7 +50,7 @@ export const deleteStaff = async (req, res) => {
 export const cancelBooking = async (req, res) => {
     try {
         await Event.findOneAndUpdate({
-            eventname: req.body.eventName,
+            _id: req.body.eventName,
         }, {
             $pull: {
                 bookings: { username: req.body.Staff },
@@ -67,7 +67,7 @@ export const payStaff = async (req, res) => {
         const event = req.body.data.eventName;
         const staff = await Staff.findOne({ username: req.body.data.staff }).select('-password');
         await Event.findOneAndUpdate({
-            eventname: event,
+            _id: event,
         }, {
             $addToSet: {
                 payments: staff,

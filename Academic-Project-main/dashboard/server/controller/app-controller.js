@@ -20,8 +20,8 @@ const getToday = () => {
 
 export const getNewEvents = async (req, res) => {
     try {
-        const getFormattedToday =  getToday();
-        const newEvents = await Event.find({date: { $gte: getFormattedToday } }).sort({ date: 1, time: 1 });
+        const getFormattedToday = getToday();
+        const newEvents = await Event.find({ date: { $gte: getFormattedToday } }).sort({ date: 1, time: 1 });
         res.status(200).json(newEvents);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -33,7 +33,7 @@ export const bookEvent = async (req, res) => {
         const currentUser = await getCurrentUser(req.cookies.jwt);
         const datas = await req.body;
         await Event.findOneAndUpdate({
-            eventname: datas.event,
+            _id: datas.event,
         },
             {
                 $addToSet: {
@@ -41,24 +41,22 @@ export const bookEvent = async (req, res) => {
                 },
             }
         );
-        res.status(201).send({ "status": "success", "message": "Booked event successfully"});
+        res.status(201).send({ "status": "success", "message": "Booked event successfully" });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
 }
 
 export const payments = async (req, res) => {
-    const currentUser = await getCurrentUser(req.cookies.jwt);
+    const currentStaff = await getCurrentUser(req.cookies.jwt);
     try {
         const events = await Event.find({
             payments: {
-                $all: [
-                    {"$elemMatch": {username: currentUser.username}}
-                ]
+                $elemMatch: { username: currentStaff.username }
             },
         });
 
-        res.status(200).json(events);
+        res.status(200).send({ "events": events, "user": currentStaff.username });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -66,8 +64,8 @@ export const payments = async (req, res) => {
 
 export const attendance = async (req, res) => {
     try {
-        const getFormattedToday =  getToday();
-        const events = await Event.find({date: getFormattedToday});
+        const getFormattedToday = getToday();
+        const events = await Event.find({ date: getFormattedToday });
         res.status(200).json(events);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -79,7 +77,7 @@ export const markAttendance = async (req, res) => {
         const datas = await req.body;
         const currentStaff = await Staff.findOne({ username: datas.staff }).select('-password');
         await Event.findOneAndUpdate({
-            eventname: datas.event,
+            _id: datas.event,
         },
             {
                 $addToSet: {
@@ -97,8 +95,11 @@ export const cancelAttendance = async (req, res) => {
     try {
         const datas = await req.body;
         const currentStaff = await Staff.findOne({ username: datas.eventName.staff }).select('-password');
+
+        const events = await Event.findOne({ _id: datas.eventName.event, "payments.username": currentStaff.username});
+        if(!events) {
         await Event.findOneAndUpdate({
-            eventname: datas.eventName.event,
+            _id: datas.eventName.event,
         },
             {
                 $pull: {
@@ -107,6 +108,10 @@ export const cancelAttendance = async (req, res) => {
             }
         );
         res.status(201).send({ "status": "success", "message": "Cancelled attendance successfully" });
+        } else {
+            res.send({ "status": "failed", "message": "Can't cancel attendance" });
+        }
+
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
