@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import { Table, TableHead, TableBody, TableRow, TableCell, styled } from "@mui/material";
-import { getEvents, payStaff } from "../services/api.js";
-import { DisplayPayments } from "../components/DisplayPayments.jsx";
+import { Table, TableHead, TableBody, TableRow, TableCell, styled, Button } from "@mui/material";
+import { BsCheckSquareFill, BsSquare } from "react-icons/bs";
+import { getEventBooking } from "../services/api.js";
+import { useParams } from 'react-router';
+import { payStaff } from "../services/api.js";
 
 const Container = styled(Table)`
     width: 95%;
@@ -18,74 +20,74 @@ const THead = styled(TableRow)`
 
 const Payments = () => {
 
-    const [todays, setTodays] = useState([]);
-    const [upcomings, setUpcomings] = useState([]);
-    const [dones, setDones] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [event, setEvent] = useState([]);
+
+    const params = useParams()
 
     useEffect(() => {
-        getAllEvents();
+        getThisEvent();
     }, []);
 
-    const getAllEvents = async () => {
-        let response = await getEvents();
+    const getThisEvent = async () => {
+        let response = await getEventBooking(params.id);
         if (response) {
-            setTodays(response.data.todaysEvents);
-            setUpcomings(response.data.upcomingEvents);
-            setDones(response.data.doneEvents);
+            setEvent(response.data);
         }
-        setLoading(false);
     }
 
     const payThisStaff = async (eventName, staff) => {
         let response = await payStaff(eventName, staff);
         if (response) {
-            response.data.status === "success" ? alert("Paid successfully") : alert("failed");
+            response.data.status === "success" ? alert("Marked Payment successfully") : alert("failed");
         }
+        getThisEvent();
     }
 
     return (
         <Container>
             <TableHead>
                 <THead>
-                    <TableCell>Date and Time</TableCell>
+                    <TableCell>Date and Time(24hrs)</TableCell>
                     <TableCell>Event Name</TableCell>
                     <TableCell>User Name</TableCell>
                     <TableCell>Category</TableCell>
                     <TableCell>Phone</TableCell>
-                    <TableCell>Amount Paid</TableCell>
+                    <TableCell>Amount</TableCell>
+                    <TableCell>Status</TableCell>
                 </THead>
             </TableHead>
-
-            {loading &&
-                <TableBody>
-                    <TableRow>
-                        <TableCell>Loading...</TableCell>
-                    </TableRow>
-                </TableBody>
-            }
-            {((todays.length === 0) && (upcomings.length === 0) && (dones.length === 0)) &&
-                <TableBody>
-                    <TableRow>
-                        <TableCell>No data found</TableCell>
-                    </TableRow>
-                </TableBody>
-            }
-            {todays.map((today) => {
-                return (
-                    <DisplayPayments key={today._id} status={today} handleClick={payThisStaff} />
-                );
-            })}
-            {upcomings.map((upcoming) => {
-                return (
-                    <DisplayPayments key={upcoming._id} status={upcoming} handleClick={payThisStaff} />
-                );
-            })}
-            {dones.map((done) => {
-                return (
-                    <DisplayPayments key={done._id} status={done} handleClick={payThisStaff} />
-                );
-            })}
+            <TableBody>
+                <TableRow>
+                    <TableCell style={{ fontWeight: 'bold' }}>
+                        <p>{event.date}</p>
+                        <p>{event.time}</p>
+                    </TableCell>
+                    <TableCell style={{ fontWeight: 'bold' }}>
+                        {event.eventname}
+                    </TableCell>
+                </TableRow>
+                {event.attendance &&
+                    event.attendance.map((staffs) => {
+                        return (
+                            <TableRow key={staffs._id} style={{ backgroundColor: '#e5e5e5' }}>
+                                <TableCell></TableCell>
+                                <TableCell></TableCell>
+                                <TableCell>{staffs.username}</TableCell>
+                                <TableCell>{staffs.category}</TableCell>
+                                <TableCell>{staffs.phone}</TableCell>
+                                <TableCell>{staffs.wage}</TableCell>
+                                <TableCell>
+                                    {event.payments.some((staff) => staff.username === staffs.username) ?
+                                        <BsCheckSquareFill style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} />
+                                        :
+                                        <BsSquare style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} onClick={() => payThisStaff(event._id, staffs.username)} />
+                                    }
+                                </TableCell>
+                            </TableRow>
+                        );
+                    })
+                }
+            </TableBody>
         </Container>
     );
 }

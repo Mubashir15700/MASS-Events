@@ -7,7 +7,7 @@ const staffAuthorization = async (req, res, next) => {
         res.status(401).send({ "status": "failed", "message": "Unauthorized user, no token" });
     } else {
         try {
-            const decoded = await jwt.verify(token, process.env.JWT_SECRET_KEY);
+            const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
             const currentUser = await Staff.findById(decoded.userID).select('-password');
             return next();
         } catch {

@@ -60,7 +60,7 @@ export default Attendance = () => {
             <Text>Today's Event(s)</Text>
             {events.map((event) => {
               return (
-                <View key={event._id} style={[styles.row, { borderWidth: 1, borderColor: 'pink' }]}>
+                <View key={event._id} style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
                   <View style={styles.innerRow}>
                     <View style={{ marginHorizontal: 10, padding: 10 }}>
                       <DateIcon name={'calendar-clock-outline'} size={20} color={'black'} />
@@ -87,7 +87,7 @@ export default Attendance = () => {
                               <Pressable style={styles.actionBtn} onPress={() => 
                                 removeAttendance(event._id, booking.username)}
                               >
-                                <Icon name={'checkbox-active'} size={20} color={'pink'} />
+                                <Icon name={'checkbox-active'} size={20} color={'#36828b'} />
                               </Pressable> :
                               <Pressable style={styles.actionBtn} onPress={() => 
                                 handleAttendance(event._id, booking.username)}
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   innerRow: { 
-    backgroundColor: 'pink', 
+    backgroundColor: '#36828b', 
     width: '100%', 
     alignItems: 'center', 
     flexDirection: 'row', 

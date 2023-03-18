@@ -12,7 +12,8 @@ export default Login = () => {
   const login = async () => {
     let response = await loginStaff(username, password);
     if (response) {
-      response.data.status === "success" ? setAuth(true)
+      response.data.status === "success" ?
+        setAuth(true)
         :
         Alert.alert(response.data.message);
     }
@@ -40,7 +41,7 @@ export default Login = () => {
           style={styles.loginBtn}
           onPress={() => login()}
         >
-          <Text style={styles.loginText}>Login</Text>
+          <Text style={{ color: '#fff' }}>Login</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: "pink",
+    borderColor: "#4682b4",
     height: 40,
     width: 300,
     marginBottom: 10,
@@ -63,6 +64,6 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "pink",
+    backgroundColor: "#4682b4",
   },
 });

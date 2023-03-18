@@ -47,38 +47,41 @@ export default Payments = () => {
         </View>
         :
         events.length ?
-          events.map((event, index) => {
-            return (
-              <View key={index}>
-                {event.payments.map((evt) => {
-                  return (
-                    <View key={evt._id}>
-                      {evt.username === currentUser &&
-                        <View style={[styles.row, { borderWidth: 1, borderColor: 'pink' }]}>
-                          <>
-                            <View style={styles.innerRow}>
-                              <View style={{ marginHorizontal: 10, padding: 10 }}>
-                                <DateIcon name={'calendar-outline'} size={20} color={'black'} />
-                                <Text>{event.date}</Text>
+          <View>
+            <Text style={{ textAlign: 'center' }}>Previous Payments</Text>
+            {events.map((event, index) => {
+              return (
+                <View key={index}>
+                  {event.payments.map((evt) => {
+                    return (
+                      <View key={evt._id}>
+                        {evt.username === currentUser &&
+                          <View style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
+                            <>
+                              <View style={styles.innerRow}>
+                                <View style={{ marginHorizontal: 10, padding: 10 }}>
+                                  <DateIcon name={'calendar-outline'} size={20} color={'black'} />
+                                  <Text style={{ fontWeight: 'bold' }}>{event.date}</Text>
+                                </View>
+                                <View>
+                                  <Text style={{ fontWeight: 'bold' }}>{event.eventname}</Text>
+                                </View>
                               </View>
-                              <View>
-                                <Text>{event.eventname}</Text>
+                              <View style={{ padding: 10 }}>
+                                <Text>Wage Recieved: {evt.wage}</Text>
                               </View>
-                            </View>
-                            <View style={{ padding: 10 }}>
-                              <Text style={{ fontWeight: 'bold' }}>{evt.username}</Text>
-                              <Text>Recieved: {evt.wage}</Text>
-                            </View>
-                          </>
-                        </View>
-                      }
-                    </View>
-                  );
-                })
-                }
-              </View>
-            );
-          })
+                            </>
+                          </View>
+                        }
+                      </View>
+                    );
+                  })
+                  }
+                </View>
+              );
+            })
+            }
+          </View>
           :
           <View style={styles.row}>
             <Text>No data found</Text>
@@ -107,7 +110,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   innerRow: {
-    backgroundColor: 'pink',
+    backgroundColor: '#36828b',
     width: '100%',
     borderTopStartRadius: 10,
     borderTopEndRadius: 10,

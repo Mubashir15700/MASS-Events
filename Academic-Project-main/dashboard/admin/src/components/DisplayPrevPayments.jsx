@@ -1,19 +1,19 @@
 import { TableBody, TableRow, TableCell } from "@mui/material";
 
-export const DisplayPayments = (props) => {
+export const DisplayPrevPayments = (props) => {
     return (
         <TableBody>
             <TableRow>
                 <TableCell style={{ fontWeight: 'bold' }}>
-                    <p>{props.status.date}</p>
-                    <p>{props.status.time}</p>
+                    <p>{props.event.date}</p>
+                    <p>{props.event.time}</p>
                 </TableCell>
                 <TableCell style={{ fontWeight: 'bold' }}>
-                    {props.status.eventname}
+                    {props.event.eventname}
                 </TableCell>
             </TableRow>
-            {props.status.payments.length ?
-                props.status.payments.map((payment) => {
+            {props.event.payments.length ?
+                props.event.payments.map((payment) => {
                     return (
                         <TableRow key={payment._id} style={{ backgroundColor: '#e5e5e5' }}>
                             <TableCell></TableCell>

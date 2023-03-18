@@ -6,7 +6,7 @@ import { useLogin } from '../context/authProvider';
 
 const Container = styled(FormGroup)`
     width: 50%;
-    margin: 8% auto 0 auto;
+    margin: 5% auto 0 auto;
     & > div {
         margin-top: 20px;
     }
@@ -34,7 +34,8 @@ const Login = () => {
 
     return (
         <Container>
-            <Typography variant='h5'>Log In</Typography>
+            <Typography variant='h5' style={{ textAlign: 'center', marginBottom: 70 }}>Event Staff Management</Typography>
+            <Typography variant='h6'>Log In</Typography>
             <FormControl>
                 <InputLabel>User Name:</InputLabel>
                 <Input onChange={(e) => handleChange(e)} name="username" />

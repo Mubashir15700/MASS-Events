@@ -1,19 +1,20 @@
 import { TableBody, TableRow, TableCell } from "@mui/material";
+import { BsCheckSquareFill, BsSquare } from "react-icons/bs";
 
-export const DisplayBookings = (props) => {
+export const DisplayEventsStatus = (props) => {
     return (
         <TableBody>
             <TableRow>
                 <TableCell style={{ fontWeight: 'bold' }}>
-                    <p>{props.status.date}</p>
-                    <p>{props.status.time}</p>
+                    <p>{props.event.date}</p>
+                    <p>{props.event.time}</p>
                 </TableCell>
                 <TableCell style={{ fontWeight: 'bold' }}>
-                    {props.status.eventname}
+                    {props.event.eventname}
                 </TableCell>
             </TableRow>
-            {props.status.bookings.length ?
-                props.status.bookings.map((booking) => {
+            {props.event.bookings.length ?
+                props.event.bookings.map((booking) => {
                     return (
                         <TableRow key={booking._id} style={{ backgroundColor: '#e5e5e5' }}>
                             <TableCell></TableCell>
@@ -22,8 +23,13 @@ export const DisplayBookings = (props) => {
                             <TableCell>{booking.category}</TableCell>
                             <TableCell>{booking.phone}</TableCell>
                             <TableCell style={{ fontSize: 15 }}>
-                                {props.status.attendance.some((staff) => staff.username === booking.username) ?
-                                    '☑️' : '☐'
+                                {props.event.attendance.some((staff) => staff.username === booking.username) ?
+                                    <BsCheckSquareFill /> : <BsSquare />
+                                }
+                            </TableCell>
+                            <TableCell style={{ fontSize: 15 }}>
+                                {props.event.payments.some((staff) => staff.username === booking.username) ?
+                                    <BsCheckSquareFill /> : <BsSquare />
                                 }
                             </TableCell>
                         </TableRow>
@@ -33,7 +39,7 @@ export const DisplayBookings = (props) => {
                 <TableRow style={{ backgroundColor: '#e5e5e5' }}>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
-                    <TableCell>No Bookings Yet!</TableCell>
+                    <TableCell>No data found</TableCell>
                 </TableRow>
             }
         </TableBody>

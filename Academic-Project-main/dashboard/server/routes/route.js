@@ -1,8 +1,8 @@
 import express from "express";
-import { registerAdmin, loginAdmin, checkAuth, addStaff, loginStaff } from "../controller/auth.js";
+import { registerAdmin, loginAdmin, logoutAdmin, checkAuth, addStaff, loginStaff } from "../controller/auth.js";
 import { getEvents, addEvent, getEvent, editEvent, getEventBooking, deleteEvent } from "../controller/event-controller.js";
-import { getStaffs, getStaff, editStaff, deleteStaff, cancelBooking, payStaff, logoutAdmin } from "../controller/staff-controller.js";
-import { getNewEvents, bookEvent, payments, attendance, markAttendance, cancelAttendance } from "../controller/app-controller.js";
+import { getStaffs, getStaff, editStaff, deleteStaff, cancelBooking, payStaff } from "../controller/staff-controller.js";
+import { getNewEvents, bookEvent, getBookedEvents, getPayments, attendance, markAttendance, cancelAttendance } from "../controller/app-controller.js";
 import adminAuthorization from "../middlewares/admin-middleware.js";
 import staffAuthorization from "../middlewares/staff-middleware.js";
 
@@ -36,7 +36,8 @@ router.get("/admin/logout/", logoutAdmin);
 router.get("/staff/currentstaff", staffAuthorization, checkAuth)
 router.get("/staff/events/getnewevents", staffAuthorization, getNewEvents);
 router.post("/staff/events/bookevent", staffAuthorization, bookEvent);
-router.get("/staff/events/payments", staffAuthorization, payments);
+router.get("/staff/events/bookedevents", staffAuthorization, getBookedEvents);
+router.get("/staff/events/getpayments", staffAuthorization, getPayments);
 router.get("/staff/events/attendance", staffAuthorization, attendance);
 router.post("/staff/events/markattendance", staffAuthorization, markAttendance);
 router.delete("/staff/events/cancelattendance", staffAuthorization, cancelAttendance)

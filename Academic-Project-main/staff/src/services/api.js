@@ -14,7 +14,7 @@ export const checkAuth = async () => {
     try {
         return await axios.get(`${URL}/staff/checkauth`);
     } catch (error) {
-        alert(error.response.data.message);
+        console.log(error);
     }
 }
 
@@ -42,9 +42,17 @@ export const bookEvent = async (data) => {
     }
 }
 
+export const getBookedEvents = async () => {
+    try {
+        return await axios.get(`${URL}/staff/events/bookedevents`);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const getPayments = async () => {
     try {
-        return await axios.get(`${URL}/staff/events/payments`);
+        return await axios.get(`${URL}/staff/events/getpayments`);
     } catch (error) {
         console.log(error);
     }

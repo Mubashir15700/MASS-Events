@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import { Table, TableHead, TableBody, TableRow, TableCell, styled } from "@mui/material";
-import { getEvents, cancelBooking } from "../services/api.js";
-import { DisplayBookings } from "../components/DisplayBookings.jsx";
+import { Table, TableHead, TableBody, TableRow, TableCell, styled, Button } from "@mui/material";
+import { BsCheckSquareFill, BsSquare } from "react-icons/bs";
+import { getEventBooking, cancelBooking } from "../services/api.js";
+import { useParams } from 'react-router';
+import { Link } from "react-router-dom";
 
 const Container = styled(Table)`
     width: 95%;
@@ -18,29 +20,25 @@ const THead = styled(TableRow)`
 
 const Bookings = () => {
 
-    const [todays, setTodays] = useState([]);
-    const [upcomings, setUpcomings] = useState([]);
-    const [dones, setDones] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [event, setEvent] = useState([]);
+
+    const params = useParams()
 
     useEffect(() => {
-        getAllEvents();
+        getThisEvent();
     }, []);
 
-    const getAllEvents = async () => {
-        let response = await getEvents();
+    const getThisEvent = async () => {
+        let response = await getEventBooking(params.id);
         if (response) {
-            setTodays(response.data.todaysEvents);
-            setUpcomings(response.data.upcomingEvents);
-            setDones(response.data.doneEvents);
+            setEvent(response.data);
         }
-        setLoading(false);
     }
 
     const cancelThisBooking = async (eventname, staff) => {
         let response = await cancelBooking(eventname, staff);
         if (response.data.status === "success") {
-            getAllEvents();
+            getThisEvent();
             alert(response.data.message);
         }
     }
@@ -49,44 +47,87 @@ const Bookings = () => {
         <Container>
             <TableHead>
                 <THead>
-                    <TableCell>Date and Time</TableCell>
+                    <TableCell>Date and Time(24hrs)</TableCell>
                     <TableCell>Event Name</TableCell>
+                    <TableCell>Staffs Booked/Required</TableCell>
+                    <TableCell>Payments</TableCell>
                     <TableCell>User Name</TableCell>
                     <TableCell>Category</TableCell>
                     <TableCell>Phone</TableCell>
                     <TableCell>Attendance</TableCell>
+                    <TableCell>Action</TableCell>
                 </THead>
             </TableHead>
-
-            {loading &&
-                <TableBody>
-                    <TableRow>
-                        <TableCell>Loading...</TableCell>
-                    </TableRow>
-                </TableBody>
-            }
-            {((todays.length === 0) && (upcomings.length === 0) && (dones.length === 0)) &&
-                <TableBody>
-                    <TableRow>
-                        <TableCell>No data found</TableCell>
-                    </TableRow>
-                </TableBody>
-            }
-            {todays.map((today) => {
-                return (
-                    <DisplayBookings key={today._id} status={today} handleClick={cancelThisBooking} />
-                );
-            })}
-            {upcomings.map((upcoming) => {
-                return (
-                    <DisplayBookings key={upcoming._id} status={upcoming} handleClick={cancelThisBooking} />
-                );
-            })}
-            {dones.map((done) => {
-                return (
-                    <DisplayBookings key={done._id} status={done} handleClick={cancelThisBooking} />
-                );
-            })}
+            <TableBody>
+                <TableRow>
+                    <TableCell style={{ fontWeight: 'bold' }}>
+                        <p>{event.date}</p>
+                        <p>{event.time}</p>
+                    </TableCell>
+                    <TableCell style={{ fontWeight: 'bold' }}>{event.eventname}</TableCell>
+                    {event.bookings && <TableCell>{event.bookings.length}/{event.reqstaffs}</TableCell>}
+                    <TableCell>
+                        {(event.attendance && event.attendance.length) ?
+                            <Button
+                                variant="contained"
+                                style={{ marginRight: "10px", backgroundColor: 'rgb(54, 130, 139)' }}
+                                component={Link}
+                                to={`/payments/${event._id}`}
+                            >
+                                View Payments
+                            </Button>
+                            :
+                            <Button
+                                variant="contained"
+                                style={{ marginRight: "10px" }}
+                                disabled={true}
+                            >
+                                No Attendance
+                            </Button>
+                        }
+                    </TableCell>
+                </TableRow>
+                {event.bookings &&
+                    event.bookings.map((staffs) => {
+                        return (
+                            <TableRow key={staffs._id} style={{ backgroundColor: '#e5e5e5' }}>
+                                <TableCell></TableCell>
+                                <TableCell></TableCell>
+                                <TableCell></TableCell>
+                                <TableCell></TableCell>
+                                <TableCell>{staffs.username}</TableCell>
+                                <TableCell>{staffs.category}</TableCell>
+                                <TableCell>{staffs.phone}</TableCell>
+                                <TableCell style={{ fontSize: 15 }}>
+                                    {event.attendance.some((staff) => staff.username === staffs.username) ?
+                                        <BsCheckSquareFill /> : <BsSquare />
+                                    }
+                                </TableCell>
+                                <TableCell>
+                                    {!(event.attendance.some((staff) => staff.username === staffs.username)) ?
+                                        <Button
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={() =>
+                                                cancelThisBooking(event._id, staffs.username)
+                                            }
+                                        >
+                                            Cancel Booking
+                                        </Button>
+                                        :
+                                        <Button
+                                            variant="contained"
+                                            disabled={true}
+                                        >
+                                            Cancel Booking
+                                        </Button>
+                                    }
+                                </TableCell>
+                            </TableRow>
+                        );
+                    })
+                }
+            </TableBody>
         </Container>
     );
 }

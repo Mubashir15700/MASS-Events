@@ -3,7 +3,7 @@ import Event from "../schema/event-schema.js";
 
 export const getStaffs = async (req, res) => {
     try {
-        const staffs = await Staff.find({ role: { $nin: ["admin"] } });
+        const staffs = await Staff.find({ role: { $nin: ["admin"] } }).sort({ category: -1 });
         res.status(200).json(staffs);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -74,20 +74,6 @@ export const payStaff = async (req, res) => {
             },
         });
         res.status(201).send({ "status": "success", "message": "Paid staff successfully" });
-    } catch (error) {
-        res.status(404).json({ message: error.message });
-    }
-}
-
-export const logoutAdmin = async (req, res) => {
-    try {
-        console.log("here");
-        // res.cookie('jwt', {
-        //     maxAge: 10000,
-        //     httpOnly: true,
-        //     overwrite: true,
-        // });
-        res.clearCookie('jwt',  {domain: 'localhost', path:'/'});
     } catch (error) {
         res.status(404).json({ message: error.message });
     }

@@ -62,11 +62,15 @@ export const deleteEvent = async (req, res) => {
 
 export const addEvent = async (req, res) => {
     const event = req.body;
-    const newEvent = new Event(event);
-    try {
-        await newEvent.save();
-        res.status(201).send({ "status": "success", "message": "Added new event successfully" });
-    } catch (error) {
-        res.status(409).json({ message: error.message });
+    if(event.date && event.time && event.duration && event.location && event.reqstaffs) {
+        const newEvent = new Event(event);
+        try {
+            await newEvent.save();
+            res.status(201).send({ "status": "success", "message": "Added new event successfully" });
+        } catch (error) {
+            res.status(409).json({ message: error.message });
+        }
+    } else {
+        res.send({ "status": "failed", "message": "All fields are required" });
     }
 }

@@ -33,7 +33,6 @@ const AllEvents = () => {
             setTodays(response.data.todaysEvents);
             setUpcomings(response.data.upcomingEvents);
             setDones(response.data.doneEvents);
-
         }
         setLoading(false);
     }

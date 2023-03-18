@@ -5,7 +5,7 @@ import { registerAdmin } from '../services/api';
 
 const Container = styled(FormGroup)`
     width: 50%;
-    margin: 8% auto 0 auto;
+    margin: 5% auto 0 auto;
     & > div {
         margin-top: 8px;
     }
@@ -45,6 +45,7 @@ const Register = () => {
 
     return (
         <Container>
+            <Typography variant='h5' style={{ textAlign: 'center', marginBottom: 70 }}>Event Staff Management</Typography>
             <Typography variant='h5'>Register</Typography>
             <FormControl>
                 <InputLabel>Name:</InputLabel>

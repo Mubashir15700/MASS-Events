@@ -6,7 +6,7 @@ export const checkAuth = async (req, res) => {
     try {
         const token = req.cookies.jwt;
         if(token) {
-            const decoded = await jwt.verify(token, process.env.JWT_SECRET_KEY);
+            const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
             const currentStaff = await Staff.findById(decoded.userID).select('-password');
             res.status(201).send({ "status": "success", "message": "Authorized user", "currentStaff": currentStaff});
         } else {
@@ -44,7 +44,6 @@ export const registerAdmin = async (req, res) => {
                     const token = jwt.sign({ userID: savedAdmin._id, userPWD: savedAdmin.password }, process.env.JWT_SECRET_KEY, { expiresIn: '7d' });
                     res.status(201).send({ "status": "success", "message": "Registered admin successfully", "token": token });
                 } catch (error) {
-                    console.log(error);
                     res.send({ "status": "failed", "message": "Unable to register" });
                 }
             } else {
@@ -83,6 +82,20 @@ export const loginAdmin = async (req, res) => {
         }
     } catch (error) {
         res.send({ "status": "failed", "message": "Unable to login" });
+    }
+}
+
+export const logoutAdmin = async (req, res) => {
+    try {
+        console.log("here");
+        // res.cookie('jwt', {
+        //     maxAge: 10000,
+        //     httpOnly: true,
+        //     overwrite: true,
+        // });
+        // res.clearCookie('jwt',  {domain: 'localhost', path:'/'});
+    } catch (error) {
+        res.status(404).json({ message: error.message });
     }
 }
 

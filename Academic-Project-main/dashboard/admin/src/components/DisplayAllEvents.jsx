@@ -6,7 +6,7 @@ export const DisplayAllEvents = (props) => {
         <TableRow>
             <TableCell>
                 <p style={{ fontWeight: 'bold' }}>{props.status.date}</p>
-                <p style={{ color: props.clr }}>{props.sts}</p>
+                <p style={{ color: props.clr, fontSize: 12 }}>{props.sts}</p>
             </TableCell>
             <TableCell style={{ fontWeight: 'bold' }}>{props.status.time}</TableCell>
             <TableCell>{props.status.duration}</TableCell>
@@ -19,7 +19,7 @@ export const DisplayAllEvents = (props) => {
                         variant="contained"
                         style={{ marginLeft: "10px", backgroundColor: 'rgb(54, 130, 139)' }}
                         component={Link}
-                        to={`/booking/${props.status._id}`}
+                        to={`/bookings/${props.status._id}`}
                     >
                         View Bookings
                     </Button>
@@ -29,7 +29,7 @@ export const DisplayAllEvents = (props) => {
                         style={{ marginLeft: "10px" }}
                         disabled={true}
                     >
-                        View Bookings
+                        No Bookings
                     </Button>
                 }
             </TableCell>

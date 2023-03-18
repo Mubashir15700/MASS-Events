@@ -46,14 +46,6 @@ export default Events = () => {
     }
   }
 
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  let mm = today.getMonth() + 1;
-  let dd = today.getDate();
-  if (dd < 10) dd = '0' + dd;
-  if (mm < 10) mm = '0' + mm;
-  const formattedToday = yyyy + '-' + mm + '-' + dd;
-
   return (
     <ScrollView style={styles.container}
       refreshControl={
@@ -62,58 +54,64 @@ export default Events = () => {
           onRefresh={onRefresh}
         />
       }>
-      {loading ? 
+      {loading ?
         <View style={styles.row}>
-          <Text>Loading...</Text> 
+          <Text>Loading...</Text>
         </View>
-      :
-      events.length ?
-        events.map((event) => {
-          return (
-            <View key={event._id} style={[styles.row, { borderWidth: 1, borderColor: 'pink' }]}>
-              <View>
-                <Icon name={'calendar-clock-outline'} size={20} color={'pink'} />
-                <Text>{event.date}</Text>
-                <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{event.time}</Text>
-                <Text style={{ fontSize: 10 }}>Duration(hrs): {event.duration}</Text>
-              </View>
-              <View style={{
-                marginLeft: 15,
-                paddingVertical: 20,
-                flex: 1,
-              }}>
-                <Text style={{ fontSize: 13, color: 'grey' }}>{event.eventname}</Text>
-                <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{event.location}</Text>
-                <Text style={{ fontSize: 13, fontWeight: 'bold', marginTop: 3 }}>
-                  Avail Slots: {event.reqstaffs - event.bookings.length}
-                </Text>
-              </View>
-              {event.bookings.some((staff) => staff.username === currentstaff.username) ?
-                <Pressable style={[styles.actionBtn, {backgroundColor: 'pink'}]} onPress={() => {
-                  Alert.alert("Already booked this event")}}
-                >
-                  <Text>Booked</Text>
-                </Pressable>
-              : (event.reqstaffs <= event.bookings.length) ?
-                <Pressable style={[styles.actionBtn, {backgroundColor: '#d3d3d3'}]} onPress={() => {
-                  Alert.alert("Booking full")}}
-                >
-                  <Text>Full</Text>
-                </Pressable> 
-              :
-                <Pressable style={[styles.actionBtn, { borderWidth: 1, borderColor: 'gray',}]} onPress={() => 
-                  bookThisEvent(event._id)}
-                >
-                  <Text>Book</Text>
-                </Pressable> 
-              }
-            </View>
-          );
-        })
         :
-        <View style={[styles.row, { justifyContent: 'center' }]}>
-          <Text>No new events found</Text>
-        </View>
+        events.length ?
+          <View>
+            <Text style={{ textAlign: 'center' }}>New Event(s)</Text>
+            {events.map((event) => {
+              return (
+                <View key={event._id} style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
+                  <View>
+                    <Icon name={'calendar-clock-outline'} size={20} color={'#36828b'} />
+                    <Text>{event.date}</Text>
+                    <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{event.time}</Text>
+                    <Text style={{ fontSize: 10 }}>Duration: {event.duration}(hrs)</Text>
+                  </View>
+                  <View style={{
+                    marginLeft: 15,
+                    paddingVertical: 20,
+                    flex: 1,
+                  }}>
+                    <Text style={{ fontSize: 13, color: 'grey' }}>{event.eventname}</Text>
+                    <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{event.location}</Text>
+                    <Text style={{ fontSize: 13, fontWeight: 'bold', marginTop: 3 }}>
+                      Avail Slots: {event.reqstaffs - event.bookings.length}
+                    </Text>
+                  </View>
+                  {event.bookings.some((staff) => staff.username === currentstaff.username) ?
+                    <Pressable style={[styles.actionBtn, { borderWidth: 1, borderColor: 'gray', }]} onPress={() => {
+                      Alert.alert("Already booked this event")
+                    }}
+                    >
+                      <Icon name={'bell-check'} size={23} color={'#36828b'} />
+                    </Pressable>
+                    : (event.reqstaffs <= event.bookings.length) ?
+                      <Pressable style={[styles.actionBtn, { borderWidth: 1, borderColor: 'gray', }]} onPress={() => {
+                        Alert.alert("Booking full")
+                      }}
+                      >
+                        <Icon name={'bell-alert-outline'} size={23} color={'gray'} />
+                      </Pressable>
+                      :
+                      <Pressable style={[styles.actionBtn, { borderWidth: 1, borderColor: 'gray', }]} onPress={() =>
+                        bookThisEvent(event._id)}
+                      >
+                        <Icon name={'bell-plus-outline'} size={23} color={'#36828b'} />
+                      </Pressable>
+                  }
+                </View>
+              );
+            })
+            }
+          </View>
+          :
+          <View style={[styles.row, { justifyContent: 'center' }]}>
+            <Text>No new events found</Text>
+          </View>
       }
     </ScrollView>
   );
@@ -137,7 +135,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   actionBtn: {
-    width: 70,
+    width: 50,
     height: 30,
     backgroundColor: '#fff',
     borderRadius: 30,
