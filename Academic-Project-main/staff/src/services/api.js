@@ -42,25 +42,9 @@ export const bookEvent = async (data) => {
     }
 }
 
-export const getBookedEvents = async () => {
+export const getBookings = async () => {
     try {
-        return await axios.get(`${URL}/staff/events/bookedevents`);
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-export const getPayments = async () => {
-    try {
-        return await axios.get(`${URL}/staff/events/getpayments`);
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-export const getAttendance = async () => {
-    try {
-        return await axios.get(`${URL}/staff/events/attendance`);
+        return await axios.get(`${URL}/staff/events/bookings`);
     } catch (error) {
         console.log(error);
     }
@@ -80,7 +64,22 @@ export const cancelAttendance = async (event, staff) => {
             "eventName": event, 
             "Staff": staff 
         } });
-        
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getEventsStatus = async () => {
+    try {
+        return await axios.get(`${URL}/staff/events/eventsstatus`);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getPayments = async () => {
+    try {
+        return await axios.get(`${URL}/staff/events/getpayments`);
     } catch (error) {
         console.log(error);
     }

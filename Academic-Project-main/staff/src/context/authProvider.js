@@ -4,6 +4,7 @@ import { checkAuth } from "../services/api";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+    
     const [auth, setAuth] = useState(false);
 
     useEffect(() => {

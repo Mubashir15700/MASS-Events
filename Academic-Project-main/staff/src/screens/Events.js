@@ -38,11 +38,9 @@ export default Events = () => {
 
   const bookThisEvent = async (event) => {
     let response = await bookEvent({ event });
-    if (response) {
-      if (response.data.status == "success") {
-        Alert.alert(response.data.message);
-        getAllNewEvents();
-      }
+    if (response && response.data.status == "success") {
+      Alert.alert(response.data.message);
+      getAllNewEvents();
     }
   }
 
@@ -53,66 +51,66 @@ export default Events = () => {
           refreshing={refreshing}
           onRefresh={onRefresh}
         />
-      }>
-      {loading ?
-        <View style={styles.row}>
-          <Text>Loading...</Text>
-        </View>
-        :
-        events.length ?
-          <View>
-            <Text style={{ textAlign: 'center' }}>New Event(s)</Text>
-            {events.map((event) => {
-              return (
-                <View key={event._id} style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
-                  <View>
-                    <Icon name={'calendar-clock-outline'} size={20} color={'#36828b'} />
-                    <Text>{event.date}</Text>
-                    <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{event.time}</Text>
-                    <Text style={{ fontSize: 10 }}>Duration: {event.duration}(hrs)</Text>
-                  </View>
-                  <View style={{
-                    marginLeft: 15,
-                    paddingVertical: 20,
-                    flex: 1,
-                  }}>
-                    <Text style={{ fontSize: 13, color: 'grey' }}>{event.eventname}</Text>
-                    <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{event.location}</Text>
-                    <Text style={{ fontSize: 13, fontWeight: 'bold', marginTop: 3 }}>
-                      Avail Slots: {event.reqstaffs - event.bookings.length}
-                    </Text>
-                  </View>
-                  {event.bookings.some((staff) => staff.username === currentstaff.username) ?
-                    <Pressable style={[styles.actionBtn, { borderWidth: 1, borderColor: 'gray', }]} onPress={() => {
-                      Alert.alert("Already booked this event")
-                    }}
-                    >
-                      <Icon name={'bell-check'} size={23} color={'#36828b'} />
-                    </Pressable>
-                    : (event.reqstaffs <= event.bookings.length) ?
-                      <Pressable style={[styles.actionBtn, { borderWidth: 1, borderColor: 'gray', }]} onPress={() => {
-                        Alert.alert("Booking full")
-                      }}
-                      >
-                        <Icon name={'bell-alert-outline'} size={23} color={'gray'} />
-                      </Pressable>
-                      :
-                      <Pressable style={[styles.actionBtn, { borderWidth: 1, borderColor: 'gray', }]} onPress={() =>
-                        bookThisEvent(event._id)}
-                      >
-                        <Icon name={'bell-plus-outline'} size={23} color={'#36828b'} />
-                      </Pressable>
-                  }
-                </View>
-              );
-            })
-            }
-          </View>
-          :
-          <View style={[styles.row, { justifyContent: 'center' }]}>
-            <Text>No new events found</Text>
-          </View>
       }
+    >
+    {loading ?
+      <View style={styles.row}>
+        <Text>Loading...</Text>
+      </View> : events.length ?
+      <View>
+        <Text style={{ textAlign: 'center' }}>New Event(s)</Text>
+        {events.map((event) => {
+          return (
+            <View key={event._id} style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
+              <View>
+                <Icon name={'calendar-clock-outline'} size={20} color={'#36828b'} />
+                <Text>{event.date}</Text>
+                <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{event.time}</Text>
+                <Text style={{ fontSize: 10 }}>Duration: {event.duration}(hrs)</Text>
+              </View>
+              <View style={{
+                marginLeft: 15,
+                paddingVertical: 20,
+                flex: 1,
+                }}
+              >
+                <Text style={{ fontSize: 13, color: 'grey' }}>{event.eventname}</Text>
+                <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{event.location}</Text>
+                <Text style={{ fontSize: 13, fontWeight: 'bold', marginTop: 3 }}>
+                  Avail Slots: {event.reqstaffs - event.bookings.length}
+                </Text>
+              </View>
+              {event.bookings.some((staff) => staff === currentstaff._id) ?
+                <Pressable style={[styles.actionBtn, { borderWidth: 1, borderColor: 'gray', }]}
+                  onPress={() => {
+                    Alert.alert("Already booked this event")
+                  }}
+                >
+                  <Icon name={'bell-check'} size={23} color={'#36828b'} />
+                </Pressable> : (event.reqstaffs <= event.bookings.length) ?
+                <Pressable style={[styles.actionBtn, { borderWidth: 1, borderColor: 'gray', }]}
+                  onPress={() => {
+                    Alert.alert("Booking full")
+                  }}
+                >
+                  <Icon name={'bell-alert-outline'} size={23} color={'gray'} />
+                </Pressable> :
+                <Pressable style={[styles.actionBtn, { borderWidth: 1, borderColor: 'gray', }]}
+                  onPress={() =>
+                    bookThisEvent(event._id)
+                  }
+                >
+                  <Icon name={'bell-plus-outline'} size={23} color={'#36828b'} />
+                </Pressable>
+              }
+            </View>
+          );
+        })}
+      </View> :
+      <View style={{ paddingTop: 270, alignItems: 'center' }}>
+        <Text>No new events found</Text>
+      </View>
+    }
     </ScrollView>
   );
 }

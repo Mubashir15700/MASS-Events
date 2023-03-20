@@ -21,6 +21,7 @@ const THead = styled(TableRow)`
 const Bookings = () => {
 
     const [event, setEvent] = useState([]);
+    const [staffs, setStaffs] = useState([]);
 
     const params = useParams()
 
@@ -31,12 +32,13 @@ const Bookings = () => {
     const getThisEvent = async () => {
         let response = await getEventBooking(params.id);
         if (response) {
-            setEvent(response.data);
+            setEvent(response.data.event);
+            setStaffs(response.data.bookedStaffs);
         }
     }
 
-    const cancelThisBooking = async (eventname, staff) => {
-        let response = await cancelBooking(eventname, staff);
+    const cancelThisBooking = async (event, staff) => {
+        let response = await cancelBooking(event, staff);
         if (response.data.status === "success") {
             getThisEvent();
             alert(response.data.message);
@@ -65,7 +67,7 @@ const Bookings = () => {
                         <p>{event.time}</p>
                     </TableCell>
                     <TableCell style={{ fontWeight: 'bold' }}>{event.eventname}</TableCell>
-                    {event.bookings && <TableCell>{event.bookings.length}/{event.reqstaffs}</TableCell>}
+                    {event.bookings && <TableCell style={{ fontWeight: 'bold' }}>{event.bookings.length}/{event.reqstaffs}</TableCell>}
                     <TableCell>
                         {(event.attendance && event.attendance.length) ?
                             <Button
@@ -87,29 +89,28 @@ const Bookings = () => {
                         }
                     </TableCell>
                 </TableRow>
-                {event.bookings &&
-                    event.bookings.map((staffs) => {
+                    {staffs.map((staff) => {
                         return (
-                            <TableRow key={staffs._id} style={{ backgroundColor: '#e5e5e5' }}>
+                            <TableRow key={staff._id} style={{ backgroundColor: '#e5e5e5' }}>
                                 <TableCell></TableCell>
                                 <TableCell></TableCell>
                                 <TableCell></TableCell>
                                 <TableCell></TableCell>
-                                <TableCell>{staffs.username}</TableCell>
-                                <TableCell>{staffs.category}</TableCell>
-                                <TableCell>{staffs.phone}</TableCell>
+                                <TableCell>{staff.username}</TableCell>
+                                <TableCell>{staff.category}</TableCell>
+                                <TableCell>{staff.phone}</TableCell>
                                 <TableCell style={{ fontSize: 15 }}>
-                                    {event.attendance.some((staff) => staff.username === staffs.username) ?
+                                    {event.attendance.some((staffs) => staffs === staff._id) ?
                                         <BsCheckSquareFill /> : <BsSquare />
                                     }
                                 </TableCell>
                                 <TableCell>
-                                    {!(event.attendance.some((staff) => staff.username === staffs.username)) ?
+                                    {!(event.attendance.some((staffs) => staffs === staff._id)) ?
                                         <Button
                                             variant="contained"
                                             color="secondary"
                                             onClick={() =>
-                                                cancelThisBooking(event._id, staffs.username)
+                                                cancelThisBooking(event._id, staff._id)
                                             }
                                         >
                                             Cancel Booking

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Table, TableHead, TableBody, TableRow, TableCell, styled, Button } from "@mui/material";
+import { Table, TableHead, TableBody, TableRow, TableCell, styled } from "@mui/material";
 import { BsCheckSquareFill, BsSquare } from "react-icons/bs";
-import { getEventBooking } from "../services/api.js";
+import { getEventAttendance } from "../services/api.js";
 import { useParams } from 'react-router';
 import { payStaff } from "../services/api.js";
 
@@ -21,6 +21,7 @@ const THead = styled(TableRow)`
 const Payments = () => {
 
     const [event, setEvent] = useState([]);
+    const [staffs, setStaffs] = useState([]);
 
     const params = useParams()
 
@@ -29,9 +30,10 @@ const Payments = () => {
     }, []);
 
     const getThisEvent = async () => {
-        let response = await getEventBooking(params.id);
+        let response = await getEventAttendance(params.id);
         if (response) {
-            setEvent(response.data);
+            setEvent(response.data.event);
+            setStaffs(response.data.attendedStaffs);
         }
     }
 
@@ -66,21 +68,21 @@ const Payments = () => {
                         {event.eventname}
                     </TableCell>
                 </TableRow>
-                {event.attendance &&
-                    event.attendance.map((staffs) => {
+                {staffs &&
+                    staffs.map((staff) => {
                         return (
-                            <TableRow key={staffs._id} style={{ backgroundColor: '#e5e5e5' }}>
+                            <TableRow key={staff._id} style={{ backgroundColor: '#e5e5e5' }}>
                                 <TableCell></TableCell>
                                 <TableCell></TableCell>
-                                <TableCell>{staffs.username}</TableCell>
-                                <TableCell>{staffs.category}</TableCell>
-                                <TableCell>{staffs.phone}</TableCell>
-                                <TableCell>{staffs.wage}</TableCell>
+                                <TableCell>{staff.username}</TableCell>
+                                <TableCell>{staff.category}</TableCell>
+                                <TableCell>{staff.phone}</TableCell>
+                                <TableCell>{staff.wage}</TableCell>
                                 <TableCell>
-                                    {event.payments.some((staff) => staff.username === staffs.username) ?
+                                    {event.payments.some((staffs) => staffs === staff._id) ?
                                         <BsCheckSquareFill style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} />
                                         :
-                                        <BsSquare style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} onClick={() => payThisStaff(event._id, staffs.username)} />
+                                        <BsSquare style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} onClick={() => payThisStaff(event._id, staff._id)} />
                                     }
                                 </TableCell>
                             </TableRow>

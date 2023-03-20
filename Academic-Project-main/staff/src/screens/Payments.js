@@ -10,7 +10,7 @@ const wait = (timeout) => {
 export default Payments = () => {
 
   const [events, setEvents] = useState([]);
-  const [currentUser, setCurrentUser] = useState([]);
+  const [payment, setPayment] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -28,7 +28,7 @@ export default Payments = () => {
     let response = await getPayments();
     if (response) {
       setEvents(response.data.events);
-      setCurrentUser(response.data.user);
+      setPayment(response.data.payment);
       setLoading(false);
     }
   }
@@ -40,54 +40,41 @@ export default Payments = () => {
           refreshing={refreshing}
           onRefresh={onRefresh}
         />
-      }>
-      {loading ?
-        <View style={styles.row}>
-          <Text>Loading...</Text>
-        </View>
-        :
-        events.length ?
-          <View>
-            <Text style={{ textAlign: 'center' }}>Previous Payments</Text>
-            {events.map((event, index) => {
-              return (
-                <View key={index}>
-                  {event.payments.map((evt) => {
-                    return (
-                      <View key={evt._id}>
-                        {evt.username === currentUser &&
-                          <View style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
-                            <>
-                              <View style={styles.innerRow}>
-                                <View style={{ marginHorizontal: 10, padding: 10 }}>
-                                  <DateIcon name={'calendar-outline'} size={20} color={'black'} />
-                                  <Text style={{ fontWeight: 'bold' }}>{event.date}</Text>
-                                </View>
-                                <View>
-                                  <Text style={{ fontWeight: 'bold' }}>{event.eventname}</Text>
-                                </View>
-                              </View>
-                              <View style={{ padding: 10 }}>
-                                <Text>Wage Recieved: {evt.wage}</Text>
-                              </View>
-                            </>
-                          </View>
-                        }
-                      </View>
-                    );
-                  })
-                  }
-                </View>
-              );
-            })
-            }
-          </View>
-          :
-          <View style={styles.row}>
-            <Text>No data found</Text>
-          </View>
       }
-    </ScrollView>
+    >
+    {loading ?
+      <View style={styles.row}>
+        <Text>Loading...</Text>
+      </View> :
+      events.length ?
+        <View>
+          <Text style={{ textAlign: 'center' }}>Previous Payments</Text>
+          {events.map((event, index) => {
+            return (
+              <View key={index}>
+                <View style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
+                  <View style={styles.innerRow}>
+                    <View style={{ marginHorizontal: 10, padding: 10 }}>
+                      <DateIcon name={'calendar-outline'} size={20} color={'black'} />
+                      <Text style={{ fontWeight: 'bold' }}>{event.date}</Text>
+                    </View>
+                    <View>
+                      <Text style={{ fontWeight: 'bold' }}>{event.eventname}</Text>
+                    </View>
+                  </View>
+                  <View style={{ padding: 10 }}>
+                    <Text>Wage Recieved: {payment}</Text>
+                  </View>
+                </View>
+              </View>
+            );
+          })}
+        </View> :
+        <View style={{ paddingTop: 270, alignItems: 'center' }}>
+          <Text>No data found</Text>
+        </View>
+      }
+    </ScrollView >
   );
 }
 

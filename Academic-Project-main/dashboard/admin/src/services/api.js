@@ -62,6 +62,14 @@ export const getEventBooking = async (id) => {
     }
 }
 
+export const getEventAttendance = async (id) => {
+    try {
+        return await axios.get(`${URL}/events/geteventattendance/${id}`);
+    } catch (error) {
+        alert(error.response.data.message);
+    }
+}
+
 export const deleteEvent = async (id) => {
     try {
         return await axios.delete(`${URL}/events/deleteevent/${id}`);
@@ -73,6 +81,14 @@ export const deleteEvent = async (id) => {
 export const addEvent = async (data) => {
     try {
         return await axios.post(`${URL}/events/addevent`, data);
+    } catch (error) {
+        alert(error.response.data.message);
+    }
+}
+
+export const getDoneEvents = async () => {
+    try {
+        return await axios.get(`${URL}/events/getdoneevents`);
     } catch (error) {
         alert(error.response.data.message);
     }
@@ -119,11 +135,11 @@ export const addStaff = async (data) => {
     }
 }
 
-export const cancelBooking = async (eventname, staff) => {
+export const cancelBooking = async (event, staff) => {
     try {
         return await axios.delete(`${URL}/staffs/cancelbooking/`, { data: { 
-            "eventName": eventname, 
-            "Staff": staff 
+            "event": event, 
+            "staff": staff 
         } });
     } catch (error) {
         alert(error.response.data.message);

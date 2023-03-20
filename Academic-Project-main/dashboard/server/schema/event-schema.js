@@ -27,9 +27,9 @@ const eventsSchema = mongoose.Schema({
         required: true,
         type: Number,
     },
-    bookings: [''],
-    attendance: [''],
-    payments: [''],
+    bookings: [{ type: mongoose.Types.ObjectId, ref: 'staff' }],
+    attendance: [{ type: mongoose.Types.ObjectId, ref: 'staff' }],
+    payments: [{ type: mongoose.Types.ObjectId, ref: 'staff' }],
 });
 
 const event = mongoose.model("event", eventsSchema);

@@ -42,8 +42,7 @@ const CombinedScreen = () => {
                 },
                 tabBarActiveTintColor: '#36828b',
                 tabBarInactiveTintColor: 'gray',
-            })
-            }
+            })}
         >
             <Tab.Screen name="Events" component={Events} />
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Table, TableHead, TableBody, TableRow, TableCell, styled } from "@mui/material";
-import { getEvents } from "../services/api.js";
+import { getDoneEvents } from "../services/api.js";
 import { DisplayEventsStatus } from "../components/DisplayEventsStatus.jsx";
 
 const Container = styled(Table)`
@@ -22,13 +22,13 @@ const EventsReport = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        getAllEvents();
+        getAllDoneEvents();
     }, []);
 
-    const getAllEvents = async () => {
-        let response = await getEvents();
+    const getAllDoneEvents = async () => {
+        let response = await getDoneEvents();
         if (response) {
-            setEvents(response.data.doneEvents);
+            setEvents(response.data);
         }
         setLoading(false);
     }

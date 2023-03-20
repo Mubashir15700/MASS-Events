@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { checkAuth } from "../services/api";
 import { AppBar, Toolbar, styled } from "@mui/material";
-import { BsFillCalendarCheckFill, BsFillCalendarPlusFill, BsFillPersonLinesFill, BsFillPersonPlusFill } from "react-icons/bs";
+import { 
+  BsFillCalendarMinusFill, 
+  BsFillCalendarPlusFill, 
+  BsFillPersonLinesFill, 
+  BsFillPersonPlusFill } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 import Sidebar from './Sidebar';
 import "./Navbar.css";
@@ -39,7 +43,7 @@ const Navbar = () => {
             isActive ? 'active' : 'inactive'
           }
         >
-          <BsFillCalendarCheckFill style={{ marginRight: 5 }} />
+          <BsFillCalendarMinusFill style={{ marginRight: 5 }} />
           All Events
         </Tabs>
         <Tabs to="/addevent"><BsFillCalendarPlusFill style={{ marginRight: 5 }} />Add Event</Tabs>
