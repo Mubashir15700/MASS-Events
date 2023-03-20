@@ -15,12 +15,13 @@ const defaultValue = {
     name: '',
     username: '',
     dob: '00/00/0000',
-    wage: '000',
+    place: 'qwerty',
+    phone: '',
     role: 'admin',
     category: '-',
+    wage: '000',
     password: '',
     confpassword: '',
-    phone: '',
 }
 
 const Register = () => {

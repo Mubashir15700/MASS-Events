@@ -18,12 +18,12 @@ export const checkAuth = async (req, res) => {
 }
 
 export const registerAdmin = async (req, res) => {
-    const { name, username, dob, wage, role, category, password, confpassword, phone } = req.body;
+    const { name, username, dob, place, phone, wage, role, category, password, confpassword } = req.body;
     const admin = await Staff.findOne({ role: role });
     if (admin) {
         res.send({ "status": "failed", "message": "Admin already exists" });
     } else {
-        if (name && username && dob && wage && role && category && password && confpassword && phone) {
+        if (name && username && dob && place && phone && wage && role && category && password && confpassword) {
             if (password === confpassword) {
                 try {
                     const salt = await bcrypt.genSalt(10);
@@ -32,11 +32,12 @@ export const registerAdmin = async (req, res) => {
                         name: name,
                         username: username,
                         dob: dob,
+                        place: place,
+                        phone: phone,
                         wage: wage,
                         role: role,
                         category: category,
                         password: hashPassword,
-                        phone: phone,
                     });
                     await newAdmin.save();
                     const savedAdmin = await Staff.findOne({ username: username });
