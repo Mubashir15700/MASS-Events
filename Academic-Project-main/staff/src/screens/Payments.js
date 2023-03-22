@@ -9,8 +9,8 @@ const wait = (timeout) => {
 
 export default Payments = () => {
 
-  const [events, setEvents] = useState([]);
-  const [payment, setPayment] = useState([]);
+  const [paidEvents, setPaidEvents] = useState([]);
+  const [staff, setStaff] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -27,8 +27,8 @@ export default Payments = () => {
   const getAllPayments = async () => {
     let response = await getPayments();
     if (response) {
-      setEvents(response.data.events);
-      setPayment(response.data.payment);
+      setPaidEvents(response.data.paidEvents);
+      setStaff(response.data.staff);
       setLoading(false);
     }
   }
@@ -46,25 +46,29 @@ export default Payments = () => {
       <View style={styles.row}>
         <Text>Loading...</Text>
       </View> :
-      events.length ?
+      paidEvents.length ?
         <View>
           <Text style={{ textAlign: 'center' }}>Previous Payments</Text>
-          {events.map((event, index) => {
+          <View style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
+            <Text style={{ fontWeight: 'bold' }}>Total wage recieved: 5000</Text>
+            <Text style={{ fontWeight: 'bold' }}>Total wage recieved this month: 1000</Text>
+          </View>
+          {paidEvents.map((paidEvent) => {
             return (
-              <View key={index}>
-                <View style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
-                  <View style={styles.innerRow}>
-                    <View style={{ marginHorizontal: 10, padding: 10 }}>
-                      <DateIcon name={'calendar-outline'} size={20} color={'black'} />
-                      <Text style={{ fontWeight: 'bold' }}>{event.date}</Text>
-                    </View>
-                    <View>
-                      <Text style={{ fontWeight: 'bold' }}>{event.eventname}</Text>
-                    </View>
+              <View key={paidEvent._id} style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
+                <View style={styles.innerRow}>
+                  <View style={{ marginHorizontal: 10, padding: 10 }}>
+                    <DateIcon name={'calendar-outline'} size={20} color={'black'} />
+                    <Text style={{ fontWeight: 'bold' }}>{paidEvent.date}</Text>
                   </View>
-                  <View style={{ padding: 10 }}>
-                    <Text>Wage Recieved: {payment}</Text>
+                  <View>
+                    <Text style={{ fontWeight: 'bold' }}>{paidEvent.eventname}</Text>
                   </View>
+                </View>
+                <View style={{ padding: 10 }}>
+                  {paidEvent.payments.some((payment) => payment === staff.staffId) ?
+                  <Text>Wage Recieved: {staff.payment}</Text> :
+                  <Text>Wage Recieved: pending</Text>}
                 </View>
               </View>
             );

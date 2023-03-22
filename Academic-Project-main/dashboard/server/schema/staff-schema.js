@@ -39,6 +39,7 @@ const staffsSchema = mongoose.Schema({
         required: true,
         type: Number,
     },
+    attendanceduty: [{ type: mongoose.Types.ObjectId, ref: 'event' }],
     password: {
         required: true,
         type: String,

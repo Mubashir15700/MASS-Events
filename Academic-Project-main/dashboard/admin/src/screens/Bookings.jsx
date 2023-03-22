@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Table, TableHead, TableBody, TableRow, TableCell, styled, Button } from "@mui/material";
 import { BsCheckSquareFill, BsSquare } from "react-icons/bs";
-import { getEventBooking, cancelBooking } from "../services/api.js";
+import { getEventBooking, assignDuty, cancelDuty, cancelBooking } from "../services/api.js";
 import { useParams } from 'react-router';
 import { Link } from "react-router-dom";
 
 const Container = styled(Table)`
-    width: 95%;
+    width: 99%;
     margin: 5% auto 0 auto;
     background-color: #e5e5e5;
 `
@@ -37,11 +37,22 @@ const Bookings = () => {
         }
     }
 
+    const assignAttendanceDuty = async (event, staff) => {
+        await assignDuty(event, staff);
+        getThisEvent();
+    }
+
+    const cancelAttendanceDuty = async (event, staff) => {
+        await cancelDuty(event, staff);
+        getThisEvent();
+    }
+
     const cancelThisBooking = async (event, staff) => {
+        cancelAttendanceDuty(event, staff);
         let response = await cancelBooking(event, staff);
         if (response.data.status === "success") {
-            getThisEvent();
             alert(response.data.message);
+            getThisEvent();
         }
     }
 
@@ -54,10 +65,11 @@ const Bookings = () => {
                     <TableCell>Staffs Booked/Required</TableCell>
                     <TableCell>Payments</TableCell>
                     <TableCell>User Name</TableCell>
-                    <TableCell>Category</TableCell>
                     <TableCell>Phone</TableCell>
+                    <TableCell>Category</TableCell>
+                    <TableCell>Attendance Duty</TableCell>
                     <TableCell>Attendance</TableCell>
-                    <TableCell>Action</TableCell>
+                    <TableCell>Actions</TableCell>
                 </THead>
             </TableHead>
             <TableBody>
@@ -97,8 +109,21 @@ const Bookings = () => {
                                 <TableCell></TableCell>
                                 <TableCell></TableCell>
                                 <TableCell>{staff.username}</TableCell>
-                                <TableCell>{staff.category}</TableCell>
                                 <TableCell>{staff.phone}</TableCell>
+                                <TableCell>{staff.category}</TableCell>
+                                {(staff.category === "Head") ?
+                                    <TableCell>
+                                        {staff.attendanceduty.some((duty) => duty === event._id) ?
+                                            !(event.attendance.some((staffs) => staffs === staff._id)) &&
+                                            <BsCheckSquareFill style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} onClick={() => cancelAttendanceDuty(event._id, staff._id)} />
+                                        :
+                                            <BsSquare style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} onClick={() => assignAttendanceDuty(event._id, staff._id)} />
+                                        }
+                                    </TableCell> : 
+                                    <TableCell>
+                                        <BsSquare style={{ color: 'gray', fontSize: 22 }} />
+                                    </TableCell>
+                                }
                                 <TableCell style={{ fontSize: 15 }}>
                                     {event.attendance.some((staffs) => staffs === staff._id) ?
                                         <BsCheckSquareFill /> : <BsSquare />

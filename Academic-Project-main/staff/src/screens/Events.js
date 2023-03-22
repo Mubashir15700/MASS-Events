@@ -36,9 +36,9 @@ export default Events = () => {
     response && setCurrentStaff(response.data.currentStaff);
   }
 
-  const bookThisEvent = async (event) => {
-    let response = await bookEvent({ event });
-    if (response && response.data.status == "success") {
+  const bookThisEvent = async (event, date) => {
+    let response = await bookEvent({ event, date });
+    if (response) {
       Alert.alert(response.data.message);
       getAllNewEvents();
     }
@@ -97,7 +97,7 @@ export default Events = () => {
                 </Pressable> :
                 <Pressable style={[styles.actionBtn, { borderWidth: 1, borderColor: 'gray', }]}
                   onPress={() =>
-                    bookThisEvent(event._id)
+                    bookThisEvent(event._id, event.date)
                   }
                 >
                   <Icon name={'bell-plus-outline'} size={23} color={'#36828b'} />

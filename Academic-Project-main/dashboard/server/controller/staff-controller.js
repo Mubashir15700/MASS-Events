@@ -47,6 +47,49 @@ export const deleteStaff = async (req, res) => {
     }
 }
 
+export const assignDuty = async (req, res) => {
+    try {
+        const event = req.body.data.event;
+        const assignStaff = await Staff.find({
+            attendanceduty: {
+                $all: [ event ]
+            },
+        });
+        if(assignStaff.length > 0) {
+            res.status(201).send({ "status": "failed", "message": "Duty already Assigned" });
+        } else {
+        const staff = await Staff.findOne({ _id: req.body.data.staff });
+        await Staff.findOneAndUpdate({
+            _id: staff._id,
+        }, {
+            $addToSet: {
+                attendanceduty: event,
+            },
+        });
+        res.status(201).send({ "status": "success", "message": "Assigned duty successfully" });
+        }
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
+export const cancelDuty = async (req, res) => {
+    try {
+        const event = req.body.event;
+        const staff = await Staff.findOne({ _id: req.body.staff });
+        await Staff.findOneAndUpdate({
+            _id: staff._id,
+        }, {
+            $pull: {
+                attendanceduty: event,
+            },
+        });
+        res.status(201).send({ "status": "success", "message": "Cancelled duty successfully" });
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
 export const cancelBooking = async (req, res) => {
     try {
         await Event.findOneAndUpdate({

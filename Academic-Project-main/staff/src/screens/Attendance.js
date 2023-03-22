@@ -111,7 +111,7 @@ export default Attendance = () => {
         })}
       </View> :
       <View style={{ paddingTop: 270, alignItems: 'center' }}>
-        <Text>No events today</Text>
+        <Text>No attendance duty today</Text>
       </View>
     }
     </ScrollView>

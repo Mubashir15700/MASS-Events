@@ -41,7 +41,7 @@ const Login = () => {
                 <Input onChange={(e) => handleChange(e)} name="username" />
             </FormControl>
             <FormControl>
-                <InputLabel>password:</InputLabel>
+                <InputLabel>Password:</InputLabel>
                 <Input type="password" onChange={(e) => handleChange(e)} name="password" />
             </FormControl>
             <FormControl style={{ flexDirection: 'row' }}>

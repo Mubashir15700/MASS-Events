@@ -58,6 +58,10 @@ export default Status = () => {
       events.length ?
         <View>
           <Text style={{ textAlign: 'center' }}>All Booked Event's Status</Text>
+          <View style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
+            <Text style={{ fontWeight: 'bold' }}>Total events attended: 10</Text>
+            <Text style={{ fontWeight: 'bold' }}>Total events attended this month: 3</Text>
+          </View>
           {events.map((event) => {
             return (
               <View key={event._id} style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>

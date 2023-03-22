@@ -34,25 +34,39 @@ export const bookEvent = async (req, res) => {
     try {
         const currentUser = await getCurrentUser(req.cookies.jwt);
         const datas = await req.body;
-        await Event.findOneAndUpdate({
-            _id: datas.event,
-        }, {
-                $addToSet: {
-                    bookings: currentUser._id.toString()
-                },
-            }
-        );
-        res.status(201).send({ "status": "success", "message": "Booked event successfully" });
+        const alreadyBooked = await Event.find({
+            bookings: {
+                $all: [ currentUser._id.toString() ]
+            }, date: datas.date
+        });
+        if(alreadyBooked.length === 0) {
+            await Event.findOneAndUpdate({
+                _id: datas.event,
+            }, {
+                    $addToSet: {
+                        bookings: currentUser._id.toString()
+                    },
+                }
+            );
+            res.status(201).send({ "status": "success", "message": "Booked event successfully" });
+        } else {
+            res.status(201).send({ "status": "failed", "message": "Already booked an event on this date" });
+        }
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
 }
 
 export const getBookings = async (req, res) => {
+    const currentUser = await getCurrentUser(req.cookies.jwt);
     try {
         const getFormattedToday = getToday();
         const events = await Event.find({ date: getFormattedToday }).populate('bookings').sort({ time: 1 });
-        res.status(200).json(events);
+        const duty = [];
+        events.map((event) => {
+            (currentUser.attendanceduty.includes(event._id)) && duty.push(event);
+        });
+        res.status(200).json(duty);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -118,12 +132,12 @@ export const getEventsStatus = async (req, res) => {
 export const getPayments = async (req, res) => {
     const currentStaff = await getCurrentUser(req.cookies.jwt);
     try {
-        const events = await Event.find({
-            payments: {
+        const paidEvents = await Event.find({
+            attendance: {
                 $all: [ currentStaff._id.toString() ] 
             },
         }).sort({ date: -1, time: -1 });
-        res.status(200).send({ "events": events, "payment": currentStaff.wage });
+        res.status(200).send({ "paidEvents": paidEvents, "staff": { "staffId": currentStaff._id, "payment": currentStaff.wage } });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }

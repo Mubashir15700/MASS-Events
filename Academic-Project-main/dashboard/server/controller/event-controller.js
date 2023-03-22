@@ -51,7 +51,7 @@ export const getEventBooking = async (req, res) => {
         event.bookings.map((booking) => {
             bookedStaffsIds.push(booking);
         });
-        const bookedStaffs = await Staff.find({ _id: { $in: bookedStaffsIds } }).select('-password');
+        const bookedStaffs = await Staff.find({ _id: { $in: bookedStaffsIds } }).select('-password').sort({ category: -1 });
         res.status(200).json({ "event": event, "bookedStaffs": bookedStaffs });
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -65,7 +65,7 @@ export const getEventAttendance = async (req, res) => {
         event.attendance.map((booking) => {
             attendedStaffsIds.push(booking);
         });
-        const attendedStaffs = await Staff.find({ _id: { $in: attendedStaffsIds } }).select('-password');
+        const attendedStaffs = await Staff.find({ _id: { $in: attendedStaffsIds } }).select('-password').sort({ category: -1 });
         res.status(200).json({ "event": event, "attendedStaffs": attendedStaffs });
     } catch (error) {
         res.status(404).json({ message: error.message });

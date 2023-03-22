@@ -135,6 +135,28 @@ export const addStaff = async (data) => {
     }
 }
 
+export const assignDuty = async (event, staff) => {
+    try {
+        return await axios.put(`${URL}/staffs/assignduty/`, { data: { 
+            "event": event, 
+            "staff": staff
+        } });
+    } catch (error) {
+        alert(error.response.data.message);
+    }
+}
+
+export const cancelDuty = async (event, staff) => {
+    try {
+        return await axios.delete(`${URL}/staffs/cancelduty/`, { data: { 
+            "event": event, 
+            "staff": staff
+        } });
+    } catch (error) {
+        alert(error.response.data.message);
+    }
+}
+
 export const cancelBooking = async (event, staff) => {
     try {
         return await axios.delete(`${URL}/staffs/cancelbooking/`, { data: { 
