@@ -114,8 +114,10 @@ const Bookings = () => {
                                 {(staff.category === "Head") ?
                                     <TableCell>
                                         {staff.attendanceduty.some((duty) => duty === event._id) ?
-                                            !(event.attendance.some((staffs) => staffs === staff._id)) &&
+                                            !(event.attendance.some((staffs) => staffs === staff._id)) ?
                                             <BsCheckSquareFill style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} onClick={() => cancelAttendanceDuty(event._id, staff._id)} />
+                                            :
+                                            <BsCheckSquareFill style={{ color: 'gray', fontSize: 22 }} />
                                         :
                                             <BsSquare style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} onClick={() => assignAttendanceDuty(event._id, staff._id)} />
                                         }

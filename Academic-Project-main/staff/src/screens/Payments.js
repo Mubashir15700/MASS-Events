@@ -50,8 +50,8 @@ export default Payments = () => {
         <View>
           <Text style={{ textAlign: 'center' }}>Previous Payments</Text>
           <View style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
-            <Text style={{ fontWeight: 'bold' }}>Total wage recieved: 5000</Text>
-            <Text style={{ fontWeight: 'bold' }}>Total wage recieved this month: 1000</Text>
+            <Text style={{ fontSize: 10, color: 'gray' }}>Total wage recieved: {staff.payment * 10}</Text>
+            <Text style={{ fontSize: 10, color: 'gray' }}>Total wage recieved this month: 1000</Text>
           </View>
           {paidEvents.map((paidEvent) => {
             return (
