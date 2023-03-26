@@ -1,5 +1,15 @@
 import { useState, useEffect } from 'react';
-import { FormControl, FormGroup, InputLabel, Input, Typography, styled, Button, Select, MenuItem } from '@mui/material';
+import { 
+    FormControl, 
+    FormGroup, 
+    InputLabel, 
+    Input, 
+    Typography, 
+    styled, 
+    Button, 
+    Select, 
+    MenuItem 
+} from '@mui/material';
 import { editStaff, getStaff } from '../services/api';
 import { useNavigate, useParams } from "react-router-dom";
 

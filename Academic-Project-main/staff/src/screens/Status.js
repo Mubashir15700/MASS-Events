@@ -57,10 +57,8 @@ export default Status = () => {
       </View> :
       events.length ?
         <View>
-          <Text style={{ textAlign: 'center' }}>All Booked Event's Status</Text>
-          <View style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
+          <View style={styles.overView}>
             <Text style={{ fontSize: 10, color: 'gray' }}>Total events booked: {events.length}</Text>
-            <Text style={{ fontSize: 10, color: 'gray' }}>Total events booked this month: 3</Text>
           </View>
           {events.map((event) => {
             return (
@@ -118,20 +116,30 @@ export default Status = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#e5e5e5',
     padding: 5,
   },
-  row: {
-    width: '90%',
-    elevation: 15,
-    borderRadius: 12,
+  overView: {
+    width: '95%',
+    borderRadius: 5,
     backgroundColor: '#fff',
     marginVertical: 5,
-    marginHorizontal: 20,
+    marginHorizontal: 8,
     paddingHorizontal: 0,
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 15,
+  },
+  row: {
+    width: '95%',
+    borderRadius: 12,
+    backgroundColor: '#fff',
+    marginVertical: 5,
+    marginHorizontal: 8,
+    paddingHorizontal: 0,
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: 5,
   },
   innerRow: {
     backgroundColor: '#36828b',

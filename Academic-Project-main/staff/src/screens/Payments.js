@@ -48,10 +48,8 @@ export default Payments = () => {
       </View> :
       paidEvents.length ?
         <View>
-          <Text style={{ textAlign: 'center' }}>Previous Payments</Text>
-          <View style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
+          <View style={styles.overView}>
             <Text style={{ fontSize: 10, color: 'gray' }}>Total wage recieved: {staff.payment * 10}</Text>
-            <Text style={{ fontSize: 10, color: 'gray' }}>Total wage recieved this month: 1000</Text>
           </View>
           {paidEvents.map((paidEvent) => {
             return (
@@ -85,20 +83,30 @@ export default Payments = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#e5e5e5',
     padding: 5,
   },
-  row: {
-    width: '90%',
-    elevation: 15,
-    borderRadius: 12,
+  overView: {
+    width: '95%',
+    borderRadius: 5,
     backgroundColor: '#fff',
     marginVertical: 5,
-    marginHorizontal: 20,
+    marginHorizontal: 8,
     paddingHorizontal: 0,
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 15,
+  },
+  row: {
+    width: '95%',
+    borderRadius: 12,
+    backgroundColor: '#fff',
+    marginVertical: 5,
+    marginHorizontal: 8,
+    paddingHorizontal: 0,
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: 5,
   },
   innerRow: {
     backgroundColor: '#36828b',

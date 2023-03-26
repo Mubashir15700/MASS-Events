@@ -79,7 +79,11 @@ const Bookings = () => {
                         <p>{event.time}</p>
                     </TableCell>
                     <TableCell style={{ fontWeight: 'bold' }}>{event.eventname}</TableCell>
-                    {event.bookings && <TableCell style={{ fontWeight: 'bold' }}>{event.bookings.length}/{event.reqstaffs}</TableCell>}
+                    {event.bookings && 
+                    <TableCell style={{ fontWeight: 'bold' }}>
+                        {event.bookings.length}/{event.reqstaffs}
+                    </TableCell>
+                    }
                     <TableCell>
                         {(event.attendance && event.attendance.length) ?
                             <Button
@@ -115,11 +119,17 @@ const Bookings = () => {
                                     <TableCell>
                                         {staff.attendanceduty.some((duty) => duty === event._id) ?
                                             !(event.attendance.some((staffs) => staffs === staff._id)) ?
-                                            <BsCheckSquareFill style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} onClick={() => cancelAttendanceDuty(event._id, staff._id)} />
+                                            <BsCheckSquareFill 
+                                                style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} 
+                                                onClick={() => cancelAttendanceDuty(event._id, staff._id)} 
+                                            />
                                             :
                                             <BsCheckSquareFill style={{ color: 'gray', fontSize: 22 }} />
                                         :
-                                            <BsSquare style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} onClick={() => assignAttendanceDuty(event._id, staff._id)} />
+                                            <BsSquare 
+                                                style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} 
+                                                onClick={() => assignAttendanceDuty(event._id, staff._id)} 
+                                            />
                                         }
                                     </TableCell> : 
                                     <TableCell>

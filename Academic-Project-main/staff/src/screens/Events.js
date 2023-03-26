@@ -44,6 +44,14 @@ export default Events = () => {
     }
   }
 
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  let mm = today.getMonth() + 1;
+  let dd = today.getDate();
+  if (dd < 10) dd = '0' + dd;
+  if (mm < 10) mm = '0' + mm;
+  const formattedToday = yyyy + '-' + mm + '-' + dd;
+
   return (
     <ScrollView style={styles.container}
       refreshControl={
@@ -58,7 +66,6 @@ export default Events = () => {
         <Text>Loading...</Text>
       </View> : events.length ?
       <View>
-        <Text style={{ textAlign: 'center' }}>New Event(s)</Text>
         {events.map((event) => {
           return (
             <View key={event._id} style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
@@ -66,6 +73,11 @@ export default Events = () => {
                 <Icon name={'calendar-clock-outline'} size={20} color={'#36828b'} />
                 <Text>{event.date}</Text>
                 <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{event.time}</Text>
+                {event.date > formattedToday ? 
+                  <Text style={{ fontWeight: 'bold', fontSize: 10 }}>Upcoming</Text> : 
+                event.date === formattedToday &&
+                  <Text style={{ fontWeight: 'bold', fontSize: 10 }}>Today</Text>
+                }
                 <Text style={{ fontSize: 10 }}>Duration: {event.duration}(hrs)</Text>
               </View>
               <View style={{
@@ -74,7 +86,7 @@ export default Events = () => {
                 flex: 1,
                 }}
               >
-                <Text style={{ fontSize: 13, color: 'grey' }}>{event.eventname}</Text>
+                <Text style={{ fontSize: 13, color: 'gray' }}>{event.eventname}</Text>
                 <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{event.location}</Text>
                 <Text style={{ fontSize: 13, fontWeight: 'bold', marginTop: 3 }}>
                   Avail Slots: {event.reqstaffs - event.bookings.length}
@@ -118,16 +130,15 @@ export default Events = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#e5e5e5',
     padding: 5,
   },
   row: {
-    width: '90%',
-    elevation: 15,
+    width: '95%',
     borderRadius: 10,
     backgroundColor: '#fff',
     marginVertical: 5,
-    marginHorizontal: 20,
+    marginLeft: 8,
     paddingHorizontal: 10,
     flexDirection: 'row',
     alignItems: 'center',

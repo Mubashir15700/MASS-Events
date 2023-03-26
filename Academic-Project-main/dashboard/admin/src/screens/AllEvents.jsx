@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Table, TableHead, TableBody, TableRow, TableCell, styled } from "@mui/material";
 import { getEvents, deleteEvent } from "../services/api.js";
-import { DisplayAllEvents } from "../components/DisplayAllEvents.jsx"
+import { DisplayAllEvents } from "../components/DisplayAllEvents.jsx";
 
 const Container = styled(Table)`
     width: 95%;
@@ -71,17 +71,35 @@ const AllEvents = () => {
                 }
                 {todays.map((today) => {
                     return (
-                        <DisplayAllEvents key={today._id} status={today} sts={'Today'} clr={'red'} handleClick={deleteThisEvent} />
+                        <DisplayAllEvents 
+                            key={today._id} 
+                            status={today} 
+                            sts={'Today'} 
+                            clr={'red'} 
+                            handleClick={deleteThisEvent} 
+                        />
                     );
                 })}
                 {upcomings.map((upcoming) => {
                     return (
-                        <DisplayAllEvents key={upcoming._id} status={upcoming} sts={'Upcoming'} clr={'blue'} handleClick={deleteThisEvent} />
+                        <DisplayAllEvents 
+                            key={upcoming._id} 
+                            status={upcoming} 
+                            sts={'Upcoming'} 
+                            clr={'blue'} 
+                            handleClick={deleteThisEvent} 
+                        />
                     );
                 })}
                 {dones.map((done) => {
                     return (
-                        <DisplayAllEvents key={done._id} status={done} sts={'Done'} clr={'green'} handleClick={deleteThisEvent} />
+                        <DisplayAllEvents 
+                            key={done._id} 
+                            status={done} 
+                            sts={'Done'} 
+                            clr={'green'} 
+                            handleClick={deleteThisEvent} 
+                        />
                     );
                 })}
             </TableBody>

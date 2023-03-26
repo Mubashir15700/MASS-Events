@@ -82,7 +82,10 @@ const Payments = () => {
                                     {event.payments.some((staffs) => staffs === staff._id) ?
                                         <BsCheckSquareFill style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} />
                                         :
-                                        <BsSquare style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} onClick={() => payThisStaff(event._id, staff._id)} />
+                                        <BsSquare 
+                                            style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} 
+                                            onClick={() => payThisStaff(event._id, staff._id)} 
+                                        />
                                     }
                                 </TableCell>
                             </TableRow>

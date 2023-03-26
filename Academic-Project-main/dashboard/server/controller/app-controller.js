@@ -116,16 +116,13 @@ export const cancelAttendance = async (req, res) => {
 }
 
 export const getEventsStatus = async (req, res) => {
-    const getFormattedToday = getToday();
-    console.log(getFormattedToday.slice(5, 7));
     const currentStaff = await getCurrentUser(req.cookies.jwt);
     try {
         const events = await Event.find({
             bookings: {
                 $all: [ currentStaff._id.toString() ]
-            }, date: '2023-03-23'
+            },
         }).sort({ date: -1, time: -1 });
-        console.log(events);
         res.status(200).send({ "events": events, "user": currentStaff._id });
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -133,8 +130,6 @@ export const getEventsStatus = async (req, res) => {
 }
 
 export const getPayments = async (req, res) => {
-    const getFormattedToday = getToday();
-    console.log(getFormattedToday.slice(5, 7));
     const currentStaff = await getCurrentUser(req.cookies.jwt);
     try {
         const paidEvents = await Event.find({
@@ -142,7 +137,10 @@ export const getPayments = async (req, res) => {
                 $all: [ currentStaff._id.toString() ] 
             },
         }).sort({ date: -1, time: -1 });
-        res.status(200).send({ "paidEvents": paidEvents, "staff": { "staffId": currentStaff._id, "payment": currentStaff.wage } });
+        res.status(200).send({ "paidEvents": paidEvents, "staff": { 
+            "staffId": currentStaff._id, 
+            "payment": currentStaff.wage 
+        } });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }

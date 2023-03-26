@@ -59,7 +59,6 @@ export default Attendance = () => {
       </View> :
       events.length ?
         <View style={{alignItems: 'center', borderTopRadius: 10}}>
-          <Text>Today's Event(s)</Text>
           {events.map((event) => {
             return (
               <View key={event._id} style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
@@ -121,17 +120,14 @@ export default Attendance = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#e5e5e5',
     padding: 5,
   },
   row: {
-    width: '90%',
-    elevation: 15,
+    width: '95%',
     borderRadius: 12,
     backgroundColor: '#fff',
     marginVertical: 5,
-    marginHorizontal: 20,
-    paddingHorizontal: 0,
     flexDirection: 'column',
     alignItems: 'center',
     marginBottom: 10,

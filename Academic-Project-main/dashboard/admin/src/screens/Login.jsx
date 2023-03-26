@@ -34,7 +34,9 @@ const Login = () => {
 
     return (
         <Container>
-            <Typography variant='h5' style={{ textAlign: 'center', marginBottom: 70 }}>Event Staff Management</Typography>
+            <Typography variant='h5' style={{ textAlign: 'center', marginBottom: 70 }}>
+                Event Staff Management
+            </Typography>
             <Typography variant='h6'>Log In</Typography>
             <FormControl>
                 <InputLabel>User Name:</InputLabel>
@@ -48,7 +50,13 @@ const Login = () => {
                 <Button variant="contained" style={{ marginRight: 10, width: 100, }} onClick={() => login()}>
                     Login
                 </Button>
-                <Button variant="contained" color="secondary" style={{ width: 100, }} component={Link} to={"/register"}>
+                <Button 
+                    variant="contained" 
+                    color="secondary" 
+                    style={{ width: 100, }} 
+                    component={Link} 
+                    to={"/register"}
+                >
                     Register
                 </Button>
             </FormControl>
