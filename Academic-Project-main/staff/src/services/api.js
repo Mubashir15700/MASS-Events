@@ -84,3 +84,11 @@ export const getPayments = async () => {
         console.log(error);
     }
 }
+
+export const logoutStaff = async () => {
+    try {
+        return await axios.get(`${URL}/staff/logout/`);
+    } catch (error) {
+        alert(error.response.data.message);
+    }
+}

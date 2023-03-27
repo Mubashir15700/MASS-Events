@@ -47,7 +47,7 @@ const Register = () => {
     return (
         <Container>
             <Typography variant='h5' style={{ textAlign: 'center', marginBottom: 70 }}>
-                Event Staff Management
+                MASS Events
             </Typography>
             <Typography variant='h5'>Register</Typography>
             <FormControl>

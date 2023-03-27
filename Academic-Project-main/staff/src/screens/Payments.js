@@ -49,7 +49,9 @@ export default Payments = () => {
       paidEvents.length ?
         <View>
           <View style={styles.overView}>
-            <Text style={{ fontSize: 10, color: 'gray' }}>Total wage recieved: {staff.payment * 10}</Text>
+            <Text style={{ fontSize: 10, color: 'gray' }}>
+              Total wage recieved: {staff.payment * paidEvents.length}
+            </Text>
           </View>
           {paidEvents.map((paidEvent) => {
             return (
@@ -88,6 +90,7 @@ const styles = StyleSheet.create({
   },
   overView: {
     width: '95%',
+    height: 15,
     borderRadius: 5,
     backgroundColor: '#fff',
     marginVertical: 5,

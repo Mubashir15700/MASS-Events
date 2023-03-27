@@ -13,8 +13,8 @@ export default props => {
     const logout = async () => {
         let response = await logoutAdmin();
         if (response) {
-            console.log(response.data);
-            response.data.status === "success" ? setAuth(false) : alert(response.data.message);
+            alert(response.data.message);
+            response.data.status === "success" && setAuth(false); 
         }
     }
 

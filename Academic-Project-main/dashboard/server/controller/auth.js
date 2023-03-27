@@ -100,16 +100,11 @@ export const loginAdmin = async (req, res) => {
     }
 }
 
-export const logoutAdmin = async (req, res) => {
+export const logout = async (req, res) => {
     try {
-        console.log("here");
-        // res.cookie('jwt', {
-        //     maxAge: 10000,
-        //     httpOnly: true,
-        //     overwrite: true,
-        // });
-        // res.clearCookie('jwt',  {domain: 'localhost', path:'/'});
-    } catch (error) {
+        res.clearCookie("jwt");
+        res.send({ "status": "success", "message": "Logged out successfully" });
+        } catch (error) {
         res.status(404).json({ message: error.message });
     }
 }
@@ -132,6 +127,7 @@ export const addStaff = async (req, res) => {
                         place: place,
                         phone: phone,
                         wage: wage,
+                        attendanceduty: [],
                         role: role,
                         category: category,
                         password: hashPassword,

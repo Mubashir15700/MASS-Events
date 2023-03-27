@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
   },
   overView: {
     width: '95%',
+    height: 15,
     borderRadius: 5,
     backgroundColor: '#fff',
     marginVertical: 5,

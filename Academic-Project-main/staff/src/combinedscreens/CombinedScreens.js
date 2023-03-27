@@ -4,8 +4,8 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import DrawerIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import PhoneIcon from 'react-native-vector-icons/Fontisto';
 import { useLogin } from '../context/authProvider';
-import { getCurrStaff } from '../services/api';
-import { View, Text, Animated, TouchableOpacity } from 'react-native';
+import { getCurrStaff, logoutStaff } from '../services/api';
+import { View, Text, Animated, TouchableOpacity, Alert } from 'react-native';
 import Events from "../screens/Events";
 import Status from "../screens/Status";
 import Payments from "../screens/Payments";
@@ -19,6 +19,8 @@ const CombinedScreen = () => {
     const [currentstaff, setCurrentStaff] = useState([]);
     const [showMenu, setShowMenu] = useState(false);
 
+    const { setAuth } = useLogin();
+
     const moveToRight = useRef(new Animated.Value(0)).current;
     const scale = useRef(new Animated.Value(1)).current;
 
@@ -31,9 +33,19 @@ const CombinedScreen = () => {
         response && setCurrentStaff(response.data.currentStaff);
     }
 
+    const logout = async () => {
+        let response = await logoutStaff();
+        if (response && response.data.status === "success") {
+            Alert.alert(response.data.message); 
+            setAuth(false); 
+        } else {
+            Alert.alert(response.data.status);
+        }
+    }
+
     return (
-        <View style={{ flex: 1, backgroundColor: 'lightgray' }}>
-            <View style={{ marginTop: 80, marginLeft: 25, }}>
+        <View style={{ flex: 1, backgroundColor: 'gray' }}>
+            <View style={{ marginTop: 80, marginLeft: 25 }}>
                 <DrawerIcon name={'account-circle'} size={70} color={"#fff"} />
                 <View style={{ marginTop: 10, marginLeft: 8 }}>
                     <Text>{currentstaff.username}</Text>
@@ -53,6 +65,7 @@ const CombinedScreen = () => {
                         justifyContent: "center",
                         backgroundColor: "#4682b4", 
                     }}
+                    onPress = {() => logout()}
                 >
                     <Text style={{ color: '#fff' }}>
                         <DrawerIcon name={'logout'} size={30} />
@@ -70,8 +83,6 @@ const CombinedScreen = () => {
                     paddingLeft: 15, 
                     paddingTop: 50, 
                     paddingBottom: 10,
-                    borderWidth: 1, 
-                    borderColor: '#000',
                     borderTopLeftRadius: 20,
                 }}>
                     <TouchableOpacity onPress={() => {
@@ -88,11 +99,11 @@ const CombinedScreen = () => {
                         setShowMenu(!showMenu);
                     }}>
                         {showMenu ? 
-                            <DrawerIcon name={'close'} size={30} color={'#fff'} /> : 
-                            <DrawerIcon name={'menu'} size={30} color={'#fff'} /> 
+                            <DrawerIcon name={'close'} size={30} color={'#e5e5e5'} /> : 
+                            <DrawerIcon name={'menu'} size={30} color={'#e5e5e5'} /> 
                         }
                     </TouchableOpacity>
-                    <Text style={{ marginLeft: 80, fontSize: 18 }}>MASS Events</Text>
+                    <Text style={{ marginLeft: 80, fontSize: 18, color: '#e5e5e5' }}>MASS Events</Text>
                 </Animated.View>
                 <Tab.Navigator
                     screenOptions={({ route }) => ({
