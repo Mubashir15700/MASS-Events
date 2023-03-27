@@ -58,11 +58,11 @@ export default Payments = () => {
               <View key={paidEvent._id} style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
                 <View style={styles.innerRow}>
                   <View style={{ marginHorizontal: 10, padding: 10 }}>
-                    <DateIcon name={'calendar-outline'} size={20} color={'black'} />
-                    <Text style={{ fontWeight: 'bold' }}>{paidEvent.date}</Text>
+                    <DateIcon name={'calendar-outline'} size={20} color={'#e5e5e5'} />
+                    <Text style={{ fontWeight: 'bold', color: '#e5e5e5' }}>{paidEvent.date}</Text>
                   </View>
                   <View>
-                    <Text style={{ fontWeight: 'bold' }}>{paidEvent.eventname}</Text>
+                    <Text style={{ fontWeight: 'bold', color: '#e5e5e5' }}>{paidEvent.eventname}</Text>
                   </View>
                 </View>
                 <View style={{ padding: 10 }}>

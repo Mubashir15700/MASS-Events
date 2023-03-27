@@ -65,17 +65,17 @@ export default Status = () => {
               <View key={event._id} style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
                 <View style={styles.innerRow}>
                   <View style={{ marginHorizontal: 10, padding: 10 }}>
-                    <DateIcon name={'calendar-outline'} size={20} color={'black'} />
-                    <Text style={{ fontWeight: 'bold' }}>{event.date}</Text>
+                    <DateIcon name={'calendar-outline'} size={20} color={'#e5e5e5'} />
+                    <Text style={{ fontWeight: 'bold', color: '#e5e5e5' }}>{event.date}</Text>
                     {event.date > formattedToday ? 
-                      <Text style={{ fontWeight: 'bold', fontSize: 10 }}>Status: Upcoming</Text> : 
+                      <Text style={{ fontWeight: 'bold', fontSize: 10, color: '#e5e5e5' }}>Status: Upcoming</Text> : 
                     event.date < formattedToday ?
-                      <Text style={{ fontWeight: 'bold', fontSize: 10 }}>Status: Done</Text> : 
-                      <Text style={{ fontWeight: 'bold', fontSize: 10 }}>Status: Today</Text>
+                      <Text style={{ fontWeight: 'bold', fontSize: 10, color: '#e5e5e5'  }}>Status: Done</Text> : 
+                      <Text style={{ fontWeight: 'bold', fontSize: 10, color: '#e5e5e5' }}>Status: Today</Text>
                     }
                   </View>
                   <View>
-                    <Text style={{ fontWeight: 'bold' }}>{event.eventname}</Text>
+                    <Text style={{ fontWeight: 'bold', color: '#e5e5e5' }}>{event.eventname}</Text>
                   </View>
                 </View>
                 <View style={{ padding: 10 }}>

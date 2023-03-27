@@ -64,12 +64,12 @@ export default Attendance = () => {
               <View key={event._id} style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
                 <View style={styles.innerRow}>
                   <View style={{ marginHorizontal: 10, padding: 10 }}>
-                    <DateIcon name={'calendar-clock-outline'} size={20} color={'black'} />
-                    <Text style={{ fontWeight: 'bold' }}>{event.date}</Text>
-                    <Text style={{ fontWeight: 'bold' }}>{event.time}</Text>
+                    <DateIcon name={'calendar-clock-outline'} size={20} color={'#e5e5e5'} />
+                    <Text style={{ fontWeight: 'bold', color: '#e5e5e5' }}>{event.date}</Text>
+                    <Text style={{ fontWeight: 'bold', color: '#e5e5e5' }}>{event.time}</Text>
                   </View>
                   <View>
-                    <Text style={{ fontWeight: 'bold' }}>{event.eventname}</Text>
+                    <Text style={{ fontWeight: 'bold', color: '#e5e5e5' }}>{event.eventname}</Text>
                   </View>
                 </View>
                 {event.bookings.length === 0 && 

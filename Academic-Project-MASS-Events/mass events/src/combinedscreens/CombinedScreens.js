@@ -44,9 +44,9 @@ const CombinedScreen = () => {
     }
 
     return (
-        <View style={{ flex: 1, backgroundColor: 'gray' }}>
+        <View style={{ flex: 1, backgroundColor: 'lightgray' }}>
             <View style={{ marginTop: 80, marginLeft: 25 }}>
-                <DrawerIcon name={'account-circle'} size={70} color={"#fff"} />
+                <DrawerIcon name={'account-circle'} size={70} color={"#36828b"} />
                 <View style={{ marginTop: 10, marginLeft: 8 }}>
                     <Text>{currentstaff.username}</Text>
                     <Text>
