@@ -5,7 +5,11 @@ import { loginAdmin } from '../services/api';
 import { useLogin } from '../context/authProvider';
 
 const Container = styled(FormGroup)`
-    width: 50%;
+    width: 60%;
+    background-color: #e5e5e5;
+    border: 1px;
+    border-radius: 10px;
+    padding: 50px;
     margin: 5% auto 0 auto;
     & > div {
         margin-top: 20px;

@@ -36,8 +36,8 @@ const Navbar = () => {
 
   return (
     <Header position="fixed" className="app">
-      <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} user={user.username} />
-      <Toolbar className="nav" style={{ marginLeft: 80 }}>
+      <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} user={user} />
+      <Toolbar className="nav" style={{ marginLeft: 100 }}>
         <Tabs to="/"
           className={({ isActive }) =>
             isActive ? 'active' : 'inactive'
@@ -46,9 +46,10 @@ const Navbar = () => {
           <BsFillCalendarMinusFill style={{ marginRight: 5 }} />
           All Events
         </Tabs>
-        <Tabs to="/addevent"><BsFillCalendarPlusFill style={{ marginRight: 5 }} />Add Event</Tabs>
-        <Tabs to="/allstaffs"><BsFillPersonLinesFill style={{ marginRight: 5 }} />All Staffs</Tabs>
-        <Tabs to="/addstaff"><BsFillPersonPlusFill style={{ marginRight: 5 }} />Add Staff</Tabs>
+        <Tabs to="/add_event"><BsFillCalendarPlusFill style={{ marginRight: 5 }} />Add Event</Tabs>
+        <Tabs to="/all_staffs"><BsFillPersonLinesFill style={{ marginRight: 5 }} />All Staffs</Tabs>
+        <Tabs to="/add_staff"><BsFillPersonPlusFill style={{ marginRight: 5 }} />Add Staff</Tabs>
+        <p style={{ marginLeft: 500, fontSize: 20 }}>MASS Events</p>
       </Toolbar>
     </Header>
   );

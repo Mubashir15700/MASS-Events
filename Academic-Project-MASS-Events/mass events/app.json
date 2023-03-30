@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "staff",
-    "slug": "staff",
+    "name": "MASS Events",
+    "slug": "staffs",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/testing/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/testing/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -22,12 +22,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/testing/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.mubashir7317.staffs"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3add6d56-058f-447d-a7fb-8cdbee26055f"
+      }
     }
   }
 }

@@ -44,18 +44,20 @@ const CombinedScreen = () => {
     }
 
     return (
-        <View style={{ flex: 1, backgroundColor: 'lightgray' }}>
-            <View style={{ marginTop: 80, marginLeft: 25 }}>
-                <DrawerIcon name={'account-circle'} size={70} color={"#36828b"} />
+        <View style={{ flex: 1, backgroundColor: '#355d85' }}>
+            <View style={{ marginTop: 100, marginLeft: 25 }}>
+                <DrawerIcon name={'account-circle'} size={90} color={"#fff"} />
                 <View style={{ marginTop: 10, marginLeft: 8 }}>
-                    <Text>{currentstaff.username}</Text>
-                    <Text>
-                        <PhoneIcon name={'phone'} size={12} color={'black'} />
+                    <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#e5e5e5' }}>
+                        {currentstaff.username}
+                    </Text>
+                    <Text style={{ color: '#e5e5e5' }}>
+                        <PhoneIcon name={'phone'} size={12} color={'#e5e5e5'} />
                         {"  " + currentstaff.phone}
                     </Text>
                 </View>
             </View>
-            <View style={{ marginTop: 400, marginLeft: 25 }}>
+            <View style={{ marginTop: 370, marginLeft: 25 }}>
                 <TouchableOpacity
                     style={{ 
                         width: 100,
@@ -63,7 +65,7 @@ const CombinedScreen = () => {
                         height: 40,
                         alignItems: "center",
                         justifyContent: "center",
-                        backgroundColor: "#4682b4", 
+                        backgroundColor: "#a83ea1", 
                     }}
                     onPress = {() => logout()}
                 >
@@ -78,7 +80,7 @@ const CombinedScreen = () => {
             }}>
                 <Animated.View style={{
                     width: '100%', 
-                    backgroundColor: '#36828b', 
+                    backgroundColor: '#4682b4', 
                     flexDirection: 'row', 
                     paddingLeft: 15, 
                     paddingTop: 50, 
@@ -120,7 +122,7 @@ const CombinedScreen = () => {
                             }
                             return <Icon name={iconName} size={20} color={color} />;
                         },
-                        tabBarActiveTintColor: '#36828b',
+                        tabBarActiveTintColor: '#4682b4',
                         tabBarInactiveTintColor: 'gray',
                     })}
                 >

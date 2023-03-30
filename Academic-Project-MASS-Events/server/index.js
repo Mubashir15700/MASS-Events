@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import Connection from "./database/db.js";
 import cors from "cors";
 import bodyParser from "body-parser";
-import Routes from "./routes/route.js";
+import Routes from "./routes/routes.js";
 import cookieParser from "cookie-parser";
 
 const app = express();

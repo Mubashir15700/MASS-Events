@@ -47,14 +47,14 @@ const AllEvents = () => {
         <Container>
             <TableHead>
                 <THead>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Time(24hrs)</TableCell>
+                    <TableCell>Date and Time(24hrs)</TableCell>
                     <TableCell>Duration(hrs)</TableCell>
                     <TableCell>Event Name</TableCell>
                     <TableCell>Location</TableCell>
                     <TableCell>
                         Staffs Booked/Required
                     </TableCell>
+                    <TableCell></TableCell>
                     <TableCell>Actions</TableCell>
                 </THead>
             </TableHead>

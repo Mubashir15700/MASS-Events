@@ -76,7 +76,7 @@ const AllStaffs = () => {
                                         variant="contained"
                                         style={{ marginRight: "10px" }}
                                         component={Link}
-                                        to={`/editstaff/${staff._id}`}
+                                        to={`/edit_staff/${staff._id}`}
                                     >
                                         Edit
                                     </Button>

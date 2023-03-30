@@ -29,6 +29,14 @@ export const checkAuth = async () => {
     }
 }
 
+export const logoutAdmin = async () => {
+    try {
+        return await axios.get(`${URL}/admin/logout/`);
+    } catch (error) {
+        alert(error.response.data.message);
+    }
+}
+
 // Events
 export const getEvents = async () => {
     try {
@@ -174,14 +182,6 @@ export const payStaff = async (eventName, staff) => {
             "eventName": eventName, 
             "staff": staff
         } });
-    } catch (error) {
-        alert(error.response.data.message);
-    }
-}
-
-export const logoutAdmin = async () => {
-    try {
-        return await axios.get(`${URL}/admin/logout/`);
     } catch (error) {
         alert(error.response.data.message);
     }

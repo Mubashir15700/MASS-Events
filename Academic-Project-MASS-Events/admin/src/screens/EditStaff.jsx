@@ -8,8 +8,7 @@ import {
     styled, 
     Button, 
     Select, 
-    MenuItem 
-} from '@mui/material';
+    MenuItem } from '@mui/material';
 import { editStaff, getStaff } from '../services/api';
 import { useNavigate, useParams } from "react-router-dom";
 

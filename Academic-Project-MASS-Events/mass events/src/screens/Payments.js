@@ -11,6 +11,8 @@ export default Payments = () => {
 
   const [paidEvents, setPaidEvents] = useState([]);
   const [staff, setStaff] = useState([]);
+  const [totalPaid, setTotalPaid] = useState(0);
+  const [totalPending, setTotalPending] = useState(0);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -29,6 +31,8 @@ export default Payments = () => {
     if (response) {
       setPaidEvents(response.data.paidEvents);
       setStaff(response.data.staff);
+      setTotalPaid(response.data.staff.totalPaid);
+      setTotalPending(response.data.staff.totalPending);
       setLoading(false);
     }
   }
@@ -50,25 +54,26 @@ export default Payments = () => {
         <View>
           <View style={styles.overView}>
             <Text style={{ fontSize: 10, color: 'gray' }}>
-              Total wage recieved: {staff.payment * paidEvents.length}
+              Total wage recieved: {totalPaid * staff.payment}
+            </Text>
+            <Text style={{ fontSize: 10, color: 'gray' }}>
+              Payments pending: {totalPending * staff.payment}
             </Text>
           </View>
           {paidEvents.map((paidEvent) => {
             return (
-              <View key={paidEvent._id} style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
+              <View key={paidEvent._id} style={[styles.row, { borderWidth: 1, borderColor: '#4682b4' }]}>
                 <View style={styles.innerRow}>
                   <View style={{ marginHorizontal: 10, padding: 10 }}>
-                    <DateIcon name={'calendar-outline'} size={20} color={'#e5e5e5'} />
-                    <Text style={{ fontWeight: 'bold', color: '#e5e5e5' }}>{paidEvent.date}</Text>
+                    <DateIcon name={'calendar-outline'} size={20} color={'#4682b4'} />
+                    <Text style={{ fontWeight: 'bold' }}>{paidEvent.date}</Text>
+                    <Text style={{ fontWeight: 'bold' }}>{paidEvent.eventname}</Text>
                   </View>
-                  <View>
-                    <Text style={{ fontWeight: 'bold', color: '#e5e5e5' }}>{paidEvent.eventname}</Text>
-                  </View>
+                  <View style={{ padding: 10 }}>
+                    {paidEvent.payments.some((payment) => payment === staff.staffId) ?
+                    <Text>Wage Recieved: {staff.payment}</Text> :
+                    <Text>Wage Recieved: pending</Text>}
                 </View>
-                <View style={{ padding: 10 }}>
-                  {paidEvent.payments.some((payment) => payment === staff.staffId) ?
-                  <Text>Wage Recieved: {staff.payment}</Text> :
-                  <Text>Wage Recieved: pending</Text>}
                 </View>
               </View>
             );
@@ -90,8 +95,11 @@ const styles = StyleSheet.create({
   },
   overView: {
     width: '95%',
-    height: 15,
-    borderRadius: 5,
+    height: 35,
+    justifyContent: 'center',
+    borderRadius: 3,
+    borderBottomWidth: 1,
+    borderBottomColor: "#4682b4",
     backgroundColor: '#fff',
     marginVertical: 5,
     marginHorizontal: 8,
@@ -112,7 +120,6 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   innerRow: {
-    backgroundColor: '#36828b',
     width: '100%',
     borderTopStartRadius: 10,
     borderTopEndRadius: 10,

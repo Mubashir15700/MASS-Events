@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Table, TableHead, TableBody, TableRow, TableCell, styled, Button } from "@mui/material";
-import { BsCheckSquareFill, BsSquare } from "react-icons/bs";
+import { BsCheckSquareFill, BsSquare, BsXCircle } from "react-icons/bs";
 import { getEventBooking, assignDuty, cancelDuty, cancelBooking } from "../services/api.js";
 import { useParams } from 'react-router';
 import { Link } from "react-router-dom";
@@ -88,7 +88,7 @@ const Bookings = () => {
                         {(event.attendance && event.attendance.length) ?
                             <Button
                                 variant="contained"
-                                style={{ marginRight: "10px", backgroundColor: 'rgb(54, 130, 139)' }}
+                                style={{ marginRight: "10px", backgroundColor: '#4682b4' }}
                                 component={Link}
                                 to={`/payments/${event._id}`}
                             >
@@ -97,7 +97,7 @@ const Bookings = () => {
                             :
                             <Button
                                 variant="contained"
-                                style={{ marginRight: "10px" }}
+                                style={{ marginRight: "10px", backgroundColor: '#7e8e9e', color: '#e5e5e5' }}
                                 disabled={true}
                             >
                                 No Attendance
@@ -120,21 +120,19 @@ const Bookings = () => {
                                         {staff.attendanceduty.some((duty) => duty === event._id) ?
                                             !(event.attendance.some((staffs) => staffs === staff._id)) ?
                                             <BsCheckSquareFill 
-                                                style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} 
+                                                style={{ color: '#4682b4', fontSize: 22 }} 
                                                 onClick={() => cancelAttendanceDuty(event._id, staff._id)} 
                                             />
                                             :
-                                            <BsCheckSquareFill style={{ color: 'gray', fontSize: 22 }} />
+                                            <BsCheckSquareFill style={{ color: '#7e8e9e', fontSize: 22 }} />
                                         :
                                             <BsSquare 
-                                                style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} 
+                                                style={{ color: '#4682b4', fontSize: 22 }} 
                                                 onClick={() => assignAttendanceDuty(event._id, staff._id)} 
                                             />
                                         }
                                     </TableCell> : 
-                                    <TableCell>
-                                        <BsSquare style={{ color: 'gray', fontSize: 22 }} />
-                                    </TableCell>
+                                    <TableCell></TableCell>
                                 }
                                 <TableCell style={{ fontSize: 15 }}>
                                     {event.attendance.some((staffs) => staffs === staff._id) ?
@@ -150,14 +148,14 @@ const Bookings = () => {
                                                 cancelThisBooking(event._id, staff._id)
                                             }
                                         >
-                                            Cancel Booking
+                                            <BsXCircle size={20} />
                                         </Button>
                                         :
                                         <Button
                                             variant="contained"
                                             disabled={true}
                                         >
-                                            Cancel Booking
+                                            <BsXCircle size={20} color={'#7e8e9e'} />
                                         </Button>
                                     }
                                 </TableCell>

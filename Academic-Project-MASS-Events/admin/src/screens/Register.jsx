@@ -4,10 +4,14 @@ import { FormControl, FormGroup, InputLabel, Input, Typography, styled, Button }
 import { registerAdmin } from '../services/api';
 
 const Container = styled(FormGroup)`
-    width: 50%;
-    margin: 5% auto 0 auto;
+    width: 60%;
+    background-color: #e5e5e5;
+    border: 1px;
+    border-radius: 10px;
+    padding: 50px;
+    margin: 3% auto 0 auto;
     & > div {
-        margin-top: 8px;
+        margin-top: 10px;
     }
 `
 

@@ -23,6 +23,9 @@ const Payments = () => {
     const [event, setEvent] = useState([]);
     const [staffs, setStaffs] = useState([]);
 
+    let total = 0;
+    let totalPaid = 0;
+
     const params = useParams()
 
     useEffect(() => {
@@ -40,7 +43,9 @@ const Payments = () => {
     const payThisStaff = async (eventName, staff) => {
         let response = await payStaff(eventName, staff);
         if (response) {
-            response.data.status === "success" ? alert("Marked Payment successfully") : alert("failed");
+            response.data.status === "success" ? 
+            alert("Marked Payment successfully") : 
+            alert("failed to mark payments");
         }
         getThisEvent();
     }
@@ -68,30 +73,49 @@ const Payments = () => {
                         {event.eventname}
                     </TableCell>
                 </TableRow>
-                {staffs &&
-                    staffs.map((staff) => {
-                        return (
-                            <TableRow key={staff._id} style={{ backgroundColor: '#e5e5e5' }}>
-                                <TableCell></TableCell>
-                                <TableCell></TableCell>
-                                <TableCell>{staff.username}</TableCell>
-                                <TableCell>{staff.category}</TableCell>
-                                <TableCell>{staff.phone}</TableCell>
-                                <TableCell>{staff.wage}</TableCell>
-                                <TableCell>
-                                    {event.payments.some((staffs) => staffs === staff._id) ?
-                                        <BsCheckSquareFill style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} />
-                                        :
-                                        <BsSquare 
-                                            style={{ color: 'rgb(54, 130, 139)', fontSize: 22 }} 
-                                            onClick={() => payThisStaff(event._id, staff._id)} 
-                                        />
-                                    }
-                                </TableCell>
-                            </TableRow>
-                        );
-                    })
+                {staffs && staffs.map((staff) => {
+                    total += staff.wage;
+                    if(event.payments.some((staffs) => staffs === staff._id)) {
+                        totalPaid += staff.wage;
+                    }
+                    return (
+                        <TableRow key={staff._id} style={{ backgroundColor: '#e5e5e5' }}>
+                            <TableCell></TableCell>
+                            <TableCell></TableCell>
+                            <TableCell>{staff.username}</TableCell>
+                            <TableCell>{staff.category}</TableCell>
+                            <TableCell>{staff.phone}</TableCell>
+                            <TableCell>{staff.wage}</TableCell>
+                            <TableCell>
+                                {event.payments.some((staffs) => staffs === staff._id) ?
+                                    <BsCheckSquareFill style={{ color: '#4682b4', fontSize: 22 }} />
+                                    :
+                                    <BsSquare 
+                                        style={{ color: '#4682b4', fontSize: 22 }} 
+                                        onClick={() => payThisStaff(event._id, staff._id)} 
+                                    />
+                                }
+                            </TableCell>
+                        </TableRow>
+                    );})
                 }
+                <TableRow>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    {event.length !== 0 &&
+                    <TableCell style={{ fontWeight: 'bold' }}>
+                        <p>Staffs booked: {event.bookings.length}</p>
+                        <p>Staffs attended: {event.attendance.length}</p>
+                        <p>Staffs paid: {event.payments.length}</p>
+                    </TableCell>}
+                    <TableCell style={{ fontWeight: 'bold' }}>
+                        <p>Total amount: {total}</p>
+                        <p>Total amount paid: {totalPaid}</p>
+                        <p>Balance: {total - totalPaid}</p>
+                    </TableCell>
+                </TableRow>
             </TableBody>
         </Container>
     );

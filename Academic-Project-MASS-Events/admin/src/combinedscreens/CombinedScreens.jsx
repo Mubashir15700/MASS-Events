@@ -20,15 +20,15 @@ const Protected = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<AllEvents />} />
-        <Route path="/editevent/:id" element={<EditEvent />} />
+        <Route path="/edit_event/:id" element={<EditEvent />} />
         <Route path="/bookings/:id" element={<Bookings />} />
         <Route path="/payments/:id" element={<Payments />} />
-        <Route path="/addevent" element={<AddEvent />} />
-        <Route path="/eventsstatus" element={<EventsStatus />} />
-        <Route path="/prevpayments" element={<PrevPayments />} />
-        <Route path="/allstaffs" element={<AllStaffs />} />
-        <Route path="/editstaff/:id" element={<EditStaff />} />
-        <Route path="/addstaff" element={<AddStaff />} />
+        <Route path="/add_event" element={<AddEvent />} />
+        <Route path="/events_status" element={<EventsStatus />} />
+        <Route path="/prev_payments" element={<PrevPayments />} />
+        <Route path="/all_staffs" element={<AllStaffs />} />
+        <Route path="/edit_staff/:id" element={<EditStaff />} />
+        <Route path="/add_staff" element={<AddStaff />} />
       </Routes>
     </BrowserRouter>
   );

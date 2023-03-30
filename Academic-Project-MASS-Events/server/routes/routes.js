@@ -1,8 +1,38 @@
 import express from "express";
-import { registerAdmin, loginAdmin, checkAuth, logout, addStaff, loginStaff } from "../controller/auth.js";
-import { getEvents, addEvent, getEventBooking, getEventAttendance, getEvent, editEvent, deleteEvent, getDoneEvents } from "../controller/event-controller.js";
-import { getStaffs, getStaff, editStaff, deleteStaff, assignDuty, cancelDuty, cancelBooking, payStaff } from "../controller/staff-controller.js";
-import { getNewEvents, bookEvent, getBookings, markAttendance, cancelAttendance, getEventsStatus, getPayments } from "../controller/app-controller.js";
+import { 
+    registerAdmin, 
+    loginAdmin, 
+    checkAuth, 
+    logout, 
+    addStaff, 
+    loginStaff } from "../controller/auth.js";
+import { 
+    getEvents, 
+    addEvent, 
+    getEventBooking, 
+    getEventAttendance, 
+    getEvent, 
+    editEvent, 
+    deleteEvent, 
+    getDoneEvents } from "../controller/event-controller.js";
+import { 
+    getStaffs, 
+    getStaff, 
+    editStaff, 
+    deleteStaff, 
+    assignDuty, 
+    cancelDuty, 
+    cancelBooking, 
+    payStaff } from "../controller/staff-controller.js";
+import { 
+    getNewEvents, 
+    bookEvent, 
+    getBookings, 
+    markAttendance, 
+    cancelAttendance, 
+    getEventsStatus, 
+    getPayments } from "../controller/app-controller.js";
+// Middlewares
 import adminAuthorization from "../middlewares/admin-middleware.js";
 import staffAuthorization from "../middlewares/staff-middleware.js";
 

@@ -41,7 +41,19 @@ export const DisplayEventsStatus = (props) => {
                     <TableCell></TableCell>
                     <TableCell>No data found</TableCell>
                 </TableRow>
-            }
+            }{props.event.length !== 0 &&
+                <TableRow>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell style={{ fontWeight: 'bold' }}>
+                        <p>Staffs booked: {props.event.bookings.length}</p>
+                        <p>Staffs attended: {props.event.attendance.length}</p>
+                        <p>Staffs paid: {props.event.payments.length}</p>
+                    </TableCell>
+                </TableRow>}
         </TableBody>
     );
 }

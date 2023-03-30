@@ -61,7 +61,7 @@ export default Attendance = () => {
         <View style={{alignItems: 'center', borderTopRadius: 10}}>
           {events.map((event) => {
             return (
-              <View key={event._id} style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
+              <View key={event._id} style={[styles.row, { borderWidth: 1, borderColor: '#4682b4' }]}>
                 <View style={styles.innerRow}>
                   <View style={{ marginHorizontal: 10, padding: 10 }}>
                     <DateIcon name={'calendar-clock-outline'} size={20} color={'#e5e5e5'} />
@@ -88,16 +88,22 @@ export default Attendance = () => {
                         <Text><Icon name={'phone'} size={12} color={'black'} /> {booking.phone}</Text>
                       </View>
                       <View>
-                        {event.attendance.some((staffs) => staffs === booking._id) ?
+                        {(event.attendance.some((staffs) => staffs === booking._id) && 
+                        event.payments.some((staffs) => staffs === booking._id)) ?
+                          <Pressable style={styles.actionBtn} onPress={() => 
+                            Alert.alert("Can't cancel attendance")}
+                          >
+                            <Icon name={'checkbox-active'} size={20} color={'#7e8e9e'} />
+                          </Pressable> : event.attendance.some((staffs) => staffs === booking._id) ?
                           <Pressable style={styles.actionBtn} onPress={() => 
                             cancelStaffAttendance(event._id, booking._id)}
                           >
-                            <Icon name={'checkbox-active'} size={20} color={'#36828b'} />
+                            <Icon name={'checkbox-active'} size={20} color={'#4682b4'} />
                           </Pressable> :
                           <Pressable style={styles.actionBtn} onPress={() => 
                             markStaffAttendance(event._id, booking._id)}
                           >
-                            <Icon name={'checkbox-passive'} size={20} color={'gray'} />
+                            <Icon name={'checkbox-passive'} size={20} color={'#4682b4'} />
                           </Pressable>
                         }
                       </View>
@@ -133,7 +139,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   innerRow: { 
-    backgroundColor: '#36828b', 
+    backgroundColor: '#4682b4', 
     width: '100%', 
     alignItems: 'center', 
     flexDirection: 'row', 

@@ -100,20 +100,11 @@ export const loginAdmin = async (req, res) => {
     }
 }
 
-export const logout = async (req, res) => {
-    try {
-        res.clearCookie("jwt");
-        res.send({ "status": "success", "message": "Logged out successfully" });
-        } catch (error) {
-        res.status(404).json({ message: error.message });
-    }
-}
-
 export const addStaff = async (req, res) => {
     const { name, username, dob, place, phone, wage, role, category, password, confpassword } = req.body;
     const staff = await Staff.findOne({ username: username });
     if (staff) {
-        res.send({ "status": "failed", "message": "Staff already exists" });
+        res.send({ "status": "failed", "message": "This user name is already taken" });
     } else {
         if (name && username && dob && place && phone && wage && role && category && password && confpassword) {
             if (password === confpassword) {
@@ -184,5 +175,15 @@ export const loginStaff = async (req, res) => {
         }
     } catch (error) {
         res.send({ "status": "failed", "message": "Unable to login" });
+    }
+}
+
+// Logout
+export const logout = async (req, res) => {
+    try {
+        res.clearCookie("jwt");
+        res.send({ "status": "success", "message": "Logged out successfully" });
+        } catch (error) {
+        res.status(404).json({ message: error.message });
     }
 }

@@ -95,8 +95,6 @@ export const cancelAttendance = async (req, res) => {
     try {
         const datas = await req.body;
         const currentStaff = await Staff.findOne({ _id: datas.eventName.staff }).select('-password');
-        const events = await Event.findOne({ _id: datas.eventName.event, "payments": currentStaff._id});
-        if(!events) {
         await Event.findOneAndUpdate({
             _id: datas.eventName.event,
         },
@@ -107,9 +105,6 @@ export const cancelAttendance = async (req, res) => {
             }
         );
         res.status(201).send({ "status": "success", "message": "Cancelled attendance successfully" });
-        } else {
-            res.send({ "status": "failed", "message": "Can't cancel attendance" });
-        }
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -117,13 +112,29 @@ export const cancelAttendance = async (req, res) => {
 
 export const getEventsStatus = async (req, res) => {
     const currentStaff = await getCurrentUser(req.cookies.jwt);
+    let totalAttended = 0;
+    let totalRecieved = 0;
     try {
         const events = await Event.find({
             bookings: {
                 $all: [ currentStaff._id.toString() ]
             },
         }).sort({ date: -1, time: -1 });
-        res.status(200).send({ "events": events, "user": currentStaff._id });
+        events.map((event) => {
+            event.attendance.some((attend) => {
+                attend.toString() === currentStaff._id.toString() && totalAttended++;
+            });
+            event.payments.some((payment) => {
+                payment.toString() === currentStaff._id.toString() && totalRecieved++;
+            });
+        });
+        console.log(totalAttended, totalRecieved);
+        res.status(200).send({ 
+            "events": events, 
+            "user": currentStaff._id, 
+            "totalAttended": totalAttended, 
+            "totalRecieved": totalRecieved,
+        });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -131,15 +142,26 @@ export const getEventsStatus = async (req, res) => {
 
 export const getPayments = async (req, res) => {
     const currentStaff = await getCurrentUser(req.cookies.jwt);
+    let totalPaid = 0;
+    let totalPending = 0;
     try {
         const paidEvents = await Event.find({
             attendance: {
                 $all: [ currentStaff._id.toString() ] 
             },
         }).sort({ date: -1, time: -1 });
+        paidEvents.map((paidEvent) => {
+            paidEvent.payments.some((payment) => {
+                payment.toString() !== currentStaff._id.toString() ? 
+                totalPending++ : 
+                totalPaid++;
+            });
+        });
         res.status(200).send({ "paidEvents": paidEvents, "staff": { 
             "staffId": currentStaff._id, 
-            "payment": currentStaff.wage 
+            "payment": currentStaff.wage,
+            "totalPaid": totalPaid,
+            "totalPending": totalPending,
         } });
     } catch (error) {
         res.status(404).json({ message: error.message });

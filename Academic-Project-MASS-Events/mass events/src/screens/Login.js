@@ -21,7 +21,10 @@ export default Login = () => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <View style={{ flex: 1, marginTop: 300 }}>
+      <View style={{ flex: 1, marginTop: 200 }}>
+        <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', marginBottom: 100, }}>
+          MASS Events
+        </Text>
         <TextInput
           style={styles.input}
           placeholder="User Name:"

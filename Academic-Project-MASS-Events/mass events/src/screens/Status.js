@@ -12,6 +12,8 @@ export default Status = () => {
 
   const [events, setEvents] = useState([]);
   const [currentUser, setCurrentUser] = useState([]);
+  const [totalAttended, setTotalAttended] = useState(0);
+  const [totalRecieved, setTotalRecieved] = useState(0);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -30,6 +32,8 @@ export default Status = () => {
     if (response) {
       setEvents(response.data.events);
       setCurrentUser(response.data.user);
+      setTotalAttended(response.data.totalAttended);
+      setTotalRecieved(response.data.totalRecieved);
       setLoading(false);
     }
   }
@@ -58,47 +62,47 @@ export default Status = () => {
       events.length ?
         <View>
           <View style={styles.overView}>
-            <Text style={{ fontSize: 10, color: 'gray' }}>Total events booked: {events.length}</Text>
+            <Text style={{ fontSize: 10, color: 'gray' }}>Total Events booked: {events.length}</Text>
+            <Text style={{ fontSize: 10, color: 'gray' }}>Events attended: {totalAttended}</Text>
+            <Text style={{ fontSize: 10, color: 'gray' }}>payments recieved: {totalRecieved}</Text>
           </View>
           {events.map((event) => {
             return (
-              <View key={event._id} style={[styles.row, { borderWidth: 1, borderColor: '#36828b' }]}>
+              <View key={event._id} style={[styles.row, { borderWidth: 1, borderColor: '#4682b4' }]}>
                 <View style={styles.innerRow}>
                   <View style={{ marginHorizontal: 10, padding: 10 }}>
-                    <DateIcon name={'calendar-outline'} size={20} color={'#e5e5e5'} />
-                    <Text style={{ fontWeight: 'bold', color: '#e5e5e5' }}>{event.date}</Text>
+                    <DateIcon name={'calendar-outline'} size={20} color={'#4682b4'} />
+                    <Text style={{ fontWeight: 'bold' }}>{event.date}</Text>
+                    <Text style={{ fontWeight: 'bold' }}>{event.eventname}</Text>
                     {event.date > formattedToday ? 
-                      <Text style={{ fontWeight: 'bold', fontSize: 10, color: '#e5e5e5' }}>Status: Upcoming</Text> : 
+                      <Text style={{ fontWeight: 'bold', fontSize: 10 }}>Status: Upcoming</Text> : 
                     event.date < formattedToday ?
-                      <Text style={{ fontWeight: 'bold', fontSize: 10, color: '#e5e5e5'  }}>Status: Done</Text> : 
-                      <Text style={{ fontWeight: 'bold', fontSize: 10, color: '#e5e5e5' }}>Status: Today</Text>
+                      <Text style={{ fontWeight: 'bold', fontSize: 10 }}>Status: Done</Text> : 
+                      <Text style={{ fontWeight: 'bold', fontSize: 10 }}>Status: Today</Text>
                     }
                   </View>
-                  <View>
-                    <Text style={{ fontWeight: 'bold', color: '#e5e5e5' }}>{event.eventname}</Text>
+                  <View style={{ padding: 10 }}>
+                    {event.attendance.some((staff) => staff === currentUser) ?
+                      <View style={{ flexDirection: 'row' }}>
+                        <Text>Attended:</Text>
+                        <Icon name={'checkbox-active'} size={15} color={'#7e8e9e'} style={{ marginLeft: 100, }} />
+                      </View> :
+                      <View style={{ flexDirection: 'row' }}>
+                        <Text>Attended:</Text>
+                        <Icon name={'checkbox-passive'} size={15} color={'#7e8e9e'} style={{ marginLeft: 100, }} />
+                      </View>
+                    }
+                    {event.payments.some((staff) => staff === currentUser) ?
+                      <View style={{ flexDirection: 'row' }}>
+                        <Text>Wage Recieved:</Text>
+                        <Icon name={'checkbox-active'} size={15} color={'#7e8e9e'} style={{ marginLeft: 60, }} />
+                      </View> :
+                      <View style={{ flexDirection: 'row' }}>
+                        <Text>Wage Recieved:</Text>
+                        <Icon name={'checkbox-passive'} size={15} color={'#7e8e9e'} style={{ marginLeft: 61, }} />
+                      </View>
+                    }
                   </View>
-                </View>
-                <View style={{ padding: 10 }}>
-                  {event.attendance.some((staff) => staff === currentUser) ?
-                    <View style={{ flexDirection: 'row' }}>
-                      <Text>Attended:</Text>
-                      <Icon name={'checkbox-active'} size={15} color={'#36828b'} style={{ marginLeft: 100, }} />
-                    </View> :
-                    <View style={{ flexDirection: 'row' }}>
-                      <Text>Attended:</Text>
-                      <Icon name={'checkbox-passive'} size={15} color={'gray'} style={{ marginLeft: 100, }} />
-                    </View>
-                  }
-                  {event.payments.some((staff) => staff === currentUser) ?
-                    <View style={{ flexDirection: 'row' }}>
-                      <Text>Wage Recieved:</Text>
-                      <Icon name={'checkbox-active'} size={15} color={'#36828b'} style={{ marginLeft: 60, }} />
-                    </View> :
-                    <View style={{ flexDirection: 'row' }}>
-                      <Text>Wage Recieved:</Text>
-                      <Icon name={'checkbox-passive'} size={15} color={'gray'} style={{ marginLeft: 61, }} />
-                    </View>
-                  }
                 </View>
               </View>
               );
@@ -121,14 +125,17 @@ const styles = StyleSheet.create({
   },
   overView: {
     width: '95%',
-    height: 15,
+    height: 50,
     borderRadius: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: "#4682b4",
     backgroundColor: '#fff',
     marginVertical: 5,
     marginHorizontal: 8,
     paddingHorizontal: 0,
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 15,
   },
   row: {
@@ -143,7 +150,6 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   innerRow: {
-    backgroundColor: '#36828b',
     width: '100%',
     borderTopStartRadius: 10,
     borderTopEndRadius: 10,
