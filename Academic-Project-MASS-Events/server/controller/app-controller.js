@@ -128,7 +128,6 @@ export const getEventsStatus = async (req, res) => {
                 payment.toString() === currentStaff._id.toString() && totalRecieved++;
             });
         });
-        console.log(totalAttended, totalRecieved);
         res.status(200).send({ 
             "events": events, 
             "user": currentStaff._id, 
@@ -145,24 +144,27 @@ export const getPayments = async (req, res) => {
     let totalPaid = 0;
     let totalPending = 0;
     try {
-        const paidEvents = await Event.find({
+        const events = await Event.find({
             attendance: {
-                $all: [ currentStaff._id.toString() ] 
+                $all: [ currentStaff._id.toString() ]
             },
         }).sort({ date: -1, time: -1 });
-        paidEvents.map((paidEvent) => {
-            paidEvent.payments.some((payment) => {
-                payment.toString() !== currentStaff._id.toString() ? 
-                totalPending++ : 
-                totalPaid++;
-            });
+        events.map((event) => {
+            if(event.payments.length !== 0) {
+                event.payments.some((payment) => {
+                    const ispaid = payment.toString() === currentStaff._id.toString();
+                    ispaid ? totalPaid++ : totalPending++;
+                });
+            } else {
+                totalPending++;
+            }
         });
-        res.status(200).send({ "paidEvents": paidEvents, "staff": { 
+        res.status(200).send({ "paidEvents": events, "staff": { 
             "staffId": currentStaff._id, 
             "payment": currentStaff.wage,
             "totalPaid": totalPaid,
             "totalPending": totalPending,
-        } });
+        }});
     } catch (error) {
         res.status(404).json({ message: error.message });
     }

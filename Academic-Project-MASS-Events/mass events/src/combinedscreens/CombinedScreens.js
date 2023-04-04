@@ -55,6 +55,9 @@ const CombinedScreen = () => {
                         <PhoneIcon name={'phone'} size={12} color={'#e5e5e5'} />
                         {"  " + currentstaff.phone}
                     </Text>
+                    <Text style={{ color: '#e5e5e5', fontSize: 10 }}>
+                        Category:  {currentstaff.category}
+                    </Text>
                 </View>
             </View>
             <View style={{ marginTop: 370, marginLeft: 25 }}>
